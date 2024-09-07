@@ -1,0 +1,13 @@
+#https://zsh.sourceforge.io/Guide/zshguide02.html#l22
+
+alias ls='lsd'
+alias ll='ls -la'
+alias lt='ls --tree'
+alias cd='z'
+
+alias tf='terraform'
+alias tg='terragrunt'
+
+alias k='kubectl'
+alias kc='kubectx'
+alias kns="kubens"

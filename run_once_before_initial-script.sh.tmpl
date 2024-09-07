@@ -1,0 +1,46 @@
+{{ if (and (eq .chezmoi.os "linux") (eq .chezmoi.hostname "lucera-wsl")) -}}
+#!/bin/bash
+
+# Install linuxbrew
+if [[ ! -d /home/linuxbrew/ ]]
+then
+    sudo /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+fi
+
+# Check pipx tool is installed
+if ! command -v pipx &> /dev/null
+then
+    sudo apt install pipx -y
+fi
+
+
+sudo apt-get install apt-transport-https ca-certificates curl gnupg lsb-release -y > /dev/null
+sudo mkdir -p /etc/apt/keyrings
+curl -sLS https://packages.microsoft.com/keys/microsoft.asc | sudo gpg --dearmor -o /etc/apt/keyrings/microsoft.gpg
+sudo chmod go+r /etc/apt/keyrings/microsoft.gpg
+
+AZ_DIST=$(lsb_release -cs)
+echo "Types: deb
+URIs: https://packages.microsoft.com/repos/azure-cli/
+Suites: ${AZ_DIST}
+Components: main
+Architectures: $(dpkg --print-architecture)
+Signed-by: /etc/apt/keyrings/microsoft.gpg" | sudo tee /etc/apt/sources.list.d/azure-cli.sources
+
+
+# add ngrok packages
+if [ ! -z /etc/apt/sources.list.d/ngrok.list ]; then
+    curl -s https://ngrok-agent.s3.amazonaws.com/ngrok.asc | sudo tee /etc/apt/trusted.gpg.d/ngrok.asc >/dev/null \
+	    && echo "deb https://ngrok-agent.s3.amazonaws.com buster main" | sudo tee /etc/apt/sources.list.d/ngrok.list
+fi
+
+{{ else if eq .chezmoi.os "darwin" -}}
+#!/bin/bash
+
+# Install linuxbrew
+if [[ ! -d /opt/homebrew/ ]]
+then
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+fi
+
+{{ end -}}

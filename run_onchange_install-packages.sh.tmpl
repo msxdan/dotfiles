@@ -1,0 +1,56 @@
+{{ if eq .chezmoi.os "linux" -}}
+#!/bin/bash
+
+# functions.sh" hash: {{ include  ".scripts/shared/functions.sh" | sha256sum }}
+source {{ joinPath .chezmoi.sourceDir "/.scripts/shared/functions.sh" | quote }}
+
+update_packages
+install_apt_package pipx
+install_apt_package ansible
+install_apt_package az azure-cli
+install_apt_package ngrok ngrok
+
+install_pipx_package keeper keepercommander
+
+# TODO: install
+
+# snap packages
+sudo snap install terraform --classic
+
+
+# brew packages
+install_brew_package k9s
+install_brew_package pulumi
+install_brew_package helm
+install_brew_package sops
+install_brew_package terragrunt
+install_brew_package atlantis
+install_brew_package inframap
+
+# Install dotnet
+install_dotnet_version "6.0.423" "8.0.301" # "8.0.206"
+
+
+# Install gitkraken
+wget https://release.gitkraken.com/linux/gitkraken-amd64.deb
+sudo apt install -y --quiet ./gitkraken-amd64.deb
+rm ./gitkraken-amd64.deb
+
+echo "A reload of .bashrc might be needed, use . ~/.bashrc"
+
+{{ else if eq .chezmoi.os "darwin" -}}
+
+#!/bin/bash
+
+# functions.sh" hash: {{ include  ".scripts/shared/functions.sh" | sha256sum }}
+source {{ joinPath .chezmoi.sourceDir "/.scripts/shared/functions.sh" | quote }}
+
+# dot_brewfile" hash: {{ include "dot_brewfile" | sha256sum }}
+brew tap homebrew/bundle
+brew bundle
+
+tenv tf install 1.9.4
+tenv tg install 0.66.7
+tenv tofu install 1.8.1
+#vagrant plugin install vagrant-vmware-desktop
+{{ end -}}

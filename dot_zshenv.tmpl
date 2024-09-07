@@ -1,0 +1,33 @@
+# vscode integration
+export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
+
+# Export pipx binary directory
+export PATH="$PATH:{{ .chezmoi.homeDir }}/.local/bin"
+
+# chezmoi
+export PATH=$PATH:~/bin
+
+export HOMEBREW_BUNDLE_FILE="{{ .chezmoi.homeDir }}/.brewfile"
+
+export TENV_AUTO_INSTALL=true
+# Use terraform as default for terragrunt
+export TERRAGRUNT_TFPATH="terraform"
+
+KUBECONFIG=
+for kubeconfig in ~/.kube/config.d/*; do
+  export KUBECONFIG=$kubeconfig:$KUBECONFIG
+done
+
+for env in ~/.private/.env.d/*; do
+  source $env
+done
+
+if [[ -r ~/.aliasrc ]]; then
+    . ~/.aliasrc
+fi
+
+export VOLTA_HOME="$HOME/.volta"
+export PATH="$VOLTA_HOME/bin:$PATH"
+export VOLTA_FEATURE_PNPM=1;
+# Lucera blog contentfull
+export BLOG_PROVIDER=local

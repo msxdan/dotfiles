@@ -1,0 +1,178 @@
+# ~/.config/starship.toml
+# Symbols list: https://starship.rs/presets/nerd-font
+
+command_timeout = 5000
+
+# Inserts a blank line between shell prompts
+add_newline = false
+
+# Change the default prompt format
+format = """\
+[╭╴](238)$os$env_var$all\
+[╰─](238)$character"""
+
+# Change the default prompt characters
+[character]
+success_symbol = "[](238)"
+error_symbol = "[](238)"
+
+# Shows an icon that should be included by zshrc script based on the distribution or os
+[env_var.STARSHIP_DISTRO]
+format = '[$env_value](bold white)'  # removed space between distro and rest for pwsh
+variable = "STARSHIP_DISTRO"
+disabled = false
+
+[os]
+format = '[$symbol]($style) '
+disabled = false
+
+[os.symbols]
+Alpaquita = " "
+Alpine = " "
+AlmaLinux = " "
+Amazon = " "
+Android = " "
+Arch = " "
+Artix = " "
+CentOS = " "
+Debian = " "
+DragonFly = " "
+Emscripten = " "
+EndeavourOS = " "
+Fedora = " "
+FreeBSD = " "
+Garuda = "󰛓 "
+Gentoo = " "
+HardenedBSD = "󰞌 "
+Illumos = "󰈸 "
+Kali = " "
+Linux = " "
+Mabox = " "
+Macos = " "
+Manjaro = " "
+Mariner = " "
+MidnightBSD = " "
+Mint = " "
+NetBSD = " "
+NixOS = " "
+OpenBSD = "󰈺 "
+openSUSE = " "
+OracleLinux = "󰌷 "
+Pop = " "
+Raspbian = " "
+Redhat = " "
+RedHatEnterprise = " "
+RockyLinux = " "
+Redox = "󰀘 "
+Solus = "󰠳 "
+SUSE = " "
+Ubuntu = " "
+Unknown = " "
+Void = " "
+Windows = "󰍲 "
+
+# Shows the username
+[username]
+style_user = "white bold"
+style_root = "black bold"
+format = "[$user]($style) "
+disabled = true  # disable in powershell
+show_always = false
+
+[directory]
+truncation_length = 3
+truncation_symbol = "…/"
+home_symbol = " ~"
+read_only_style = "197"
+read_only = "  "
+format = "at [$path]($style)[$read_only]($read_only_style) "
+
+[git_branch]
+symbol = "󰊢 "
+format = "on [$symbol$branch]($style) "
+truncation_length = 15
+truncation_symbol = "…/"
+style = "bold green"
+
+[git_status]
+format = '[\($all_status$ahead_behind\)]($style) '
+style = "bold green"
+conflicted = "🏳"
+up_to_date = " "
+untracked = " "
+ahead = "⇡${count}"
+diverged = "⇕⇡${ahead_count}⇣${behind_count}"
+behind = "⇣${count}"
+stashed = " "
+modified = " "
+staged = '[++\($count\)](green)'
+renamed = "襁 "
+deleted = " "
+
+[azure]
+disabled = true
+format = 'on [$symbol($subscription)]($style) '
+symbol = '󰠅 '
+style = 'blue bold'
+
+[gcloud]
+disabled = true
+symbol = '🇬️'
+format = '[$symbol$active]($style) '
+style = 'bold yellow'
+
+[battery]
+full_symbol = '🔋 '
+charging_symbol = '⚡️ '
+discharging_symbol = '💀 '
+disabled = true
+
+[[battery.display]] # 'bold red' style and discharging_symbol when capacity is between 0% and 10%
+threshold = 10
+style = 'bold red'
+
+[[battery.display]] # 'bold yellow' style and 💦 symbol when capacity is between 10% and 30%
+threshold = 90
+style = 'bold yellow'
+discharging_symbol = '🔋 '
+
+[terraform]
+format = "via [󱁢 $version]($style)  [$workspace]($style) "
+
+[vagrant]
+format = "via [ vagrant $version]($style) "
+
+[docker_context]
+format = "via [ $context](bold blue) "
+detect_extensions = ['.Dockerfile']
+detect_files = ['docker-compose.yml', 'docker-compose.yaml', '*.Dockerfile', 'Dockerfile']
+disabled = false
+
+[helm]
+format = "via [  $version](bold purple) "
+
+[python]
+symbol = " "
+format = '\[[${symbol}${pyenv_prefix}(${version})( \($virtualenv\))]($style)\] '
+
+[nodejs]
+symbol = " "
+format = '\[[$symbol($version)]($style)\] '
+disabled = false
+
+[ruby]
+format = "via [ $version]($style) "
+
+[kubernetes]
+format = 'on [󱃾 $context\($namespace\)](bold purple) '
+disabled = false
+
+[pulumi]
+command_timeout = 5000
+symbol = '🛥 '
+format = ' [$symbol ($version) $stack]($style) '
+disabled = true
+
+[golang]
+symbol = " "
+format = 'via [$symbol($version )($mod_version )]($style)'

@@ -1,0 +1,91 @@
+eval "$(starship init zsh)"
+eval "$(zoxide init zsh)"
+
+source "$(brew --prefix)/share/google-cloud-sdk/path.zsh.inc"
+source "$(brew --prefix)/share/google-cloud-sdk/completion.zsh.inc"
+source <(kubectl completion zsh) && complete -F __start_kubectl k
+source <(pulumi gen-completion zsh)
+source <(helm completion zsh)
+source <(tenv completion zsh)
+#source <(chezmoi completion zsh)
+autoload -U +X bashcompinit && bashcompinit
+complete -o nospace -C /opt/homebrew/bin/terraform terraform
+
+source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# Required by zoxide
+source <(fzf --zsh)
+
+# zinit plugin, load before compinit
+#ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
+#[ ! -d $ZINIT_HOME ] && mkdir -p "$(dirname $ZINIT_HOME)"
+#[ ! -d $ZINIT_HOME/.git ] && git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
+#source "${ZINIT_HOME}/zinit.zsh"
+
+if type brew &>/dev/null; then
+  FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
+  autoload -Uz compinit
+  compinit
+fi
+
+_complete_psql() {
+    services=$(egrep -o '^\[.+\]' ~/.pg_service.conf | cut -f2 -d\[ | cut -f1 -d] | sort | sed 's/^/service=/')
+    if [[ $services ]]
+    then
+        COMPREPLY=( $( compgen -W "$services" -- ${COMP_WORDS[COMP_CWORD]}) )
+    else
+        echo
+        echo "(no services)"
+        echo -n "> ${COMP_WORDS} "
+    fi
+    return 0
+}
+complete -F _complete_psql psql pgcli
+
+# make sure you execute this *after* asdf or other version managers are loaded
+if (( $+commands[orbctl] )); then
+  eval "$(orbctl completion zsh)"
+  compdef _orb orbctl
+  compdef _orb orb
+fi
+
+# yazi
+function yy() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
+	yazi "$@" --cwd-file="$tmp"
+	if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+		cd -- "$cwd"
+	fi
+	rm -f -- "$tmp"
+}
+
+HISTFILESIZE=100000000000
+HISTSIZE=100000000000
+
+# Zsh options
+# Alows zsh to use bash-style comments
+setopt INTERACTIVE_COMMENTS
+# Case insensitive globbing
+setopt NO_CASE_GLOB
+# share history across multiple zsh sessions (enables extended history)
+setopt SHARE_HISTORY
+# append to history
+setopt APPEND_HISTORY
+# adds commands as they are typed, not at shell exit
+setopt INC_APPEND_HISTORY
+# expire duplicates first
+setopt HIST_EXPIRE_DUPS_FIRST
+# do not store duplications
+setopt HIST_IGNORE_DUPS
+#ignore duplicates when searching
+setopt HIST_FIND_NO_DUPS
+# removes blank lines from history
+setopt HIST_REDUCE_BLANKS
+# Show hidden items when completing
+setopt globdots
+# don't store command in history file if prefixed by space
+setopt HIST_IGNORE_SPACE
+
+# Enable completion on special-dirs like . and .. so when pressing tab it will complete to ./ and ../
+zstyle ':completion:*' special-dirs true

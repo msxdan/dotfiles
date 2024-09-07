@@ -1,0 +1,9 @@
+# yazi.toml
+
+[manager]
+show_hidden = true
+
+[preview]
+max_width = 2080
+max_height = 5080
+

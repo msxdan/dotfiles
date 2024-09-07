@@ -1,0 +1,20 @@
+# Added by OrbStack: 'orb' SSH host for Linux machines
+# This only works if it's at the top of ssh_config (before any Host blocks).
+# Comment this line if you don't want it to be added again.
+Include ~/.orbstack/ssh/config
+Include ~/.colima/ssh_config
+Include ~/.ssh/config.d/*
+
+#Host *
+#  ForwardAgent no
+
+Host github.com
+  Hostname github.com
+  User msxdan
+  IdentityFile ~/.private/.ssh/keys/github_com_ed25519
+
+Host gitlab.com
+  HostName gitlab.com
+  User msxdan
+  IdentityFile ~/.private/.ssh/keys/gitlab_com_rsa
+
