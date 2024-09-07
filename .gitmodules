@@ -1,0 +1,3 @@
+[submodule "dot_private"]
+	path = dot_private
+	url = git@github.com:msxdan/dotfiles_private.git
