@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# ssh_config_mm" hash: {{ include  "dot_private/private_dot_ssh/private_config.d/mm" | sha256sum }}
+# ssh_config" hash: {{ include  "private_dot_ssh/private_config" | sha256sum }}
+
+# Load ssh keys into keychain
+ssh-add --apple-use-keychain $(find ~/.private/.ssh/keys -type f | grep -E '.*_ed25519$|.*_rsa$')

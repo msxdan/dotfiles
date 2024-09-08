@@ -1,0 +1,6 @@
+{{ if eq .chezmoi.os "darwin" -}}
+#!/bin/bash
+# dot_brewfile" hash: {{ include "dot_brewfile" | sha256sum }}
+brew tap homebrew/bundle
+brew bundle
+{{ end -}}

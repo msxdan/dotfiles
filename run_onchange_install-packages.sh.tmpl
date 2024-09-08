@@ -42,15 +42,9 @@ echo "A reload of .bashrc might be needed, use . ~/.bashrc"
 
 #!/bin/bash
 
-# functions.sh" hash: {{ include  ".scripts/shared/functions.sh" | sha256sum }}
-source {{ joinPath .chezmoi.sourceDir "/.scripts/shared/functions.sh" | quote }}
-
-# dot_brewfile" hash: {{ include "dot_brewfile" | sha256sum }}
-brew tap homebrew/bundle
-brew bundle
-
-tenv tf install 1.9.4
+tenv tf install 1.9.5
 tenv tg install 0.66.7
 tenv tofu install 1.8.1
 #vagrant plugin install vagrant-vmware-desktop
+
 {{ end -}}
