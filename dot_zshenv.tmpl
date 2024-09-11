@@ -15,8 +15,9 @@ export TERRAGRUNT_TFPATH="terraform"
 
 KUBECONFIG=
 for kubeconfig in ~/.kube/config.d/*; do
-  export KUBECONFIG=$kubeconfig:$KUBECONFIG
+  KUBECONFIG=${KUBECONFIG}:$kubeconfig
 done
+export KUBECONFIG="${KUBECONFIG}:${HOME}/.kube/config"
 
 for env in ~/.private/.env.d/*; do
   source $env
