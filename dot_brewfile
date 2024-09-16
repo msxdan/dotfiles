@@ -115,6 +115,7 @@ brew "zsh-autosuggestions"
 brew "zsh-completions"
 brew "zsh-syntax-highlighting"
 cask "powershell"
+brew "ripgrep"
 
 # Python
 brew "pyenv-virtualenv"
@@ -141,6 +142,7 @@ cask "font-caskaydia-cove-nerd-font"
 
 vscode "oderwat.indent-rainbow"
 vscode "kestra-io.kestra"
+vscode "Catppuccin.catppuccin-vsc-icons"
 
 vscode "4ops.terraform"
 vscode "ahmadalli.vscode-nginx-conf"
