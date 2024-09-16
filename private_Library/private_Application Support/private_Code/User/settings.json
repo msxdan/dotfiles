@@ -34,7 +34,7 @@
   "liveServer.settings.donotVerifyTags": true,
 
   "workbench.colorTheme": "GitHub Dark",
-  "workbench.iconTheme": "material-icon-theme",
+  "workbench.iconTheme": "catppuccin-macchiato",
   "workbench.productIconTheme": "fluent-icons",
   "workbench.editor.enablePreview": false,
   "workbench.colorCustomizations": {
@@ -98,5 +98,25 @@
     "editor.formatOnType": true
   },
 
-  "kestra.api.url": "https://api.kestra.io/v1"
+  "kestra.api.url": "https://api.kestra.io/v1",
+
+  "indentRainbow.indicatorStyle": "light",
+  "indentRainbow.lightIndicatorStyleLineWidth": 1,
+  "indentRainbow.includedLanguages": [],
+  "indentRainbow.excludedLanguages": ["plaintext"],
+  "indentRainbow.updateDelay": 100, // 10 makes it super fast but may cost more resources
+  // Defining custom colors instead of default "Rainbow" for dark backgrounds.
+  "indentRainbow.colors": [
+    "rgba(255,255,64,0.3)",
+    "rgba(127,255,127,0.3)",
+    "rgba(255,127,255,0.3)",
+    "rgba(79,236,236,0.3)"
+  ],
+
+  // The indent color if the number of spaces is not a multiple of "tabSize".
+  "indentRainbow.errorColor": "rgba(128,32,32,0.6)",
+
+  // The indent color when there is a mix between spaces and tabs.
+  // To be disabled this coloring set this to an empty string.
+  "indentRainbow.tabmixColor": "rgba(128,32,96,0.6)"
 }
