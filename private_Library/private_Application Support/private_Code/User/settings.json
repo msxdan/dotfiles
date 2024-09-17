@@ -1,6 +1,11 @@
 {
+  "apc.electron": {},
+  "apc.stylesheet": {
+    "*": "font-family: CaskaydiaCove Nerd Font;"
+  },
+
   "editor.fontFamily": "'CaskaydiaCove Nerd Font', 'JetbrainsMono Nerd Font', Consolas, 'Courier New', monospace",
-  "editor.fontSize": 12.5,
+  "editor.fontSize": 13.5,
   "editor.bracketPairColorization.enabled": true,
   "editor.guides.bracketPairs": "active",
   "editor.suggestSelection": "first",
@@ -15,6 +20,7 @@
   "editor.wordWrap": "on",
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.minimap.enabled": false,
+  "editor.detectIndentation": false,
 
   "breadcrumbs.enabled": true,
 
@@ -22,6 +28,7 @@
   "terminal.integrated.defaultProfile.windows": "PowerShell",
   "terminal.integrated.defaultProfile.osx": "zsh",
   "terminal.integrated.fontSize": 12,
+  "window.zoomLevel": 0,
 
   "search.followSymlinks": false,
 
@@ -93,7 +100,9 @@
     "*.conf": "properties",
     "*.bak": "bat"
   },
-
+  "[shellscript]": {
+    "editor.defaultFormatter": "foxundermoon.shell-format"
+  },
   "[python]": {
     "editor.formatOnType": true
   },
