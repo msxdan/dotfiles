@@ -139,12 +139,12 @@ cask "font-jetbrains-mono-nerd-font"
 cask "font-caskaydia-cove-nerd-font"
 
 # VS Code
-
+vscode "drcika.apc-extension"
 vscode "oderwat.indent-rainbow"
 vscode "kestra-io.kestra"
 vscode "Catppuccin.catppuccin-vsc-icons"
-
 vscode "4ops.terraform"
+vscode "foxundermoon.shell-format"
 vscode "ahmadalli.vscode-nginx-conf"
 vscode "almenon.arepl"
 vscode "astro-build.astro-vscode"

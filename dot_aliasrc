@@ -11,3 +11,5 @@ alias tg='terragrunt'
 alias k='kubectl'
 alias kc='kubectx'
 alias kns="kubens"
+
+alias vim='nvim'
