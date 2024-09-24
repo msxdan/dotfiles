@@ -4,7 +4,7 @@
 	"credHelpers": {
 		"europe-docker.pkg.dev": "gcloud"
 	},
-	"currentContext": "colima",
+	"currentContext": "orbstack",
 	"cliPluginsExtraDirs": [
 		"/opt/homebrew/lib/docker/cli-plugins"
 	]

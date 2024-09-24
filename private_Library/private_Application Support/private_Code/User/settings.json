@@ -79,6 +79,12 @@
   },
   "yaml.customTags": ["!reference sequence"],
 
+  "[dockerfile]": {
+    "editor.quickSuggestions": {
+      "strings": true
+    },
+    "editor.defaultFormatter": "ms-azuretools.vscode-docker"
+  },
   "docker.enableDockerComposeLanguageService": true,
   "[dockercompose]": {
     "editor.insertSpaces": true,
@@ -105,6 +111,12 @@
   },
   "[python]": {
     "editor.formatOnType": true
+  },
+  "[terraform]": {
+    "editor.defaultFormatter": "hashicorp.terraform"
+  },
+  "[nginx]": {
+    "editor.defaultFormatter": "ahmadalli.vscode-nginx-conf"
   },
 
   "kestra.api.url": "https://api.kestra.io/v1",
