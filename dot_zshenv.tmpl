@@ -13,11 +13,11 @@ export TENV_AUTO_INSTALL=true
 # Use terraform as default for terragrunt
 export TERRAGRUNT_TFPATH="terraform"
 
-KUBECONFIG=
+KUBECONFIG=${HOME}/.kube/config
 for kubeconfig in ~/.kube/config.d/*; do
   KUBECONFIG=${KUBECONFIG}:$kubeconfig
 done
-export KUBECONFIG="${KUBECONFIG}:${HOME}/.kube/config"
+export KUBECONFIG
 
 for env in ~/.private/.env.d/*; do
   source $env
