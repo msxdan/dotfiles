@@ -43,7 +43,7 @@
   "workbench.colorTheme": "GitHub Dark",
   "workbench.iconTheme": "catppuccin-macchiato",
   "workbench.productIconTheme": "fluent-icons",
-  "workbench.editor.enablePreview": false,
+  "workbench.editor.enablePreview": true,
   "workbench.colorCustomizations": {
     "terminal.foreground": "#eee"
   },
