@@ -4,15 +4,15 @@ eval "$(zoxide init zsh)"
 source "$(brew --prefix)/share/google-cloud-sdk/path.zsh.inc"
 source "$(brew --prefix)/share/google-cloud-sdk/completion.zsh.inc"
 source <(kubectl completion zsh) && complete -F __start_kubectl k
-source <(pulumi gen-completion zsh)
+#source <(pulumi gen-completion zsh)
 source <(helm completion zsh)
 source <(tenv completion zsh)
 #source <(chezmoi completion zsh)
 autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C /opt/homebrew/bin/terraform terraform
 
-source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+#source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+#source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # Required by zoxide
 source <(fzf --zsh)
@@ -26,12 +26,18 @@ source "${ZINIT_HOME}/zinit.zsh"
 # Load zinit plugins
 zinit ice atload"zpcdreplay" atclone"./zplug.zsh" atpull"%atclone" wait"0" lucid
 zinit light g-plane/pnpm-shell-completion
+zinit light zsh-users/zsh-syntax-highlighting
+zinit light zsh-users/zsh-completions
+zinit light zsh-users/zsh-autosuggestions
+zinit light Aloxaf/fzf-tab
 
-if type brew &>/dev/null; then
-  FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
-  autoload -Uz compinit
-  compinit
-fi
+
+#if type brew &>/dev/null; then
+#  FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
+autoload -Uz compinit
+compinit
+zinit cdreplay -q
+#fi
 
 _complete_psql() {
     services=$(egrep -o '^\[.+\]' ~/.pg_service.conf | cut -f2 -d\[ | cut -f1 -d] | sort | sed 's/^/service=/')
@@ -93,3 +99,29 @@ setopt HIST_IGNORE_SPACE
 
 # Enable completion on special-dirs like . and .. so when pressing tab it will complete to ./ and ../
 zstyle ':completion:*' special-dirs true
+# disable sort when completing `git checkout`
+zstyle ':completion:*:git-checkout:*' sort false
+# set descriptions format to enable group support
+# NOTE: don't use escape sequences (like '%F{red}%d%f') here, fzf-tab will ignore them
+zstyle ':completion:*:descriptions' format '[%d]'
+# set list-colors to enable filename colorizing
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+# force zsh not to show completion menu, which allows fzf-tab to capture the unambiguous prefix
+zstyle ':completion:*' menu no
+# preview directory's content with eza when completing cd
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color always $realpath'
+zstyle ':fzf-tab:complete:z:*' fzf-preview 'ls --color always $realpath'
+# custom fzf flags
+# NOTE: fzf-tab does not follow FZF_DEFAULT_OPTS
+#zstyle ':fzf-tab:*' fzf-flags --color=fg:1,fg+:2 --bind=tab:accept
+# switch group using `<` and `>`
+zstyle ':fzf-tab:*' switch-group '<' '>'
+
+bindkey -e
+bindkey "^[[3~" delete-char                    # Key Del
+bindkey "^[[5~" beginning-of-buffer-or-history # Key Page Up
+bindkey "^[[6~" end-of-buffer-or-history       # Key Page Down
+bindkey "^[[H" beginning-of-line               # Key Home
+bindkey "^[[F" end-of-line                     # Key End
+bindkey "^[[1;3C" forward-word                 # Key Alt + Right
+bindkey "^[[1;3D" backward-word                # Key Alt + Left

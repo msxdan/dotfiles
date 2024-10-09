@@ -26,9 +26,10 @@ brew "terraform-docs"
 brew "tflint"
 brew "cloudflare/cloudflare/cf-terraforming"
 brew "infracost"
-brew "pulumi"
+#brew "pulumi"
 cask "vagrant"
 cask "vagrant-vmware-utility"
+brew "ansible-lint"
 
 # Development
 brew "gh"
@@ -87,6 +88,7 @@ cask "stats"
 
 ## Others
 cask "whatsapp"
+brew "cowsay"
 
 # Terminal
 cask "iterm2"
@@ -111,11 +113,15 @@ brew "watch"
 brew "gnupg"
 brew "zoxide"
 brew "neofetch"
-brew "zsh-autosuggestions"
-brew "zsh-completions"
-brew "zsh-syntax-highlighting"
+#brew "zsh-autosuggestions"
+#brew "zsh-completions"
+#brew "zsh-syntax-highlighting"
 cask "powershell"
 brew "ripgrep"
+
+# Cracking
+#brew "john-jumbo"
+#brew "hashcat"
 
 # Python
 brew "pyenv-virtualenv"
@@ -175,6 +181,7 @@ vscode "graphql.vscode-graphql"
 vscode "graphql.vscode-graphql-execution"
 vscode "graphql.vscode-graphql-syntax"
 vscode "hashicorp.terraform"
+#vscode "marcostazi.VS-code-vagrantfile"
 vscode "htmlhint.vscode-htmlhint"
 vscode "ionutvmi.reg"
 vscode "jeff-hykin.better-shellscript-syntax"
@@ -230,3 +237,4 @@ vscode "vscode-icons-team.vscode-icons"
 vscode "miguelsolorio.fluent-icons"
 vscode "wholroyd.jinja"
 vscode "ybaumes.highlight-trailing-white-spaces"
+vscode "redhat.ansible"
