@@ -111,6 +111,8 @@ zstyle ':completion:*' menu no
 # preview directory's content with eza when completing cd
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color always $realpath'
 zstyle ':fzf-tab:complete:z:*' fzf-preview 'ls --color always $realpath'
+zstyle ':fzf-tab:complete:ls:*' fzf-preview 'ls --color always $realpath'
+zstyle ':fzf-tab:complete:lsd:*' fzf-preview 'ls --color always $realpath'
 # custom fzf flags
 # NOTE: fzf-tab does not follow FZF_DEFAULT_OPTS
 #zstyle ':fzf-tab:*' fzf-flags --color=fg:1,fg+:2 --bind=tab:accept
@@ -119,6 +121,7 @@ zstyle ':fzf-tab:*' switch-group '<' '>'
 
 bindkey -e
 bindkey "^[[3~" delete-char                    # Key Del
+bindkey '^[[3;3~' kill-word                    # Key Alt + Del  (delete word)
 bindkey "^[[5~" beginning-of-buffer-or-history # Key Page Up
 bindkey "^[[6~" end-of-buffer-or-history       # Key Page Down
 bindkey "^[[H" beginning-of-line               # Key Home

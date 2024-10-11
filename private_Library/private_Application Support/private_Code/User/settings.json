@@ -4,6 +4,10 @@
     "*": "font-family: CaskaydiaCove Nerd Font;"
   },
 
+  "window.nativeTabs": true,
+  "window.customTitleBarVisibility": "never",
+  "window.zoomLevel": 0,
+
   "editor.fontFamily": "'CaskaydiaCove Nerd Font', 'JetbrainsMono Nerd Font', Consolas, 'Courier New', monospace",
   "editor.fontSize": 13.5,
   "editor.bracketPairColorization.enabled": true,
@@ -28,7 +32,6 @@
   "terminal.integrated.defaultProfile.windows": "PowerShell",
   "terminal.integrated.defaultProfile.osx": "zsh",
   "terminal.integrated.fontSize": 12,
-  "window.zoomLevel": 0,
 
   "search.followSymlinks": false,
 
