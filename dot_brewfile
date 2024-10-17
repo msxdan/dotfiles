@@ -118,6 +118,7 @@ brew "neofetch"
 #brew "zsh-syntax-highlighting"
 cask "powershell"
 brew "ripgrep"
+brew "yamllint"
 
 # Cracking
 #brew "john-jumbo"
