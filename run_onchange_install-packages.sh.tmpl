@@ -47,6 +47,8 @@ fi
 pipx install --include-deps ansible
 pipx install shcheck
 pipx install keepercommander
+pipx install molecule
+pipx inject molecule "molecule-plugins"
 
 tenv tf install 1.9.5
 tenv tg install 0.66.7

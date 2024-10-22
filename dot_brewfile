@@ -119,6 +119,7 @@ brew "neofetch"
 cask "powershell"
 brew "ripgrep"
 brew "yamllint"
+brew "mtr"
 
 # Cracking
 #brew "john-jumbo"
