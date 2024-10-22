@@ -53,6 +53,21 @@ _complete_psql() {
 }
 complete -F _complete_psql psql pgcli
 
+# Custom switch context completion
+_complete_sc() {
+  files=$(ls -1 ~/.private/.env.d/)
+  if [[ $files ]]
+  then
+      COMPREPLY=( $( compgen -W "$files" -- ${COMP_WORDS[COMP_CWORD]}) )
+  else
+      echo
+      echo "(no files)"
+      echo -n "> ${COMP_WORDS} "
+  fi
+  return 0
+}
+complete -F _complete_sc sc sc.sh
+
 # make sure you execute this *after* asdf or other version managers are loaded
 if (( $+commands[orbctl] )); then
   eval "$(orbctl completion zsh)"

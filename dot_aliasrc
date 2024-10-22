@@ -13,3 +13,6 @@ alias kc='kubectx'
 alias kns="kubens"
 
 alias vim='nvim'
+
+# Custom switch context
+alias sc='. ~/.local/bin/sc.sh'
