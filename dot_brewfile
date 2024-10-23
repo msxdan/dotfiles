@@ -18,7 +18,7 @@ brew "awscli"
 cask "google-cloud-sdk"
 brew "azcopy"
 cask "microsoft-azure-storage-explorer"
-cask "microsoft-remote-desktop"
+cask "windows-app" # replaces microsoft-remote-desktop
 
 # IaC
 brew "tenv" # Replaces tfenv and tofuenv
