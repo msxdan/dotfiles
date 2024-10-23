@@ -13,6 +13,7 @@ format = """\
 [╭╴](238)\
 $os\
 ${custom.environment}\
+$jobs\
 $env_var\
 $all\
 [╰─](238)\
@@ -123,6 +124,11 @@ modified = " "
 staged = '[++\($count\)](green)'
 renamed = "襁 "
 deleted = " "
+
+[jobs]
+symbol = '✦'
+number_threshold = 2
+symbol_threshold = 1
 
 [azure]
 disabled = true
