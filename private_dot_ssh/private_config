@@ -2,6 +2,9 @@ Include ~/.orbstack/ssh/config
 Include ~/.colima/ssh_config
 Include ~/.ssh/config.d/*
 
+CanonicalizeHostname yes
+CanonicalDomains internal.marvincloud.io marvincloud.io
+
 Host *
   IgnoreUnknown UseKeyChain
   UseKeyChain yes
@@ -19,10 +22,13 @@ Host gitlab.com
   HostName gitlab.com
   User msxdan
 
-Host zeus-01
-  HostName 192.168.96.54
-  User root
+Host agon
+  HostName 192.168.96.10
+  User agon
 
-Host zeus-02
-  HostName 192.168.96.55
+Host argos
+  HostName 192.168.96.14
+  User msxuser
+
+Host *.marvincloud.io
   User root
