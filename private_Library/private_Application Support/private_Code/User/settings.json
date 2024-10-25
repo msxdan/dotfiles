@@ -81,6 +81,7 @@
     "Kubernetes": ["kubernetes.yaml", "deployment.yaml", "service.yaml"]
   },
   "yaml.customTags": ["!reference sequence"],
+  "yaml.format.printWidth": 140,
 
   "[dockerfile]": {
     "editor.quickSuggestions": {

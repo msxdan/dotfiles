@@ -67,6 +67,7 @@ _complete_sc() {
   return 0
 }
 complete -F _complete_sc sc sc.sh
+sc mm
 
 # make sure you execute this *after* asdf or other version managers are loaded
 if (( $+commands[orbctl] )); then

@@ -121,6 +121,7 @@ cask "powershell"
 brew "ripgrep"
 brew "yamllint"
 brew "mtr"
+brew "exiftool"
 
 # Cracking
 #brew "john-jumbo"
@@ -146,6 +147,9 @@ brew "hugo"
 # Fonts
 cask "font-jetbrains-mono-nerd-font"
 cask "font-caskaydia-cove-nerd-font"
+
+# Diagrams
+cask "drawio"
 
 # VS Code
 vscode "drcika.apc-extension"
