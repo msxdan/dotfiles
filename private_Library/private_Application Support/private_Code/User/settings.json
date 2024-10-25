@@ -108,7 +108,8 @@
   "files.associations": {
     ".env": "properties",
     "*.conf": "properties",
-    "*.bak": "bat"
+    "*.bak": "bat",
+    "*.sh.tmpl": "shellscript"
   },
   "[shellscript]": {
     "editor.defaultFormatter": "foxundermoon.shell-format"
