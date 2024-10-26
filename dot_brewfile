@@ -2,10 +2,12 @@ tap "cloudflare/cloudflare"
 tap "hashicorp/tap"
 tap "homebrew/bundle"
 tap "homebrew/services"
-brew "ffmpeg"
+
+cask "anydesk"
 
 # Network
 brew "tcptraceroute"
+brew "mtr"
 # IP/CIDR Calculation tool
 brew "ipcalc"
 
@@ -120,7 +122,7 @@ brew "neofetch"
 cask "powershell"
 brew "ripgrep"
 brew "yamllint"
-brew "mtr"
+brew "ffmpeg"
 brew "exiftool"
 
 # Cracking
@@ -245,3 +247,4 @@ vscode "miguelsolorio.fluent-icons"
 vscode "wholroyd.jinja"
 vscode "ybaumes.highlight-trailing-white-spaces"
 vscode "redhat.ansible"
+vscode "tamasfe.even-better-toml"
