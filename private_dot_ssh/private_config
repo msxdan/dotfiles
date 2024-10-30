@@ -3,7 +3,8 @@ Include ~/.colima/ssh_config
 Include ~/.ssh/config.d/*
 
 CanonicalizeHostname yes
-CanonicalDomains internal.marvincloud.io marvincloud.io
+CanonicalDomains marvincloud.io
+EnableEscapeCommandline yes
 
 Host *
   IgnoreUnknown UseKeyChain

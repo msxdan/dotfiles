@@ -144,5 +144,6 @@
 
   // The indent color when there is a mix between spaces and tabs.
   // To be disabled this coloring set this to an empty string.
-  "indentRainbow.tabmixColor": "rgba(128,32,96,0.6)"
+  "indentRainbow.tabmixColor": "rgba(128,32,96,0.6)",
+  "excalidraw.theme": "dark"
 }
