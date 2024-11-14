@@ -8,6 +8,7 @@ cask "anydesk"
 # Network
 brew "tcptraceroute"
 brew "mtr"
+brew "nmap"
 # IP/CIDR Calculation tool
 brew "ipcalc"
 
@@ -127,7 +128,7 @@ brew "exiftool"
 
 # Cracking
 #brew "john-jumbo"
-#brew "hashcat"
+brew "hashcat"
 
 # Python
 brew "pyenv-virtualenv"
@@ -152,6 +153,9 @@ cask "font-caskaydia-cove-nerd-font"
 
 # Diagrams
 cask "drawio"
+
+# Video
+cask "vlc"
 
 # VS Code
 vscode "drcika.apc-extension"
