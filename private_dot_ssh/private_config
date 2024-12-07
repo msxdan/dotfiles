@@ -31,5 +31,9 @@ Host argos
   HostName 192.168.96.14
   User msxuser
 
+Host iris
+  HostName 192.168.96.75
+  User satoshi
+
 Host *.marvincloud.io
   User root

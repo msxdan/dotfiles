@@ -9,6 +9,8 @@ cask "anydesk"
 brew "tcptraceroute"
 brew "mtr"
 brew "nmap"
+#brew "wireshark"
+cask "wireshark"
 # IP/CIDR Calculation tool
 brew "ipcalc"
 
@@ -16,6 +18,8 @@ brew "ipcalc"
 brew "k6"
 
 # Cloud
+tap "azure/azd"
+brew "azd"
 brew "azure-cli"
 brew "awscli"
 cask "google-cloud-sdk"
