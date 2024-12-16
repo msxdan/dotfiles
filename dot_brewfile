@@ -97,6 +97,7 @@ cask "stats"
 ## Others
 cask "whatsapp"
 brew "cowsay"
+cask "raspberry-pi-imager"
 
 # Terminal
 cask "iterm2"
