@@ -3,6 +3,7 @@ eval "$(zoxide init zsh)"
 
 source "$(brew --prefix)/share/google-cloud-sdk/path.zsh.inc"
 source "$(brew --prefix)/share/google-cloud-sdk/completion.zsh.inc"
+source <(docker completion zsh)
 source <(kubectl completion zsh) && complete -F __start_kubectl k
 #source <(pulumi gen-completion zsh)
 source <(helm completion zsh)
