@@ -4,6 +4,7 @@ tap "homebrew/bundle"
 tap "homebrew/services"
 
 cask "anydesk"
+cask "raspberry-pi-imager"
 
 # Network
 brew "tcptraceroute"
@@ -49,6 +50,8 @@ brew "lazygit"
 cask "rider"
 brew "neovim"
 brew "go"
+#cask "bruno"
+cask "hoppscotch"
 
 ## Frontend
 brew "volta"
@@ -97,7 +100,6 @@ cask "stats"
 ## Others
 cask "whatsapp"
 brew "cowsay"
-cask "raspberry-pi-imager"
 
 # Terminal
 cask "iterm2"
