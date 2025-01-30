@@ -59,7 +59,7 @@ brew "volta"
 ## Databases
 brew "pgcli"
 cask "datagrip"
-cask "redisinsight"
+cask "redis-insight"
 
 # Virtualization
 brew "qemu"
@@ -103,8 +103,8 @@ brew "cowsay"
 
 # Terminal
 cask "iterm2"
-cask "warp"
-cask "alacritty"
+#cask "warp"
+#cask "alacritty"
 cask "kitty"
 
 ## Multiplexor
@@ -259,3 +259,6 @@ vscode "ybaumes.highlight-trailing-white-spaces"
 vscode "redhat.ansible"
 vscode "tamasfe.even-better-toml"
 vscode "pomdtr.excalidraw-editor"
+vscode "ms-vscode.cpptools-extension-pack"
+vscode "vadimcn.vscode-lldb"
+vscode "ms-vscode.makefile-tools"

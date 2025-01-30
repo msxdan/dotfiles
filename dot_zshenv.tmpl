@@ -19,17 +19,19 @@ for kubeconfig in ~/.kube/config.d/*; do
 done
 export KUBECONFIG
 
+export HELM_REGISTRY_CONFIG="${HOME}/.docker/config.json"
+
 for env in ~/.private/.env.d/*; do
   source $env
 done
 
 if [[ -r ~/.aliasrc ]]; then
-    . ~/.aliasrc
+  . ~/.aliasrc
 fi
 
 export VOLTA_HOME="$HOME/.volta"
 export PATH="$VOLTA_HOME/bin:$PATH"
-export VOLTA_FEATURE_PNPM=1;
+export VOLTA_FEATURE_PNPM=1
 # Lucera blog contentfull
 export BLOG_PROVIDER=local
 

@@ -35,5 +35,13 @@ Host iris
   HostName 192.168.96.75
   User satoshi
 
+Host enigma
+  HostName 192.168.96.76
+  User enigma
+
+Host enigma-02
+  HostName 192.168.96.77
+  User enigma
+
 Host *.marvincloud.io
   User root
