@@ -45,12 +45,12 @@ if [ ! -f ~/.docker/cli-plugins/docker-scout ]; then
 fi
 
 pipx install --include-deps ansible
-pipx install shcheck
+pipx install shcheck # check http headers
 pipx install keepercommander
 pipx install molecule
 pipx inject molecule "molecule-plugins"
 
-tenv tf install --arch=amd64 1.10.2
+tenv tf install --arch=amd64 1.10.5
 tenv tg install 0.66.7
 tenv tofu install 1.9.0-rc1
 #vagrant plugin install vagrant-vmware-desktop

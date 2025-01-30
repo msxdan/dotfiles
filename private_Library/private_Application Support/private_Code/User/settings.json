@@ -118,8 +118,19 @@
     "editor.formatOnType": true
   },
   "[terraform]": {
-    "editor.defaultFormatter": "hashicorp.terraform"
+    "editor.defaultFormatter": "hashicorp.terraform",
+    "editor.formatOnSave": true,
+    "editor.formatOnSaveMode": "file"
   },
+  "[terraform-vars]": {
+    "editor.defaultFormatter": "hashicorp.terraform",
+    "editor.formatOnSave": true,
+    "editor.formatOnSaveMode": "file"
+  },
+  "terraform.codelens.referenceCount": true,
+  "terraform.experimentalFeatures.validateOnSave": true,
+  "terraform.experimentalFeatures.prefillRequiredFields": true,
+
   "[nginx]": {
     "editor.defaultFormatter": "ahmadalli.vscode-nginx-conf"
   },
@@ -145,5 +156,10 @@
   // The indent color when there is a mix between spaces and tabs.
   // To be disabled this coloring set this to an empty string.
   "indentRainbow.tabmixColor": "rgba(128,32,96,0.6)",
-  "excalidraw.theme": "dark"
+  "excalidraw.theme": "dark",
+  "cmake.pinnedCommands": [
+    "workbench.action.tasks.configureTaskRunner",
+    "workbench.action.tasks.runTask"
+  ],
+  "liveServer.settings.donotShowInfoMsg": true
 }
