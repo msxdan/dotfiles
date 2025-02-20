@@ -10,6 +10,7 @@ cask "raspberry-pi-imager"
 brew "tcptraceroute"
 brew "mtr"
 brew "nmap"
+brew "ipinfo-cli"
 #brew "wireshark"
 cask "wireshark"
 # IP/CIDR Calculation tool
@@ -58,6 +59,7 @@ brew "volta"
 
 ## Databases
 brew "pgcli"
+brew "pgbadger"
 cask "datagrip"
 cask "redis-insight"
 
@@ -69,8 +71,6 @@ brew "docker-buildx"
 brew "docker-compose"
 brew "docker-credential-helper"
 brew "dive"
-# Enable metrics server on Orbstack
-# k apply -f https://github.com/kubernetes-sigs/metrics-server/releases/download/v0.7.1/components.yaml
 cask "orbstack"
 
 # k8s
@@ -78,9 +78,14 @@ brew "kubernetes-cli"
 # kubectx is a tool to switch between contexts (clusters) on kubectl faster.
 # kubens is a tool to switch between Kubernetes namespaces (and configure them for kubectl) easily.
 brew "kubectx"
+brew "cri-tools"
+brew "kind"
 brew "k9s"
 brew "helm"
 brew "helmfile"
+
+# Security
+brew "snyk-cli"
 
 # Teams
 cask "slack"
@@ -234,7 +239,7 @@ vscode "ms-vscode-remote.remote-ssh"
 vscode "ms-vscode-remote.remote-ssh-edit"
 vscode "ms-vscode-remote.remote-wsl"
 vscode "ms-vscode-remote.vscode-remote-extensionpack"
-vscode "ms-vscode.azure-account"
+#vscode "ms-vscode.azure-account" # Deprecated
 vscode "ms-vscode.azurecli"
 vscode "ms-vscode.live-server"
 vscode "ms-vscode.powershell"
