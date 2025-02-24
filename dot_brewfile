@@ -105,12 +105,14 @@ cask "stats"
 ## Others
 cask "whatsapp"
 brew "cowsay"
+cask "focus"
 
 # Terminal
-cask "iterm2"
+#cask "iterm2"
 #cask "warp"
 #cask "alacritty"
 cask "kitty"
+#cask "ghostty"
 
 ## Multiplexor
 brew "tmux"
@@ -124,6 +126,7 @@ brew "bat"
 brew "lsd"
 brew "fzf"
 brew "htop"
+brew "btop"
 brew "yazi"
 brew "watch"
 brew "gnupg"
@@ -137,6 +140,7 @@ brew "ripgrep"
 brew "yamllint"
 brew "ffmpeg"
 brew "exiftool"
+brew "grc"
 
 # Cracking
 #brew "john-jumbo"
