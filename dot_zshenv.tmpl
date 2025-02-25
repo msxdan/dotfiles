@@ -13,6 +13,14 @@ export TENV_AUTO_INSTALL=true
 # Use terraform as default for terragrunt
 export TERRAGRUNT_TFPATH="terraform"
 
+# Create kubeconfig symlink for existing kubeconfigs in ~/.private/.kube/config.d
+for private_kube_config in ~/.private/.kube/config.d/*; do
+  KUBE_FILE="$HOME/.kube/config.d/$(basename $private_kube_config)"
+  if [ ! -L ${KUBE_FILE} ]; then
+    ln -s $private_kube_config ${KUBE_FILE}
+  fi
+done
+
 KUBECONFIG=${HOME}/.kube/config
 for kubeconfig in ~/.kube/config.d/*; do
   KUBECONFIG=${KUBECONFIG}:$kubeconfig
