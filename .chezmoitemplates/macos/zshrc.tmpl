@@ -136,6 +136,21 @@ zstyle ':fzf-tab:complete:lsd:*' fzf-preview 'ls --color always $realpath'
 # switch group using `<` and `>`
 zstyle ':fzf-tab:*' switch-group '<' '>'
 
+# SSH host completion
+h=()
+for ssh_config in $HOME/.ssh/config $HOME/.ssh/config.d/*; do
+  if [[ -r $ssh_config ]]; then
+    h=($h ${${${(@M)${(f)"$(cat $ssh_config)"}:#Host *}#Host }:#*[*?]*})
+  fi
+done
+#if [[ -r $HOME/.ssh/known_hosts ]]; then
+#  h=($h ${${${(f)"$(cat ~/.ssh/known_hosts{,2} || true)"}%%\ *}%%,*}) 2>/dev/null
+#fi
+if [[ $#h -gt 0 ]]; then
+  zstyle ':completion:*:ssh:*' hosts $h
+  zstyle ':completion:*:slogin:*' hosts $h
+fi
+
 bindkey -e
 bindkey "^[[3~" delete-char                    # Key Del
 bindkey '^[[3;3~' kill-word                    # Key Alt + Del  (delete word)
