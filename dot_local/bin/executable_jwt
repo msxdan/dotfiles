@@ -1,0 +1,8 @@
+#!/bin/bash
+
+if ! command -v jq &>/dev/null; then
+  echo "jq is required to run this script, try to install it with 'brew install jq'"
+  exit 1
+fi
+
+jq -R 'split(".") | select(length > 0) | .[0],.[1] | @base64d | fromjson' <<<"$1"
