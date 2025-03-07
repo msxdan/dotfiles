@@ -52,7 +52,8 @@ cask "rider"
 brew "neovim"
 brew "go"
 #cask "bruno"
-cask "hoppscotch"
+#cask "hoppscotch"
+cask "postman"
 
 ## Frontend
 brew "volta"
@@ -72,6 +73,8 @@ brew "docker-compose"
 brew "docker-credential-helper"
 brew "dive"
 cask "orbstack"
+#cask "genymotion"
+#cask "bluestacks"
 
 # k8s
 brew "kubernetes-cli"
@@ -86,6 +89,7 @@ brew "helmfile"
 
 # Security
 brew "snyk-cli"
+brew "trivy"
 
 # Teams
 cask "slack"
@@ -122,6 +126,7 @@ brew "starship"
 
 ## Others
 brew "jq"
+brew "yq"
 brew "bat"
 brew "lsd"
 brew "fzf"
