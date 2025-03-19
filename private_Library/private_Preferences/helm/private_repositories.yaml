@@ -28,3 +28,12 @@ repositories:
   password: ""
   url: https://charts.bitnami.com/bitnami
   username: ""
+- caFile: ""
+  certFile: ""
+  insecure_skip_tls_verify: false
+  keyFile: ""
+  name: bitwarden
+  pass_credentials_all: false
+  password: ""
+  url: https://charts.bitwarden.com/
+  username: ""

@@ -86,6 +86,7 @@ brew "kind"
 brew "k9s"
 brew "helm"
 brew "helmfile"
+brew "argocd"
 
 # Security
 brew "snyk-cli"
