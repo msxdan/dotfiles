@@ -7,6 +7,9 @@ export PATH="$PATH:{{ .chezmoi.homeDir }}/.local/bin"
 # chezmoi
 export PATH=$PATH:~/bin
 
+# LM Studio
+export PATH="$PATH:{{ .chezmoi.homeDir }}/.lmstudio/bin"
+
 export HOMEBREW_BUNDLE_FILE="{{ .chezmoi.homeDir }}/.brewfile"
 
 export TENV_AUTO_INSTALL=true

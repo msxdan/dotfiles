@@ -11,8 +11,9 @@ brew "tcptraceroute"
 brew "mtr"
 brew "nmap"
 brew "ipinfo-cli"
+brew "speedtest-cli"
 #brew "wireshark"
-cask "wireshark"
+cask "wireshark-app"
 # IP/CIDR Calculation tool
 brew "ipcalc"
 
@@ -37,7 +38,7 @@ brew "cloudflare/cloudflare/cf-terraforming"
 brew "infracost"
 #brew "pulumi"
 cask "vagrant"
-cask "vagrant-vmware-utility"
+#cask "vagrant-vmware-utility"
 brew "ansible-lint"
 
 # Development
@@ -50,7 +51,8 @@ cask "fork"
 brew "lazygit"
 cask "rider"
 brew "neovim"
-brew "go"
+#brew "go"
+brew "goenv"
 #cask "bruno"
 #cask "hoppscotch"
 cask "postman"
@@ -162,7 +164,7 @@ brew "sops"
 
 # VPN Services
 cask "perimeter81"
-cask "tailscale"
+cask "tailscale-app"
 brew "tailscale", link: false
 
 # Note taking
@@ -178,6 +180,9 @@ cask "drawio"
 
 # Video
 cask "vlc"
+
+# AI
+cask "lm-studio"
 
 # VS Code
 vscode "drcika.apc-extension"
@@ -260,7 +265,7 @@ vscode "ms-vscode.vscode-typescript-next"
 #vscode "oracle.oracledevtools"
 vscode "nicolasvuillamy.vscode-groovy-lint"
 vscode "njpwerner.autodocstring"
-vscode "pflannery.vscode-versionlens"
+vscode "pflannery.vscode-versionlens" # Version Lens
 vscode "pkief.material-icon-theme"
 vscode "redhat.vscode-xml"
 vscode "redhat.vscode-yaml"

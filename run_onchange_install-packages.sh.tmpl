@@ -51,10 +51,13 @@ pipx install keepercommander
 pipx install molecule
 pipx inject molecule "molecule-plugins"
 
-tenv tf install --arch=amd64 1.10.5
+tenv tf install --arch=amd64 1.12.0
 tenv tg install 0.66.7
 tenv tofu install --arch=amd64 1.9.0
 #vagrant plugin install vagrant-vmware-desktop
+
+goenv install 1.24.4
+goenv global 1.24.4
 
 volta install node@20
 volta install pnpm@8.6.2
