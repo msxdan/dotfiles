@@ -25,7 +25,7 @@ tap "azure/azd"
 brew "azd"
 brew "azure-cli"
 brew "awscli"
-cask "google-cloud-sdk"
+cask "gcloud-cli"
 brew "azcopy"
 cask "microsoft-azure-storage-explorer"
 cask "windows-app" # replaces microsoft-remote-desktop
@@ -38,7 +38,7 @@ brew "cloudflare/cloudflare/cf-terraforming"
 brew "infracost"
 #brew "pulumi"
 cask "vagrant"
-#cask "vagrant-vmware-utility"
+cask "vagrant-vmware-utility"
 brew "ansible-lint"
 
 # Development
@@ -68,7 +68,7 @@ cask "redis-insight"
 
 # Virtualization
 brew "qemu"
-#brew "colima"
+# brew "lima"
 brew "docker"
 brew "docker-buildx"
 brew "docker-compose"
@@ -89,6 +89,7 @@ brew "k9s"
 brew "helm"
 brew "helmfile"
 brew "argocd"
+brew "kustomize"
 
 # Security
 brew "snyk-cli"
@@ -153,6 +154,8 @@ brew "grc"
 # Cracking
 #brew "john-jumbo"
 brew "hashcat"
+brew "hashid"
+brew "hydra"
 
 # Python
 brew "pyenv-virtualenv"
@@ -183,6 +186,9 @@ cask "vlc"
 
 # AI
 cask "lm-studio"
+cask "claude"
+brew "gemini-cli"
+cask "comfyui"
 
 # VS Code
 vscode "drcika.apc-extension"
@@ -282,3 +288,4 @@ vscode "pomdtr.excalidraw-editor"
 vscode "ms-vscode.cpptools-extension-pack"
 vscode "vadimcn.vscode-lldb"
 vscode "ms-vscode.makefile-tools"
+vscode "Vue.volar"
