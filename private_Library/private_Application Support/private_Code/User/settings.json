@@ -75,7 +75,7 @@
       "comments": false,
       "strings": true
     },
-    "editor.defaultFormatter": "redhat.vscode-yaml"
+    "editor.defaultFormatter": "kennylong.kubernetes-yaml-formatter"
   },
   "yaml.schemas": {
     "Kubernetes": ["kubernetes.yaml", "deployment.yaml", "service.yaml"]
@@ -97,6 +97,7 @@
   },
 
   "github.copilot.editor.enableAutoCompletions": true,
+  "github.copilot.nextEditSuggestions.enabled": true,
   "github.copilot.enable": {
     "*": true,
     "plaintext": false,
@@ -161,5 +162,6 @@
     "workbench.action.tasks.configureTaskRunner",
     "workbench.action.tasks.runTask"
   ],
-  "liveServer.settings.donotShowInfoMsg": true
+  "liveServer.settings.donotShowInfoMsg": true,
+  "ansible.lightspeed.enabled": false
 }

@@ -1,11 +1,10 @@
 {
-	"auths": {},
-	"credsStore": "osxkeychain",
-	"credHelpers": {
-		"europe-docker.pkg.dev": "gcloud"
-	},
-	"currentContext": "orbstack",
-	"cliPluginsExtraDirs": [
-		"/opt/homebrew/lib/docker/cli-plugins"
-	]
+  "auths": {
+    "ghcr.io": {}
+  },
+  "credsStore": "osxkeychain",
+  "credHelpers": {
+    "europe-docker.pkg.dev": "gcloud"
+  },
+  "cliPluginsExtraDirs": ["/opt/homebrew/lib/docker/cli-plugins"]
 }

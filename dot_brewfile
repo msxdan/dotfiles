@@ -1,7 +1,9 @@
 tap "cloudflare/cloudflare"
 tap "hashicorp/tap"
-tap "homebrew/bundle"
 tap "homebrew/services"
+tap "siderolabs/tap"
+tap "thecasualcoder/stable"
+
 
 cask "anydesk"
 cask "raspberry-pi-imager"
@@ -16,6 +18,8 @@ brew "speedtest-cli"
 cask "wireshark-app"
 # IP/CIDR Calculation tool
 brew "ipcalc"
+brew "arping"
+cask "winbox" # MikroTik RouterOS configuration utility
 
 # Load Testing
 brew "k6"
@@ -32,6 +36,7 @@ cask "windows-app" # replaces microsoft-remote-desktop
 
 # IaC
 brew "tenv" # Replaces tfenv and tofuenv
+brew "tf-summarize"
 brew "terraform-docs"
 brew "tflint"
 brew "cloudflare/cloudflare/cf-terraforming"
@@ -56,6 +61,7 @@ brew "goenv"
 #cask "bruno"
 #cask "hoppscotch"
 cask "postman"
+brew "websocat" # websocket client
 
 ## Frontend
 brew "volta"
@@ -79,7 +85,7 @@ cask "orbstack"
 #cask "bluestacks"
 
 # k8s
-brew "kubernetes-cli"
+brew "kubernetes-cli@1.32"
 # kubectx is a tool to switch between contexts (clusters) on kubectl faster.
 # kubens is a tool to switch between Kubernetes namespaces (and configure them for kubectl) easily.
 brew "kubectx"
@@ -90,6 +96,8 @@ brew "helm"
 brew "helmfile"
 brew "argocd"
 brew "kustomize"
+brew "talosctl"
+brew "cilium-cli"
 
 # Security
 brew "snyk-cli"
@@ -154,12 +162,12 @@ brew "grc"
 # Cracking
 #brew "john-jumbo"
 brew "hashcat"
-brew "hashid"
 brew "hydra"
 
 # Python
 brew "pyenv-virtualenv"
 brew "pipx"
+brew "poetry"
 
 # Encryption
 brew "age"
@@ -187,8 +195,13 @@ cask "vlc"
 # AI
 cask "lm-studio"
 cask "claude"
+cask "claude-code"
 brew "gemini-cli"
 cask "comfyui"
+
+# Android
+brew "apktool"
+brew "jadx"
 
 # VS Code
 vscode "drcika.apc-extension"
@@ -200,7 +213,7 @@ vscode "foxundermoon.shell-format"
 vscode "ahmadalli.vscode-nginx-conf"
 vscode "almenon.arepl"
 vscode "astro-build.astro-vscode"
-vscode "azure-automation.vscode-azureautomation"
+#vscode "azure-automation.vscode-azureautomation"
 vscode "bartolomesintes.mclibre-org-html-css-extension-pack"
 vscode "batisteo.vscode-django"
 vscode "bradgashler.htmltagwrap"
@@ -289,3 +302,4 @@ vscode "ms-vscode.cpptools-extension-pack"
 vscode "vadimcn.vscode-lldb"
 vscode "ms-vscode.makefile-tools"
 vscode "Vue.volar"
+vscode "kennylong.kubernetes-yaml-formatter"
