@@ -41,6 +41,8 @@ sh -c "$(curl -fsLS get.chezmoi.io)" -- init msxdan/dotfiles --apply --recurse-s
 
 Everything sensitive is stored in private repo `dotfiles_private` and secrets are encrypted with [age](https://age-encryption.org/). SSH keys, AWS credentials, database passwords - all locked away but automatically available when needed.
 
+Also SSH keys are password protected
+
 ## Postgres
 
 ### .pgpass and .pg_service.conf

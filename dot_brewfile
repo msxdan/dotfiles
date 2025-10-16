@@ -16,10 +16,10 @@ brew "ipinfo-cli"
 brew "speedtest-cli"
 #brew "wireshark"
 cask "wireshark-app"
-# IP/CIDR Calculation tool
-brew "ipcalc"
+brew "ipcalc" # IP/CIDR Calculation tool
 brew "arping"
 cask "winbox" # MikroTik RouterOS configuration utility
+brew "socat"
 
 # Load Testing
 brew "k6"
@@ -111,7 +111,7 @@ cask "rectangle"
 cask "alt-tab"
 cask "flameshot"
 cask "hiddenbar"
-cask "logi-options-plus"
+cask "logi-options+"
 cask "logitune"
 cask "maccy"
 cask "raycast"
@@ -201,7 +201,15 @@ cask "comfyui"
 
 # Android
 brew "apktool"
-brew "jadx"
+brew "jadx"   # jadx and jadx-gui
+brew "dex2jar"
+cask "jd-gui" # Requires JRE 8 https://javadl.oracle.com/webapps/download/AutoDL?BundleId=252313_68ce765258164726922591683c51982c
+cask "genymotion"
+brew "android-platform-tools"
+#cask "android-commandlinetools"
+
+# Gaming
+brew "nvidia-geforce-now"
 
 # VS Code
 vscode "drcika.apc-extension"

@@ -20,3 +20,6 @@ source ~/.orbstack/shell/init.zsh 2>/dev/null || :
 
 # opencode
 export PATH="{{ .chezmoi.homeDir }}/.opencode/bin:$PATH"
+
+# Add .NET Core SDK tools
+export PATH="$PATH:{{ .chezmoi.homeDir }}/.dotnet/tools"

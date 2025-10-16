@@ -144,18 +144,16 @@ alias p='pulumi'
 # Terraform alias
 alias tf='terraform'
 
-# Export pipx binary directory
-export PATH="$PATH:{{ .chezmoi.homeDir }}/.local/bin"
-
-
 # Load pyenv
 export PYENV_ROOT="$HOME/.pyenv"
 [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 
+# Export pipx binary directory
+export PATH="$PATH:{{ .chezmoi.homeDir }}/.local/bin"
+
 # Add dotnet to path
 export PATH="$PATH:{{ .chezmoi.homeDir }}/.dotnet"
-
 
 
 # Add commands completion for bash

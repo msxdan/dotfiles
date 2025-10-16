@@ -163,5 +163,6 @@
     "workbench.action.tasks.runTask"
   ],
   "liveServer.settings.donotShowInfoMsg": true,
-  "ansible.lightspeed.enabled": false
+  "ansible.lightspeed.enabled": false,
+  "docker.extension.enableComposeLanguageServer": false
 }
