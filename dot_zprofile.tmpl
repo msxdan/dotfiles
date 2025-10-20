@@ -6,7 +6,7 @@ export VIRTUAL_ENV_DISABLE_PROMPT=1
 eval "$(pyenv init -)"
 
 # Export pipx binary directory
-export PATH="$PATH:{{ .chezmoi.homeDir }}/.local/bin"
+export PATH="{{ .chezmoi.homeDir }}/.local/bin:$PATH"
 
 export GOENV_ROOT="$HOME/.goenv"
 export PATH="$GOENV_ROOT/bin:$PATH"
