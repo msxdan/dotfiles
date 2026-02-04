@@ -1,5 +1,6 @@
 {
 	"auths": {
+		"dhi.io": {},
 		"ghcr.io": {},
 		"registry.marvincloud.io": {}
 	},
@@ -7,6 +8,7 @@
 	"credHelpers": {
 		"europe-docker.pkg.dev": "gcloud"
 	},
+	"currentContext": "orbstack",
 	"cliPluginsExtraDirs": [
 		"/opt/homebrew/lib/docker/cli-plugins"
 	]
