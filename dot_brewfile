@@ -1,7 +1,10 @@
 tap "cloudflare/cloudflare"
 tap "hashicorp/tap"
-tap "homebrew/bundle"
 tap "homebrew/services"
+tap "siderolabs/tap"
+tap "thecasualcoder/stable"
+tap "mongodb/brew"
+
 
 cask "anydesk"
 cask "raspberry-pi-imager"
@@ -14,11 +17,14 @@ brew "ipinfo-cli"
 brew "speedtest-cli"
 #brew "wireshark"
 cask "wireshark-app"
-# IP/CIDR Calculation tool
-brew "ipcalc"
+brew "ipcalc" # IP/CIDR Calculation tool
+brew "arping"
+cask "winbox" # MikroTik RouterOS configuration utility
+brew "socat"
 
 # Load Testing
 brew "k6"
+cask "k6-studio"
 
 # Cloud
 tap "azure/azd"
@@ -32,6 +38,7 @@ cask "windows-app" # replaces microsoft-remote-desktop
 
 # IaC
 brew "tenv" # Replaces tfenv and tofuenv
+brew "tf-summarize"
 brew "terraform-docs"
 brew "tflint"
 brew "cloudflare/cloudflare/cf-terraforming"
@@ -56,6 +63,7 @@ brew "goenv"
 #cask "bruno"
 #cask "hoppscotch"
 cask "postman"
+brew "websocat" # websocket client
 
 ## Frontend
 brew "volta"
@@ -65,6 +73,8 @@ brew "pgcli"
 brew "pgbadger"
 cask "datagrip"
 cask "redis-insight"
+brew "mongosh"
+brew "mongodb-database-tools"
 
 # Virtualization
 brew "qemu"
@@ -79,7 +89,7 @@ cask "orbstack"
 #cask "bluestacks"
 
 # k8s
-brew "kubernetes-cli"
+brew "kubernetes-cli@1.32"
 # kubectx is a tool to switch between contexts (clusters) on kubectl faster.
 # kubens is a tool to switch between Kubernetes namespaces (and configure them for kubectl) easily.
 brew "kubectx"
@@ -90,6 +100,8 @@ brew "helm"
 brew "helmfile"
 brew "argocd"
 brew "kustomize"
+brew "talosctl"
+brew "cilium-cli"
 
 # Security
 brew "snyk-cli"
@@ -103,7 +115,7 @@ cask "rectangle"
 cask "alt-tab"
 cask "flameshot"
 cask "hiddenbar"
-cask "logi-options-plus"
+cask "logi-options+"
 cask "logitune"
 cask "maccy"
 cask "raycast"
@@ -150,16 +162,17 @@ brew "yamllint"
 brew "ffmpeg"
 brew "exiftool"
 brew "grc"
+brew "libpst" # For reading Outlook .pst files
 
 # Cracking
 #brew "john-jumbo"
 brew "hashcat"
-brew "hashid"
 brew "hydra"
 
 # Python
 brew "pyenv-virtualenv"
 brew "pipx"
+brew "poetry"
 
 # Encryption
 brew "age"
@@ -187,8 +200,24 @@ cask "vlc"
 # AI
 cask "lm-studio"
 cask "claude"
+cask "claude-code"
 brew "gemini-cli"
 cask "comfyui"
+
+# Android
+brew "apktool"
+brew "jadx"   # jadx and jadx-gui
+brew "dex2jar"
+cask "jd-gui" # Requires JRE 8 https://javadl.oracle.com/webapps/download/AutoDL?BundleId=252313_68ce765258164726922591683c51982c
+cask "genymotion"
+cask "android-platform-tools"
+#cask "android-commandlinetools"
+
+# Gaming
+cask "nvidia-geforce-now"
+
+# Password Manager
+brew "keeper-commander"
 
 # VS Code
 vscode "drcika.apc-extension"
@@ -200,7 +229,7 @@ vscode "foxundermoon.shell-format"
 vscode "ahmadalli.vscode-nginx-conf"
 vscode "almenon.arepl"
 vscode "astro-build.astro-vscode"
-vscode "azure-automation.vscode-azureautomation"
+#vscode "azure-automation.vscode-azureautomation"
 vscode "bartolomesintes.mclibre-org-html-css-extension-pack"
 vscode "batisteo.vscode-django"
 vscode "bradgashler.htmltagwrap"
@@ -289,3 +318,4 @@ vscode "ms-vscode.cpptools-extension-pack"
 vscode "vadimcn.vscode-lldb"
 vscode "ms-vscode.makefile-tools"
 vscode "Vue.volar"
+vscode "kennylong.kubernetes-yaml-formatter"

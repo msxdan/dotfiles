@@ -1,10 +1,12 @@
 {
-	"auths": {},
+	"auths": {
+		"ghcr.io": {},
+		"registry.marvincloud.io": {}
+	},
 	"credsStore": "osxkeychain",
 	"credHelpers": {
 		"europe-docker.pkg.dev": "gcloud"
 	},
-	"currentContext": "orbstack",
 	"cliPluginsExtraDirs": [
 		"/opt/homebrew/lib/docker/cli-plugins"
 	]

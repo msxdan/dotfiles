@@ -3,6 +3,9 @@
   "apc.stylesheet": {
     "*": "font-family: CaskaydiaCove Nerd Font;"
   },
+  "apc.parts.font.family": {
+    "sidebar": "Verdana"
+  },
 
   "window.nativeTabs": true,
   "window.customTitleBarVisibility": "never",
@@ -75,7 +78,7 @@
       "comments": false,
       "strings": true
     },
-    "editor.defaultFormatter": "redhat.vscode-yaml"
+    "editor.defaultFormatter": "kennylong.kubernetes-yaml-formatter"
   },
   "yaml.schemas": {
     "Kubernetes": ["kubernetes.yaml", "deployment.yaml", "service.yaml"]
@@ -93,10 +96,17 @@
   "[dockercompose]": {
     "editor.insertSpaces": true,
     "editor.tabSize": 2,
-    "editor.autoIndent": "advanced"
+    "editor.autoIndent": "advanced",
+    "editor.quickSuggestions": {
+      "other": true,
+      "comments": false,
+      "strings": true
+    },
+    "editor.defaultFormatter": "redhat.vscode-yaml"
   },
 
   "github.copilot.editor.enableAutoCompletions": true,
+  "github.copilot.nextEditSuggestions.enabled": true,
   "github.copilot.enable": {
     "*": true,
     "plaintext": false,
@@ -117,6 +127,8 @@
   "[python]": {
     "editor.formatOnType": true
   },
+  "python.analysis.completeFunctionParens": true,
+  "python.analysis.autoFormatStrings": true,
   "[terraform]": {
     "editor.defaultFormatter": "hashicorp.terraform",
     "editor.formatOnSave": true,
@@ -161,5 +173,10 @@
     "workbench.action.tasks.configureTaskRunner",
     "workbench.action.tasks.runTask"
   ],
-  "liveServer.settings.donotShowInfoMsg": true
+  "liveServer.settings.donotShowInfoMsg": true,
+  "ansible.lightspeed.enabled": false,
+  "docker.extension.enableComposeLanguageServer": false,
+  "[github-actions-workflow]": {
+    "editor.defaultFormatter": "redhat.vscode-yaml"
+  }
 }
