@@ -3,6 +3,9 @@
   "apc.stylesheet": {
     "*": "font-family: CaskaydiaCove Nerd Font;"
   },
+  "apc.parts.font.family": {
+    "sidebar": "Verdana"
+  },
 
   "window.nativeTabs": true,
   "window.customTitleBarVisibility": "never",
@@ -93,7 +96,13 @@
   "[dockercompose]": {
     "editor.insertSpaces": true,
     "editor.tabSize": 2,
-    "editor.autoIndent": "advanced"
+    "editor.autoIndent": "advanced",
+    "editor.quickSuggestions": {
+      "other": true,
+      "comments": false,
+      "strings": true
+    },
+    "editor.defaultFormatter": "redhat.vscode-yaml"
   },
 
   "github.copilot.editor.enableAutoCompletions": true,
@@ -118,6 +127,8 @@
   "[python]": {
     "editor.formatOnType": true
   },
+  "python.analysis.completeFunctionParens": true,
+  "python.analysis.autoFormatStrings": true,
   "[terraform]": {
     "editor.defaultFormatter": "hashicorp.terraform",
     "editor.formatOnSave": true,
@@ -164,5 +175,8 @@
   ],
   "liveServer.settings.donotShowInfoMsg": true,
   "ansible.lightspeed.enabled": false,
-  "docker.extension.enableComposeLanguageServer": false
+  "docker.extension.enableComposeLanguageServer": false,
+  "[github-actions-workflow]": {
+    "editor.defaultFormatter": "redhat.vscode-yaml"
+  }
 }

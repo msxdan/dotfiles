@@ -3,6 +3,7 @@ tap "hashicorp/tap"
 tap "homebrew/services"
 tap "siderolabs/tap"
 tap "thecasualcoder/stable"
+tap "mongodb/brew"
 
 
 cask "anydesk"
@@ -23,6 +24,7 @@ brew "socat"
 
 # Load Testing
 brew "k6"
+cask "k6-studio"
 
 # Cloud
 tap "azure/azd"
@@ -71,6 +73,8 @@ brew "pgcli"
 brew "pgbadger"
 cask "datagrip"
 cask "redis-insight"
+brew "mongosh"
+brew "mongodb-database-tools"
 
 # Virtualization
 brew "qemu"
@@ -158,6 +162,7 @@ brew "yamllint"
 brew "ffmpeg"
 brew "exiftool"
 brew "grc"
+brew "libpst" # For reading Outlook .pst files
 
 # Cracking
 #brew "john-jumbo"
@@ -205,11 +210,14 @@ brew "jadx"   # jadx and jadx-gui
 brew "dex2jar"
 cask "jd-gui" # Requires JRE 8 https://javadl.oracle.com/webapps/download/AutoDL?BundleId=252313_68ce765258164726922591683c51982c
 cask "genymotion"
-brew "android-platform-tools"
+cask "android-platform-tools"
 #cask "android-commandlinetools"
 
 # Gaming
-brew "nvidia-geforce-now"
+cask "nvidia-geforce-now"
+
+# Password Manager
+brew "keeper-commander"
 
 # VS Code
 vscode "drcika.apc-extension"

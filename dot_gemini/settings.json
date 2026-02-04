@@ -1,5 +1,13 @@
 {
-  "theme": "GitHub",
-  "selectedAuthType": "oauth-personal",
-  "sandbox": true
+  "tools": {
+    "sandbox": true
+  },
+  "security": {
+    "auth": {
+      "selectedType": "oauth-personal"
+    }
+  },
+  "ui": {
+    "theme": "GitHub"
+  }
 }
