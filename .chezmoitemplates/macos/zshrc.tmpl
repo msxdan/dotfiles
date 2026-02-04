@@ -40,19 +40,78 @@ compinit
 zinit cdreplay -q
 #fi
 
-_complete_psql() {
-    services=$(egrep -o '^\[.+\]' ~/.pg_service.conf | cut -f2 -d\[ | cut -f1 -d] | sort | sed 's/^/service=/')
-    if [[ $services ]]
-    then
-        COMPREPLY=( $( compgen -W "$services" -- ${COMP_WORDS[COMP_CWORD]}) )
-    else
-        echo
-        echo "(no services)"
-        echo -n "> ${COMP_WORDS} "
-    fi
-    return 0
+# Helper function to get PostgreSQL service names
+_pg_service_list() {
+    egrep -o '^\[.+\]' ~/.pg_service.conf 2>/dev/null | cut -f2 -d\[ | cut -f1 -d] | sort | sed 's/^/service=/'
 }
-complete -F _complete_psql psql pgcli
+
+# Generic completion function for psql-like commands
+# Usage: _complete_pg_cmd <command> <help_regex> <opt_group> <desc_group>
+_complete_pg_cmd() {
+    local cmd=$1 help_regex=$2 opt_group=$3 desc_group=$4
+    local cur="${words[CURRENT]}"
+
+    # Complete service names if current word starts with "service="
+    if [[ $cur == service=* ]]; then
+        local -a service_list service_display
+        service_list=(${(f)"$(_pg_service_list)"})
+        service_display=("${(@)service_list[@]/%/ -- PostgreSQL service name}")
+        compadd -ld service_display -a service_list
+        return 0
+    fi
+
+    local -a opt_list opt_display service_list service_display
+    local line opt desc max_len=0
+    local help_output
+    help_output=$($cmd --help 2>/dev/null)
+
+    # First pass: find max option length
+    while IFS= read -r line; do
+        if [[ $line =~ $help_regex ]]; then
+            opt="${match[$opt_group]}"
+            (( ${#opt} > max_len )) && max_len=${#opt}
+        fi
+    done <<< "$help_output"
+
+    # Include service= in max_len calculation
+    service_list=(${(f)"$(_pg_service_list)"})
+    for s in "${service_list[@]}"; do
+        (( ${#s} > max_len )) && max_len=${#s}
+    done
+
+    # Second pass: build option arrays with padding
+    while IFS= read -r line; do
+        if [[ $line =~ $help_regex ]]; then
+            opt="${match[$opt_group]}"
+            desc="${match[$desc_group]}"
+            opt_list+=("$opt")
+            opt_display+=("${(r:$max_len:)opt} -- $desc")
+        fi
+    done <<< "$help_output"
+
+    # Build service arrays with padding
+    for s in "${service_list[@]}"; do
+        service_display+=("${(r:$max_len:)s} -- PostgreSQL service name")
+    done
+
+    compadd -ld opt_display -a opt_list
+    compadd -ld service_display -a service_list
+}
+
+_complete_psql() {
+    _complete_pg_cmd psql \
+        '^  (-[a-zA-Z0-9]+|--[a-zA-Z0-9-]+)[, ]+(.*)' \
+        1 2
+}
+
+_complete_pgcli() {
+    _complete_pg_cmd pgcli \
+        '^  (-[a-zA-Z], )?(--[a-zA-Z0-9-]+)( [A-Z]+)? +(.*)' \
+        2 4
+}
+
+compdef _complete_psql psql
+compdef _complete_pgcli pgcli
 
 # Custom switch context completion
 _complete_sc() {
