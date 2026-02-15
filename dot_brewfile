@@ -71,6 +71,7 @@ brew "volta"
 ## Databases
 brew "pgcli"
 brew "pgbadger"
+brew "dlt/tap/pg_glimpse"
 cask "datagrip"
 cask "redis-insight"
 brew "mongosh"
