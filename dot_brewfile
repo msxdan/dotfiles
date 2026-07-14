@@ -1,10 +1,12 @@
-tap "cloudflare/cloudflare"
-tap "hashicorp/tap"
-tap "homebrew/services"
-tap "siderolabs/tap"
-tap "thecasualcoder/stable"
-tap "mongodb/brew"
-tap "databricks/tap"
+tap "cloudflare/cloudflare", trusted: true
+tap "hashicorp/tap", trusted: true
+tap "homebrew/services", trusted: true
+tap "siderolabs/tap", trusted: true
+
+# tap "thecasualcoder/stable", trusted: true
+
+tap "mongodb/brew", trusted: true
+tap "databricks/tap", trusted: true
 
 cask "anydesk"
 cask "raspberry-pi-imager"
