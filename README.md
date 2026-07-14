@@ -5,9 +5,10 @@ Personal dotfiles managed with [chezmoi](https://chezmoi.io).
 ## Setup
 
 ```bash
-export PATH=~//bin:$PATH
+export PATH=~/bin:$PATH
 
 # Add github SSH key to ~/.ssh/id_ed25519
+chmod 600 id_ed25519
 ssh-add --apple-use-keychain ~/.ssh/id_ed25519
 sh -c "$(curl -fsLS get.chezmoi.io)" -- init msxdan/dotfiles --apply --recurse-submodules
 ```
