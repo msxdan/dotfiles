@@ -166,7 +166,9 @@ cask "slack"
 
 cask "rectangle"
 cask "alt-tab"
-cask "flameshot"
+
+# cask "flameshot"
+
 cask "hiddenbar"
 
 # cask "logi-options+"
@@ -221,6 +223,7 @@ brew "yazi"
 brew "watch"
 brew "gnupg"
 brew "zoxide"
+brew "mise"
 
 # brew "neofetch"
 

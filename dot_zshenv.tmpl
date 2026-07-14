@@ -18,6 +18,7 @@ export TERRAGRUNT_TFPATH="terraform"
 
 export TF_CLI_ARGS_apply="-parallelism=40"
 export TF_CLI_ARGS_plan="-parallelism=40"
+export TF_CLI_CONFIG_FILE="{{ .chezmoi.homeDir }}/.terraformrc"
 
 # Create kubeconfig symlink for existing kubeconfigs in ~/.private/.kube/config.d
 for private_kube_config in ~/.private/.kube/config.d/*; do
