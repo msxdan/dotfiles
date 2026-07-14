@@ -1,15 +1,16 @@
+tap "azure/azd", trusted: true
 tap "cloudflare/cloudflare", trusted: true
 tap "hashicorp/tap", trusted: true
 tap "homebrew/services", trusted: true
 tap "siderolabs/tap", trusted: true
-
-# tap "thecasualcoder/stable", trusted: true
-
 tap "mongodb/brew", trusted: true
 tap "databricks/tap", trusted: true
 
-cask "anydesk"
-cask "raspberry-pi-imager"
+# tap "thecasualcoder/stable", trusted: true
+
+# cask "anydesk"
+
+# cask "raspberry-pi-imager"
 
 # Network
 
@@ -18,8 +19,11 @@ brew "mtr"
 brew "nmap"
 brew "ipinfo-cli"
 brew "speedtest-cli"
-#brew "wireshark"
-cask "wireshark-app"
+
+# brew "wireshark"
+
+# cask "wireshark-app"
+
 brew "ipcalc" # IP/CIDR Calculation tool
 brew "arping"
 cask "winbox" # MikroTik RouterOS configuration utility
@@ -28,15 +32,17 @@ brew "socat"
 # Load Testing
 
 brew "k6"
-cask "k6-studio"
+
+# cask "k6-studio"
 
 # Cloud
 
-tap "azure/azd"
 brew "azd"
 brew "azure-cli"
 brew "awscli"
-cask "gcloud-cli"
+
+# cask "gcloud-cli"
+
 brew "azcopy"
 cask "microsoft-azure-storage-explorer"
 cask "windows-app" # replaces microsoft-remote-desktop
@@ -47,11 +53,17 @@ brew "tenv" # Replaces tfenv and tofuenv
 brew "tf-summarize"
 brew "terraform-docs"
 brew "tflint"
-brew "cloudflare/cloudflare/cf-terraforming"
+
+# brew "cloudflare/cloudflare/cf-terraforming"
+
 brew "infracost"
-#brew "pulumi"
-cask "vagrant"
-cask "vagrant-vmware-utility"
+
+# brew "pulumi"
+
+# cask "vagrant"
+
+# cask "vagrant-vmware-utility"
+
 brew "ansible-lint"
 
 # Development
@@ -66,23 +78,31 @@ cask "fork"
 brew "lazygit"
 cask "rider"
 brew "neovim"
-#brew "go"
+
+# brew "go"
+
 brew "goenv"
-#cask "bruno"
-#cask "hoppscotch"
+
+# cask "bruno"
+
+# cask "hoppscotch"
+
 cask "postman"
 brew "websocat" # websocket client
 
 ## Frontend
 
-brew "volta"
+# brew "volta"
 
 ## Databases
 
 brew "pgcli"
 brew "pgbadger"
-brew "dlt/tap/pg_glimpse"
-cask "datagrip"
+
+# brew "dlt/tap/pg_glimpse"
+
+# cask "datagrip"
+
 cask "redis-insight"
 brew "mongosh"
 brew "mongodb-database-tools"
@@ -101,12 +121,14 @@ brew "docker-compose"
 brew "docker-credential-helper"
 brew "dive"
 cask "orbstack"
-#cask "genymotion"
-#cask "bluestacks"
+
+# cask "genymotion"
+
+# cask "bluestacks"
 
 # k8s
 
-brew "kubernetes-cli@1.32"
+# brew "kubernetes-cli@1.32"
 
 # kubectx is a tool to switch between contexts (clusters) on kubectl faster.
 
@@ -141,23 +163,31 @@ cask "hiddenbar"
 cask "logi-options+"
 cask "logitune"
 cask "maccy"
-cask "raycast"
+
+# cask "raycast"
+
 cask "spotify"
 cask "stats"
 
 ## Others
 
-cask "whatsapp"
-brew "cowsay"
-cask "focus"
+# cask "whatsapp"
+
+# brew "cowsay"
+
+# cask "focus"
 
 # Terminal
 
-#cask "iterm2"
-#cask "warp"
-#cask "alacritty"
+# cask "iterm2"
+
+# cask "warp"
+
+# cask "alacritty"
+
 cask "kitty"
-#cask "ghostty"
+
+# cask "ghostty"
 
 ## Multiplexor
 
@@ -194,7 +224,8 @@ brew "libpst" # For reading Outlook .pst files
 
 # Cracking
 
-#brew "john-jumbo"
+# brew "john-jumbo"
+
 brew "hashcat"
 brew "hydra"
 
@@ -211,15 +242,19 @@ brew "sops"
 
 # VPN Services
 
-#cask "perimeter81"
-cask "tailscale-app"
-brew "tailscale", link: false
-cask "cloudflare-warp"
+# cask "perimeter81"
+
+# cask "tailscale-app"
+
+# brew "tailscale", link: false
+
+# cask "cloudflare-warp"
 
 # Note taking
 
 cask "obsidian"
-brew "hugo"
+
+# brew "hugo"
 
 # Fonts
 
@@ -238,26 +273,37 @@ brew "imagemagick"
 
 # AI
 
-cask "lm-studio"
-cask "claude"
-cask "claude-code"
-brew "gemini-cli"
-cask "comfyui"
-brew "ollama"
+# cask "lm-studio"
+
+# cask "claude"
+
+# cask "claude-code"
+
+# brew "gemini-cli"
+
+# cask "comfyui"
+
+# brew "ollama"
 
 # Android
 
-brew "apktool"
-brew "jadx" # jadx and jadx-gui
-brew "dex2jar"
-cask "jd-gui" # Requires JRE 8 https://javadl.oracle.com/webapps/download/AutoDL?BundleId=252313_68ce765258164726922591683c51982c
-cask "genymotion"
-cask "android-platform-tools"
-#cask "android-commandlinetools"
+# brew "apktool"
+
+# brew "jadx" # jadx and jadx-gui
+
+# brew "dex2jar"
+
+# cask "jd-gui" # Requires JRE 8 https://javadl.oracle.com/webapps/download/AutoDL?BundleId=252313_68ce765258164726922591683c51982c
+
+# cask "genymotion"
+
+# cask "android-platform-tools"
+
+# cask "android-commandlinetools"
 
 # Gaming
 
-cask "nvidia-geforce-now"
+# cask "nvidia-geforce-now"
 
 # Password Manager
 
@@ -265,102 +311,200 @@ brew "keeper-commander"
 
 # VS Code
 
-vscode "drcika.apc-extension"
-vscode "oderwat.indent-rainbow"
-vscode "kestra-io.kestra"
-vscode "Catppuccin.catppuccin-vsc-icons"
-vscode "4ops.terraform"
-vscode "foxundermoon.shell-format"
-vscode "ahmadalli.vscode-nginx-conf"
-vscode "almenon.arepl"
-vscode "astro-build.astro-vscode"
-#vscode "azure-automation.vscode-azureautomation"
-vscode "bartolomesintes.mclibre-org-html-css-extension-pack"
-vscode "batisteo.vscode-django"
-vscode "bradgashler.htmltagwrap"
-vscode "compilenix.vscode-zonefile"
-vscode "compulim.compulim-vscode-closetag"
-vscode "dbaeumer.vscode-eslint"
-vscode "devsense.composer-php-vscode"
-vscode "devsense.phptools-vscode"
-vscode "devsense.profiler-php-vscode"
-vscode "donjayamanne.python-environment-manager"
-vscode "donjayamanne.python-extension-pack"
-vscode "eamodio.gitlens"
-vscode "esbenp.prettier-vscode"
-vscode "formulahendry.auto-close-tag"
-#vscode "formulahendry.auto-rename-tag"
-vscode "github.copilot"
-vscode "github.copilot-chat"
-vscode "github.github-vscode-theme"
-vscode "github.vscode-github-actions"
-vscode "github.vscode-pull-request-github"
-vscode "gitlab.gitlab-workflow"
-vscode "golang.go"
-vscode "graphql.vscode-graphql"
-vscode "graphql.vscode-graphql-execution"
-vscode "graphql.vscode-graphql-syntax"
-vscode "hashicorp.terraform"
-#vscode "marcostazi.VS-code-vagrantfile"
-vscode "HTMLHint.vscode-htmlhint"
-vscode "ionutvmi.reg"
-vscode "jeff-hykin.better-shellscript-syntax"
-vscode "kevinrose.vsc-python-indent"
-vscode "kisstkondoros.vscode-gutter-preview"
-vscode "l7ssha.tag-inserter"
-vscode "magicstack.magicpython"
-vscode "mrmlnc.vscode-csscomb"
-vscode "ms-azuretools.vscode-azureresourcegroups"
-vscode "ms-azuretools.vscode-azurestaticwebapps"
-vscode "ms-azuretools.vscode-bicep"
-vscode "ms-azuretools.vscode-docker"
-vscode "ms-dotnettools.csdevkit"
-vscode "ms-dotnettools.csharp"
-vscode "ms-dotnettools.dotnet-interactive-vscode"
-vscode "ms-dotnettools.vscode-dotnet-pack"
-vscode "ms-dotnettools.vscode-dotnet-runtime"
-vscode "ms-kubernetes-tools.vscode-kubernetes-tools"
-vscode "ms-python.debugpy"
-vscode "ms-python.isort"
-vscode "ms-python.python"
-vscode "ms-python.vscode-pylance"
-vscode "ms-toolsai.jupyter"
-vscode "ms-toolsai.jupyter-keymap"
-vscode "ms-toolsai.jupyter-renderers"
-vscode "ms-toolsai.vscode-jupyter-cell-tags"
-vscode "ms-toolsai.vscode-jupyter-slideshow"
-vscode "ms-vscode-remote.remote-containers"
-vscode "ms-vscode-remote.remote-ssh"
-vscode "ms-vscode-remote.remote-ssh-edit"
-vscode "ms-vscode-remote.remote-wsl"
-vscode "ms-vscode-remote.vscode-remote-extensionpack"
-#vscode "ms-vscode.azure-account" # Deprecated
-vscode "ms-vscode.azurecli"
-vscode "ms-vscode.live-server"
-vscode "ms-vscode.powershell"
-vscode "ms-vscode.remote-explorer"
-vscode "ms-vscode.remote-server"
-vscode "ms-vscode.vscode-typescript-next"
-#vscode "mycelo.oracle-plsql"
-#vscode "oracle.oracledevtools"
-vscode "nicolasvuillamy.vscode-groovy-lint"
-vscode "njpwerner.autodocstring"
-vscode "pflannery.vscode-versionlens" # Version Lens
-vscode "pkief.material-icon-theme"
-vscode "redhat.vscode-xml"
-vscode "redhat.vscode-yaml"
-vscode "ritwickdey.liveserver"
-vscode "visualstudioexptteam.intellicode-api-usage-examples"
-vscode "visualstudioexptteam.vscodeintellicode"
-vscode "vscode-icons-team.vscode-icons"
-vscode "miguelsolorio.fluent-icons"
-vscode "wholroyd.jinja"
-vscode "ybaumes.highlight-trailing-white-spaces"
-vscode "redhat.ansible"
-vscode "tamasfe.even-better-toml"
-vscode "pomdtr.excalidraw-editor"
-vscode "ms-vscode.cpptools-extension-pack"
-vscode "vadimcn.vscode-lldb"
-vscode "ms-vscode.makefile-tools"
-vscode "Vue.volar"
-vscode "kennylong.kubernetes-yaml-formatter"
+# vscode "drcika.apc-extension"
+
+# vscode "oderwat.indent-rainbow"
+
+# vscode "kestra-io.kestra"
+
+# vscode "Catppuccin.catppuccin-vsc-icons"
+
+# vscode "4ops.terraform"
+
+# vscode "foxundermoon.shell-format"
+
+# vscode "ahmadalli.vscode-nginx-conf"
+
+# vscode "almenon.arepl"
+
+# vscode "astro-build.astro-vscode"
+
+# #vscode "azure-automation.vscode-azureautomation"
+
+# vscode "bartolomesintes.mclibre-org-html-css-extension-pack"
+
+# vscode "batisteo.vscode-django"
+
+# vscode "bradgashler.htmltagwrap"
+
+# vscode "compilenix.vscode-zonefile"
+
+# vscode "compulim.compulim-vscode-closetag"
+
+# vscode "dbaeumer.vscode-eslint"
+
+# vscode "devsense.composer-php-vscode"
+
+# vscode "devsense.phptools-vscode"
+
+# vscode "devsense.profiler-php-vscode"
+
+# vscode "donjayamanne.python-environment-manager"
+
+# vscode "donjayamanne.python-extension-pack"
+
+# vscode "eamodio.gitlens"
+
+# vscode "esbenp.prettier-vscode"
+
+# vscode "formulahendry.auto-close-tag"
+
+# #vscode "formulahendry.auto-rename-tag"
+
+# vscode "github.copilot"
+
+# vscode "github.copilot-chat"
+
+# vscode "github.github-vscode-theme"
+
+# vscode "github.vscode-github-actions"
+
+# vscode "github.vscode-pull-request-github"
+
+# vscode "gitlab.gitlab-workflow"
+
+# vscode "golang.go"
+
+# vscode "graphql.vscode-graphql"
+
+# vscode "graphql.vscode-graphql-execution"
+
+# vscode "graphql.vscode-graphql-syntax"
+
+# vscode "hashicorp.terraform"
+
+# #vscode "marcostazi.VS-code-vagrantfile"
+
+# vscode "HTMLHint.vscode-htmlhint"
+
+# vscode "ionutvmi.reg"
+
+# vscode "jeff-hykin.better-shellscript-syntax"
+
+# vscode "kevinrose.vsc-python-indent"
+
+# vscode "kisstkondoros.vscode-gutter-preview"
+
+# vscode "l7ssha.tag-inserter"
+
+# vscode "magicstack.magicpython"
+
+# vscode "mrmlnc.vscode-csscomb"
+
+# vscode "ms-azuretools.vscode-azureresourcegroups"
+
+# vscode "ms-azuretools.vscode-azurestaticwebapps"
+
+# vscode "ms-azuretools.vscode-bicep"
+
+# vscode "ms-azuretools.vscode-docker"
+
+# vscode "ms-dotnettools.csdevkit"
+
+# vscode "ms-dotnettools.csharp"
+
+# vscode "ms-dotnettools.dotnet-interactive-vscode"
+
+# vscode "ms-dotnettools.vscode-dotnet-pack"
+
+# vscode "ms-dotnettools.vscode-dotnet-runtime"
+
+# vscode "ms-kubernetes-tools.vscode-kubernetes-tools"
+
+# vscode "ms-python.debugpy"
+
+# vscode "ms-python.isort"
+
+# vscode "ms-python.python"
+
+# vscode "ms-python.vscode-pylance"
+
+# vscode "ms-toolsai.jupyter"
+
+# vscode "ms-toolsai.jupyter-keymap"
+
+# vscode "ms-toolsai.jupyter-renderers"
+
+# vscode "ms-toolsai.vscode-jupyter-cell-tags"
+
+# vscode "ms-toolsai.vscode-jupyter-slideshow"
+
+# vscode "ms-vscode-remote.remote-containers"
+
+# vscode "ms-vscode-remote.remote-ssh"
+
+# vscode "ms-vscode-remote.remote-ssh-edit"
+
+# vscode "ms-vscode-remote.remote-wsl"
+
+# vscode "ms-vscode-remote.vscode-remote-extensionpack"
+
+# #vscode "ms-vscode.azure-account" # Deprecated
+
+# vscode "ms-vscode.azurecli"
+
+# vscode "ms-vscode.live-server"
+
+# vscode "ms-vscode.powershell"
+
+# vscode "ms-vscode.remote-explorer"
+
+# vscode "ms-vscode.remote-server"
+
+# vscode "ms-vscode.vscode-typescript-next"
+
+# #vscode "mycelo.oracle-plsql"
+
+# #vscode "oracle.oracledevtools"
+
+# vscode "nicolasvuillamy.vscode-groovy-lint"
+
+# vscode "njpwerner.autodocstring"
+
+# vscode "pflannery.vscode-versionlens" # Version Lens
+
+# vscode "pkief.material-icon-theme"
+
+# vscode "redhat.vscode-xml"
+
+# vscode "redhat.vscode-yaml"
+
+# vscode "ritwickdey.liveserver"
+
+# vscode "visualstudioexptteam.intellicode-api-usage-examples"
+
+# vscode "visualstudioexptteam.vscodeintellicode"
+
+# vscode "vscode-icons-team.vscode-icons"
+
+# vscode "miguelsolorio.fluent-icons"
+
+# vscode "wholroyd.jinja"
+
+# vscode "ybaumes.highlight-trailing-white-spaces"
+
+# vscode "redhat.ansible"
+
+# vscode "tamasfe.even-better-toml"
+
+# vscode "pomdtr.excalidraw-editor"
+
+# vscode "ms-vscode.cpptools-extension-pack"
+
+# vscode "vadimcn.vscode-lldb"
+
+# vscode "ms-vscode.makefile-tools"
+
+# vscode "Vue.volar"
+
+# vscode "kennylong.kubernetes-yaml-formatter"
