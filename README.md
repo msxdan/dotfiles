@@ -13,6 +13,13 @@ ssh-add --apple-use-keychain ~/.ssh/id_ed25519
 sh -c "$(curl -fsLS get.chezmoi.io)" -- init msxdan/dotfiles --apply --recurse-submodules
 ```
 
+## Testing
+
+```bash
+sh -c "$(curl -fsLS get.chezmoi.io)" -- init msxdan/dotfiles --apply --recurse-submodules --branch fix/macos-setup
+```
+
+
 ## What's Included
 
 **Terminal**
