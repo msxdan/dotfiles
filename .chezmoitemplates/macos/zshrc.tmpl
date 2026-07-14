@@ -1,22 +1,6 @@
 eval "$(starship init zsh)"
 eval "$(zoxide init zsh)"
-
-source "$(brew --prefix)/share/google-cloud-sdk/path.zsh.inc"
-source "$(brew --prefix)/share/google-cloud-sdk/completion.zsh.inc"
-source <(docker completion zsh) # Makes the first load a bit slower
-source <(kubectl completion zsh) && complete -F __start_kubectl k
-#source <(pulumi gen-completion zsh)
-source <(helm completion zsh)
-source <(tenv completion zsh)
-#source <(chezmoi completion zsh)
-autoload -U +X bashcompinit && bashcompinit
-complete -o nospace -C /opt/homebrew/bin/terraform terraform
-
-#source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-#source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
-# Required by zoxide
-source <(fzf --zsh)
+eval "$(mise activate zsh)"
 
 # zinit plugin, load before compinit
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
@@ -32,13 +16,33 @@ zinit light zsh-users/zsh-completions
 zinit light zsh-users/zsh-autosuggestions
 zinit light Aloxaf/fzf-tab
 
-
-#if type brew &>/dev/null; then
-#  FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
+# bashcompinit (for `complete -F`/`complete -C` style completions below)
+# and compinit (defines compdef, used by docker/kubectl/helm/tenv completion scripts)
+# must both load before any tool completion is sourced
+autoload -U +X bashcompinit && bashcompinit
 autoload -Uz compinit
 compinit
 zinit cdreplay -q
-#fi
+
+# Now it's safe to load tool completions that depend on compdef/complete
+if [[ -f "$(brew --prefix)/share/google-cloud-sdk/path.zsh.inc" ]]; then
+  source "$(brew --prefix)/share/google-cloud-sdk/path.zsh.inc"
+  # source "$(brew --prefix)/share/google-cloud-sdk/completion.zsh.inc"
+fi
+source <(docker completion zsh) # Makes the first load a bit slower
+source <(kubectl completion zsh) && complete -F __start_kubectl k
+#source <(pulumi gen-completion zsh)
+source <(helm completion zsh)
+source <(tenv completion zsh)
+#source <(chezmoi completion zsh)
+complete -o nospace -C /opt/homebrew/bin/terraform terraform
+
+#source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+#source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# Required by zoxide
+source <(fzf --zsh)
+
 
 # Helper function to get PostgreSQL service names
 _pg_service_list() {
