@@ -80,7 +80,9 @@ brew "gitleaks"
 cask "devtoys"
 cask "fork"
 brew "lazygit"
-cask "rider"
+
+# cask "rider"
+
 brew "neovim"
 
 # brew "go"
