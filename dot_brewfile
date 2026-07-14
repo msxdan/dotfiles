@@ -1,7 +1,10 @@
 tap "azure/azd", trusted: true
 tap "cloudflare/cloudflare", trusted: true
-tap "hashicorp/tap", trusted: true
-tap "homebrew/services", trusted: true
+
+# tap "hashicorp/tap", trusted: true
+
+# tap "homebrew/services", trusted: true
+
 tap "siderolabs/tap", trusted: true
 tap "mongodb/brew", trusted: true
 tap "databricks/tap", trusted: true
@@ -52,7 +55,8 @@ cask "windows-app" # replaces microsoft-remote-desktop
 brew "tenv" # Replaces tfenv and tofuenv
 brew "tf-summarize"
 brew "terraform-docs"
-brew "tflint"
+
+# brew "tflint"
 
 # brew "cloudflare/cloudflare/cf-terraforming"
 
@@ -136,7 +140,9 @@ cask "orbstack"
 
 brew "kubectx"
 brew "cri-tools"
-brew "kind"
+
+# brew "kind"
+
 brew "k9s"
 brew "helm"
 brew "helmfile"
@@ -160,8 +166,11 @@ cask "rectangle"
 cask "alt-tab"
 cask "flameshot"
 cask "hiddenbar"
-cask "logi-options+"
-cask "logitune"
+
+# cask "logi-options+"
+
+# cask "logitune"
+
 cask "maccy"
 
 # cask "raycast"
@@ -210,11 +219,15 @@ brew "yazi"
 brew "watch"
 brew "gnupg"
 brew "zoxide"
-brew "neofetch"
+
+# brew "neofetch"
+
 #brew "zsh-autosuggestions"
 #brew "zsh-completions"
 #brew "zsh-syntax-highlighting"
-cask "powershell"
+
+# cask "powershell"
+
 brew "ripgrep"
 brew "yamllint"
 brew "ffmpeg"
