@@ -81,6 +81,10 @@ cask "devtoys"
 cask "fork"
 brew "lazygit"
 
+# brew "gitbatch"
+
+brew "worktrunk"
+
 # cask "rider"
 
 brew "neovim"
@@ -128,6 +132,10 @@ brew "docker-credential-helper"
 brew "dive"
 cask "orbstack"
 
+# cask "utm"
+
+# cask "devpod"
+
 # cask "genymotion"
 
 # cask "bluestacks"
@@ -157,6 +165,7 @@ brew "cilium-cli"
 
 brew "snyk-cli"
 brew "trivy"
+brew "sslscan"
 
 # Teams
 
@@ -189,6 +198,8 @@ cask "stats"
 # brew "cowsay"
 
 # cask "focus"
+
+# cask "libreoffice"
 
 # Terminal
 
@@ -303,6 +314,8 @@ brew "imagemagick"
 
 # brew "ollama"
 
+# cask "comfy"
+
 # Android
 
 # brew "apktool"
@@ -314,6 +327,8 @@ brew "imagemagick"
 # cask "jd-gui" # Requires JRE 8 https://javadl.oracle.com/webapps/download/AutoDL?BundleId=252313_68ce765258164726922591683c51982c
 
 # cask "genymotion"
+
+# cask "android-studio"
 
 # cask "android-platform-tools"
 
