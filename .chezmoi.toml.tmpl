@@ -8,30 +8,40 @@
    NOTE: .chezmoidata/ is NOT available in this file -- the config is rendered before
    the source state is loaded -- which is why the host table is inline.
 */}}
-{{- $hostname := .chezmoi.hostname -}}
 {{- $os := .chezmoi.os -}}
+{{- $hostname := .chezmoi.hostname -}}
+{{- $hn := lower $hostname -}}
 {{- $osID := $os -}}
 {{- $idLike := "" -}}
 {{- if and (eq $os "linux") (hasKey .chezmoi "osRelease") -}}
 {{-   $osID = index .chezmoi.osRelease "id" | default $os -}}
 {{-   $idLike = index .chezmoi.osRelease "idLike" | default "" -}}
 {{- end -}}
-{{- $isArch := and (eq $os "linux") (or (eq $osID "arch") (contains "arch" $idLike)) -}}
+{{- $isArch := and (eq $os "linux") (or (eq $osID "arch") (contains "arch" $idLike) (ne (lookPath "pacman") "")) -}}
 
-{{- $isWSL := false -}}
+{{/*
+   Detect the session from what is installed rather than from the hostname. A
+   hostname is the wrong signal: it varies per machine and differs in case (a
+   CachyOS live ISO reports "CachyOS", an installed box "cachyos"), and a mismatch
+   silently demotes a workstation to a headless server.
+*/}}
+{{- $isWSL := and (eq $os "linux") (eq $hn "wsl") -}}
 {{- $isDesktop := false -}}
 {{- $desktopEnv := "" -}}
-{{- $role := "" -}}
-{{- if eq $hostname "cachyos" -}}
-{{-   $isDesktop = true -}}
-{{-   $desktopEnv = "kde" -}}
-{{-   $role = "workstation" -}}
-{{- else if eq $hostname "wsl" -}}
-{{-   $isWSL = true -}}
+{{- $role := "server" -}}
+{{- if $isWSL -}}
 {{-   $role = "wsl" -}}
 {{- else if eq $os "darwin" -}}
 {{-   $isDesktop = true -}}
 {{-   $desktopEnv = "aqua" -}}
+{{-   $role = "workstation" -}}
+{{- else if ne (lookPath "plasmashell") "" -}}
+{{-   $isDesktop = true -}}
+{{-   $desktopEnv = "kde" -}}
+{{-   $role = "workstation" -}}
+{{- else if ne (lookPath "gnome-shell") "" -}}
+{{-   $isDesktop = true -}}
+{{-   $desktopEnv = "gnome" -}}
 {{-   $role = "workstation" -}}
 {{- else -}}
 {{-   $role = promptStringOnce . "role" "Role for this machine (workstation/server)" "server" -}}

@@ -117,6 +117,8 @@ packages:
         - kdeconnect
         - krdp
         - kwalletmanager
+        # Without an askpass, GUI-initiated git/ssh fails with "ssh-askpass: No such file"
+        - ksshaskpass
         - ttf-jetbrains-mono-nerd
         - ttf-cascadia-code-nerd
     aur:

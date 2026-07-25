@@ -38,6 +38,16 @@ fi
 #!/bin/bash
 set -euo pipefail
 
+# A live ISO runs from a read-only squashfs with a small tmpfs overlay. A full -Syu
+# would replace systemd and the kernel underneath the running session, and the
+# package install afterwards would exhaust the overlay -- both hang or kill the
+# session. Fail fast with an explanation instead.
+if [ -d /run/archiso ]; then
+    echo "ERROR: this is an Arch live ISO (/run/archiso exists)." >&2
+    echo "Install CachyOS to disk and boot the installed system before applying." >&2
+    exit 1
+fi
+
 # Arch does not support partial upgrades: refresh and upgrade fully before
 # installing anything, otherwise later -S calls can pull mismatched deps.
 sudo pacman -Syu --noconfirm

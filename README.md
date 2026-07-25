@@ -13,10 +13,32 @@ sh -c "$(curl -fsLS get.chezmoi.io)" -- init msxdan/dotfiles --apply --recurse-s
 
 ### CachyOS / Arch
 
+Must be an **installed** system. Applying on a live ISO is refused: the bootstrap
+does a full `pacman -Syu` plus ~110 packages, which on a read-only squashfs with a
+tmpfs overlay replaces the running kernel/systemd and exhausts the overlay.
+
+The private submodule (`dot_private`) is cloned over SSH, but the SSH keys live
+*inside* it — so a brand-new machine has no way to authenticate. Break the cycle by
+authenticating to GitHub over HTTPS first:
+
 ```bash
-sudo pacman -S --needed chezmoi git age
+sudo pacman -S --needed chezmoi git age github-cli
+
+gh auth login          # device/browser flow, no SSH key needed
+gh auth setup-git      # installs the git credential helper
+git config --global url."https://github.com/".insteadOf "git@github.com:"
+
 chezmoi init msxdan/dotfiles --apply --recurse-submodules
 ```
+
+Once `~/.private/.ssh/keys` exists and the keys are in the agent, drop the rewrite:
+
+```bash
+git config --global --unset url."https://github.com/".insteadOf
+```
+
+`--recurse-submodules` is not optional: several templates `include` files from
+`dot_private`, so without it `chezmoi apply` fails to render.
 
 The bootstrap script does a full `pacman -Syu`, installs `paru` if missing, and sets
 zsh as the login shell. `chezmoi apply` then installs everything listed in
@@ -26,6 +48,23 @@ zsh as the login shell. `chezmoi apply` then installs everything listed in
 > `~/.config/chezmoi/chezmoi.toml` at init time. A machine initialised before those
 > facts existed must re-run `chezmoi init` once so the config picks them up —
 > otherwise every OS branch silently evaluates to false.
+
+> **Testing a branch:** `chezmoi init --branch <name>` is **silently ignored** when
+> `~/.local/share/chezmoi` already exists — it keeps whatever branch is checked out
+> and exits 0. To actually switch, either wipe and re-init:
+>
+> ```bash
+> rm -rf ~/.local/share/chezmoi ~/.config/chezmoi
+> chezmoi init msxdan/dotfiles --branch <name> --apply --recurse-submodules
+> ```
+>
+> or switch the existing clone in place:
+>
+> ```bash
+> chezmoi git -- fetch origin <name>
+> chezmoi git -- checkout <name>
+> chezmoi init && chezmoi apply
+> ```
 
 ## Multi-host layout
 
