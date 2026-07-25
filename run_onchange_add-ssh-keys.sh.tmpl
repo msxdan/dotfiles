@@ -15,6 +15,11 @@ ssh-add --apple-use-keychain $(find ~/.private/.ssh/keys -type f | grep -E '.*_e
 export SSH_AUTH_SOCK="${XDG_RUNTIME_DIR:-/run/user/$(id -u)}/ssh-agent.socket"
 systemctl --user enable --now ssh-agent.service
 
+# chezmoi inherits the environment of the shell that launched it, so ~/.zshenv has
+# almost certainly not been re-sourced since ksshaskpass was installed. Set the
+# prompter up here too, or ssh-add below fails instead of asking.
+{{ template "linux/ssh-askpass.tmpl" . }}
+
 if [ -d ~/.private/.ssh/keys ]; then
   loaded_fingerprints="$(ssh-add -l 2>/dev/null || true)"
   find ~/.private/.ssh/keys -type f \( -name '*_ed25519' -o -name '*_rsa' \) -print0 |

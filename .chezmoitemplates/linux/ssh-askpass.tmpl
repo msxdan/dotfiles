@@ -1,0 +1,22 @@
+{{/*
+   Shared askpass detection, in POSIX syntax so it can be pulled into both ~/.zshenv
+   and the bash run_ scripts.
+
+   ssh needs a prompter whenever it has no controlling terminal, which is the case
+   any time git or ssh-add is driven by another process. Without one it fails with
+   "ssh_askpass: exec(...): No such file or directory" instead of asking. Exporting
+   this from ~/.zshenv alone is not enough: a chezmoi run inherits the environment of
+   the shell that launched it, so any script that shells out to ssh has to set it up
+   for itself.
+
+   SSH_ASKPASS_REQUIRE is deliberately left unset -- ssh then prompts on the terminal
+   when there is one, and only falls back to the dialog when there isn't.
+*/}}
+if [ -z "${SSH_ASKPASS:-}" ]; then
+  for askpass in /usr/bin/ksshaskpass /usr/lib/ssh/ssh-askpass; do
+    if [ -x "$askpass" ]; then
+      export SSH_ASKPASS="$askpass"
+      break
+    fi
+  done
+fi
