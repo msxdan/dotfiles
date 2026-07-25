@@ -1,0 +1,23 @@
+{{ if .isKDE -}}
+#!/bin/bash
+set -euo pipefail
+
+# krdp_override" hash: {{ include "dot_config/systemd/user/app-org.kde.krdpserver.service.d/override.conf" | sha256sum }}
+
+# Skip cleanly when applying from a TTY or a machine where Plasma isn't installed
+# yet -- kwriteconfig6 and qdbus6 both need the KDE tooling present.
+if ! command -v kwriteconfig6 &>/dev/null; then
+  echo "kwriteconfig6 not found, skipping KDE configuration"
+  exit 0
+fi
+
+# Switch desktops independently per screen, rather than one shared set of
+# virtual desktops across all monitors.
+kwriteconfig6 --file kwinrc --group Windows --key PerOutputVirtualDesktops true
+
+# Needs a live session bus, so don't fail the whole apply if there isn't one.
+qdbus6 org.kde.KWin /KWin reconfigure || echo "KWin not running, changes apply at next login"
+
+# Pick up the KRDP drop-in that lets the server keep CAP_NET_BIND_SERVICE.
+systemctl --user daemon-reload || true
+{{ end -}}

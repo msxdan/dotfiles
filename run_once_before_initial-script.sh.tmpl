@@ -1,4 +1,4 @@
-{{ if (and (eq .chezmoi.os "linux") (eq .chezmoi.hostname "lucera-wsl")) -}}
+{{ if .isWSL -}}
 #!/bin/bash
 
 # Install linuxbrew
@@ -32,6 +32,32 @@ Signed-by: /etc/apt/keyrings/microsoft.gpg" | sudo tee /etc/apt/sources.list.d/a
 if [ ! -z /etc/apt/sources.list.d/ngrok.list ]; then
     curl -s https://ngrok-agent.s3.amazonaws.com/ngrok.asc | sudo tee /etc/apt/trusted.gpg.d/ngrok.asc >/dev/null \
 	    && echo "deb https://ngrok-agent.s3.amazonaws.com buster main" | sudo tee /etc/apt/sources.list.d/ngrok.list
+fi
+
+{{ else if .isArch -}}
+#!/bin/bash
+set -euo pipefail
+
+# Arch does not support partial upgrades: refresh and upgrade fully before
+# installing anything, otherwise later -S calls can pull mismatched deps.
+sudo pacman -Syu --noconfirm
+
+# Toolchain needed to build AUR packages and to run the rest of this repo.
+sudo pacman -S --needed --noconfirm base-devel git zsh openssh age
+
+# CachyOS ships paru preinstalled, but a plain Arch or minimal VM image will not.
+if ! command -v {{ .aurHelper }} &> /dev/null; then
+    build_dir="$(mktemp -d)"
+    git clone --depth 1 "https://aur.archlinux.org/{{ .aurHelper }}-bin.git" "${build_dir}/{{ .aurHelper }}-bin"
+    (cd "${build_dir}/{{ .aurHelper }}-bin" && makepkg -si --noconfirm)
+    rm -rf "${build_dir}"
+fi
+
+# Make zsh the login shell (chsh prompts for the account password).
+zsh_path="$(command -v zsh)"
+if [ "$(getent passwd "$USER" | cut -d: -f7)" != "${zsh_path}" ]; then
+    echo "Setting ${zsh_path} as the login shell for ${USER}"
+    chsh -s "${zsh_path}" "$USER"
 fi
 
 {{ else if eq .chezmoi.os "darwin" -}}

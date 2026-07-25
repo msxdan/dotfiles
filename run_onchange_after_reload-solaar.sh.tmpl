@@ -1,0 +1,26 @@
+{{ if and (eq .chezmoi.os "linux") .isDesktop -}}
+#!/bin/bash
+set -euo pipefail
+
+# Solaar only reads rules.yaml at startup, so the daemon has to be restarted
+# whenever these change.
+# solaar_rules" hash: {{ include "dot_config/solaar/rules.yaml" | sha256sum }}
+# solaar_config" hash: {{ include "dot_config/solaar/config.yaml" | sha256sum }}
+
+if ! command -v solaar &>/dev/null; then
+  echo "solaar not installed yet, skipping reload"
+  exit 0
+fi
+
+if ! pgrep -x solaar &>/dev/null; then
+  echo "solaar not running, nothing to reload"
+  exit 0
+fi
+
+echo "Restarting solaar to pick up the new rules"
+pkill -x solaar || true
+# Give the daemon time to drop its device claims before reclaiming them.
+sleep 2
+nohup solaar --window=hide >/dev/null 2>&1 &
+disown
+{{ end -}}

@@ -1,0 +1,115 @@
+- 1.1.20
+- _NAME: PRO X SE
+  _absent: [hi-res-scroll, lowres-scroll-mode, hires-smooth-invert, hires-smooth-resolution, hires-scroll-mode, scroll-ratchet, scroll-ratchet-torque, smart-shift,
+    thumb-scroll-invert, thumb-scroll-mode, onboard_profiles, report_rate, report_rate_extended, pointer_speed, dpi, dpi_extended, speed-change, backlight,
+    backlight_level, backlight_duration_hands_out, backlight_duration_hands_in, backlight_duration_powered, backlight-timed, led_control, led_zone_, rgb_control,
+    rgb_zone_, per-key-lighting, brightness_control, rgb_idle_effect, rgb_idle_timeout, rgb_sleep_timeout, rgb_startup_animation, rgb_shutdown_animation,
+    fn-swap, reprogrammable-keys, persistent-remappable-keys, divert-keys, disable-keyboard-keys, force-sensing, crown-smooth, divert-crown, divert-gkeys,
+    m-key-leds, mr-key-led, multiplatform, change-host, gesture2-gestures, gesture2-divert, gesture2-params, analog-button-tuning, haptic-level, haptic-play,
+    adc_power_management, headset-eco-mode, headset-do-not-disturb, headset-mic-mute, headset-mic-snr, headset-ai-nr, headset-ai-nr-level, headset-sidetone,
+    headset-mic-gain, headset-mix-balance, headset-auto-sleep, headset-onboard-eq, headset-eq-active-preset, headset-advanced-eq, headset_led_control, headset-onboard-effect,
+    headset_per_zone_lighting, headset-signature-startup, headset-signature-shutdown, headset-signature-passive, logivoice-nr-state, logivoice-ng-state,
+    logivoice-comp-state, logivoice-deesser-state, logivoice-depopper-state, logivoice-limiter-state, logivoice-hpf-state]
+  _modelId: 000000000AAA
+  _sensitive: {hires-scroll-mode: ignore, hires-smooth-invert: ignore, hires-smooth-resolution: ignore}
+  _unitId: FFFFFFFF
+  equalizer: {0: 0, 1: 0, 2: 0, 3: 0, 4: 0}
+  sidetone: 26
+- _NAME: MX Master 3S For Mac
+  _absent: [hi-res-scroll, lowres-scroll-mode, scroll-ratchet-torque, onboard_profiles, report_rate, report_rate_extended, pointer_speed, dpi_extended,
+    speed-change, backlight, backlight_level, backlight_duration_hands_out, backlight_duration_hands_in, backlight_duration_powered, backlight-timed, led_control,
+    led_zone_, rgb_control, rgb_zone_, per-key-lighting, brightness_control, rgb_idle_effect, rgb_idle_timeout, rgb_sleep_timeout, rgb_startup_animation,
+    rgb_shutdown_animation, fn-swap, persistent-remappable-keys, disable-keyboard-keys, force-sensing, crown-smooth, divert-crown, divert-gkeys, m-key-leds,
+    mr-key-led, multiplatform, gesture2-gestures, gesture2-divert, gesture2-params, analog-button-tuning, haptic-level, haptic-play, sidetone, equalizer,
+    adc_power_management, headset-eco-mode, headset-do-not-disturb, headset-mic-mute, headset-mic-snr, headset-ai-nr, headset-ai-nr-level, headset-sidetone,
+    headset-mic-gain, headset-mix-balance, headset-auto-sleep, headset-onboard-eq, headset-eq-active-preset, headset-advanced-eq, headset_led_control, headset-onboard-effect,
+    headset_per_zone_lighting, headset-signature-startup, headset-signature-shutdown, headset-signature-passive, logivoice-nr-state, logivoice-ng-state,
+    logivoice-comp-state, logivoice-deesser-state, logivoice-depopper-state, logivoice-limiter-state, logivoice-hpf-state]
+  _battery: 4100
+  _config_cookie: [28, 209]
+  _modelId: B03400000000
+  _sensitive: {hires-scroll-mode: ignore, hires-smooth-invert: ignore, hires-smooth-resolution: ignore}
+  _unitId: 64F7B583
+  change-host: null
+  divert-keys: {82: 0, 83: 0, 86: 0, 195: 2, 196: 0}
+  dpi: 1000
+  hires-scroll-mode: false
+  hires-smooth-invert: false
+  hires-smooth-resolution: true
+  reprogrammable-keys: {80: 80, 81: 81, 82: 82, 83: 83, 86: 86, 195: 195, 196: 196}
+  scroll-ratchet: 2
+  smart-shift: 10
+  thumb-scroll-invert: false
+  thumb-scroll-mode: false
+- _NAME: MX Keys for Mac
+  _absent: [hi-res-scroll, lowres-scroll-mode, hires-smooth-invert, hires-smooth-resolution, hires-scroll-mode, scroll-ratchet, scroll-ratchet-torque, smart-shift,
+    thumb-scroll-invert, thumb-scroll-mode, onboard_profiles, report_rate, report_rate_extended, pointer_speed, dpi, dpi_extended, speed-change, backlight-timed,
+    led_control, led_zone_, rgb_control, rgb_zone_, per-key-lighting, brightness_control, rgb_idle_effect, rgb_idle_timeout, rgb_sleep_timeout, rgb_startup_animation,
+    rgb_shutdown_animation, persistent-remappable-keys, force-sensing, crown-smooth, divert-crown, divert-gkeys, m-key-leds, mr-key-led, gesture2-gestures,
+    gesture2-divert, gesture2-params, analog-button-tuning, haptic-level, haptic-play, sidetone, equalizer, adc_power_management, headset-eco-mode, headset-do-not-disturb,
+    headset-mic-mute, headset-mic-snr, headset-ai-nr, headset-ai-nr-level, headset-sidetone, headset-mic-gain, headset-mix-balance, headset-auto-sleep,
+    headset-onboard-eq, headset-eq-active-preset, headset-advanced-eq, headset_led_control, headset-onboard-effect, headset_per_zone_lighting, headset-signature-startup,
+    headset-signature-shutdown, headset-signature-passive, logivoice-nr-state, logivoice-ng-state, logivoice-comp-state, logivoice-deesser-state, logivoice-depopper-state,
+    logivoice-limiter-state, logivoice-hpf-state, backlight_level, backlight_duration_hands_out, backlight_duration_hands_in, backlight_duration_powered,
+    reprogrammable-keys]
+  _battery: 4096
+  _config_cookie: [28, 208]
+  _modelId: B36140920000
+  _sensitive: {hires-scroll-mode: ignore, hires-smooth-invert: ignore, hires-smooth-resolution: ignore}
+  _unitId: 208A123B
+  backlight: 0
+  change-host: null
+  disable-keyboard-keys: {1: false}
+  divert-keys: {10: 0, 13: 0, 111: 0, 191: 0, 199: 0, 200: 0, 209: 0, 210: 0, 211: 0, 224: 0, 225: 0, 226: 0, 227: 0, 228: 0, 229: 0, 230: 0, 231: 0, 232: 0,
+    233: 0, 234: 0, 235: 0, 236: 0}
+  fn-swap: true
+  multiplatform: 0
+- _NAME: MX Master 3S
+  _absent: [hi-res-scroll, lowres-scroll-mode, scroll-ratchet-torque, onboard_profiles, report_rate, report_rate_extended, pointer_speed, dpi_extended,
+    speed-change, backlight, backlight_level, backlight_duration_hands_out, backlight_duration_hands_in, backlight_duration_powered, backlight-timed, led_control,
+    led_zone_, rgb_control, rgb_zone_, per-key-lighting, brightness_control, rgb_idle_effect, rgb_idle_timeout, rgb_sleep_timeout, rgb_startup_animation,
+    rgb_shutdown_animation, fn-swap, persistent-remappable-keys, disable-keyboard-keys, force-sensing, crown-smooth, divert-crown, divert-gkeys, m-key-leds,
+    mr-key-led, multiplatform, gesture2-gestures, gesture2-divert, gesture2-params, analog-button-tuning, haptic-level, haptic-play, sidetone, equalizer,
+    adc_power_management, headset-eco-mode, headset-do-not-disturb, headset-mic-mute, headset-mic-snr, headset-ai-nr, headset-ai-nr-level, headset-sidetone,
+    headset-mic-gain, headset-mix-balance, headset-auto-sleep, headset-onboard-eq, headset-eq-active-preset, headset-advanced-eq, headset_led_control, headset-onboard-effect,
+    headset_per_zone_lighting, headset-signature-startup, headset-signature-shutdown, headset-signature-passive, logivoice-nr-state, logivoice-ng-state,
+    logivoice-comp-state, logivoice-deesser-state, logivoice-depopper-state, logivoice-limiter-state, logivoice-hpf-state]
+  _battery: 4100
+  _config_cookie: [180, 181]
+  _modelId: B03400000000
+  _sensitive: {hires-scroll-mode: ignore, hires-smooth-invert: ignore, hires-smooth-resolution: ignore}
+  _unitId: D7BC8903
+  change-host: null
+  divert-keys: {82: 0, 83: 0, 86: 0, 195: 2, 196: 0}
+  dpi: 1000
+  hires-scroll-mode: false
+  hires-smooth-invert: false
+  hires-smooth-resolution: true
+  reprogrammable-keys: {80: 80, 81: 81, 82: 82, 83: 83, 86: 86, 195: 195, 196: 196}
+  scroll-ratchet: 2
+  smart-shift: 10
+  thumb-scroll-invert: false
+  thumb-scroll-mode: false
+- _NAME: MX Mechanical
+  _absent: [hi-res-scroll, lowres-scroll-mode, hires-smooth-invert, hires-smooth-resolution, hires-scroll-mode, scroll-ratchet, scroll-ratchet-torque, smart-shift,
+    thumb-scroll-invert, thumb-scroll-mode, onboard_profiles, report_rate, report_rate_extended, pointer_speed, dpi, dpi_extended, speed-change, backlight-timed,
+    led_control, led_zone_, rgb_control, rgb_zone_, per-key-lighting, brightness_control, rgb_idle_effect, rgb_idle_timeout, rgb_sleep_timeout, rgb_startup_animation,
+    rgb_shutdown_animation, persistent-remappable-keys, force-sensing, crown-smooth, divert-crown, divert-gkeys, m-key-leds, mr-key-led, gesture2-gestures,
+    gesture2-divert, gesture2-params, analog-button-tuning, haptic-level, haptic-play, sidetone, equalizer, adc_power_management, headset-eco-mode, headset-do-not-disturb,
+    headset-mic-mute, headset-mic-snr, headset-ai-nr, headset-ai-nr-level, headset-sidetone, headset-mic-gain, headset-mix-balance, headset-auto-sleep,
+    headset-onboard-eq, headset-eq-active-preset, headset-advanced-eq, headset_led_control, headset-onboard-effect, headset_per_zone_lighting, headset-signature-startup,
+    headset-signature-shutdown, headset-signature-passive, logivoice-nr-state, logivoice-ng-state, logivoice-comp-state, logivoice-deesser-state, logivoice-depopper-state,
+    logivoice-limiter-state, logivoice-hpf-state, backlight_level, backlight_duration_hands_out, backlight_duration_hands_in, backlight_duration_powered,
+    reprogrammable-keys]
+  _battery: 4100
+  _config_cookie: [180, 182]
+  _modelId: B36600000000
+  _sensitive: {hires-scroll-mode: ignore, hires-smooth-invert: ignore, hires-smooth-resolution: ignore}
+  _unitId: 4342A814
+  backlight: 0
+  change-host: null
+  disable-keyboard-keys: {1: false, 2: false, 4: false, 8: false, 16: false}
+  divert-keys: {10: 0, 110: 0, 111: 0, 199: 0, 200: 0, 212: 0, 226: 0, 227: 0, 228: 0, 229: 0, 230: 0, 231: 0, 232: 0, 233: 0, 259: 0, 264: 0, 266: 0, 267: 0,
+    268: 0, 269: 0, 270: 0, 271: 0, 272: 0, 273: 0, 274: 0, 275: 0, 276: 0, 277: 0, 278: 0, 279: 0, 280: 0, 281: 0, 282: 0, 283: 0, 284: 0, 286: 0}
+  fn-swap: true
+  multiplatform: 0

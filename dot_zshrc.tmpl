@@ -1,3 +1,7 @@
-{{- if eq .chezmoi.os "darwin" -}}
-{{-   template "macos/zshrc.tmpl" . -}}
-{{- end -}}
+{{- template "shared/zshrc-init.tmpl" . }}
+{{ if eq .chezmoi.os "darwin" -}}
+{{-   template "macos/zshrc.tmpl" . }}
+{{ else if eq .chezmoi.os "linux" -}}
+{{-   template "linux/zshrc.tmpl" . }}
+{{ end }}
+{{- template "shared/zshrc-main.tmpl" . -}}

@@ -1,0 +1,160 @@
+# Package lists consumed by run_onchange_install-packages.sh.tmpl.
+#
+# macOS keeps ~/.brewfile as its source of truth (brew bundle); this file covers
+# Arch-family hosts only. Names were verified against the CachyOS pacman sync DB
+# and the AUR on 2026-07-25.
+#
+# "base"    -> every Arch host, headless included
+# "desktop" -> only where .isDesktop is true
+#
+# Intentionally NOT ported from the Brewfile, because KDE/Linux already covers them
+# or nothing packages them:
+#   rectangle, alt-tab, maccy, hiddenbar, stats -> KWin tiling, Task Switcher,
+#                                                  Klipper, System Tray, Plasma sensors
+#   orbstack                                    -> native docker + containerd
+#   windows-app (RDP)                           -> krdp / krdc
+#   devtoys, fork                               -> devtoys has no port; Fork runs under bottles
+#   goenv, pyenv-virtualenv, volta              -> replaced by mise on Linux
+#   tf-summarize, sqlcmd, azure-storage-explorer -> not in repos or AUR
+packages:
+  arch:
+    pacman:
+      base:
+        # System / shell
+        - base-devel
+        - git
+        - openssh
+        - zsh
+        - wget
+        - curl
+        - unzip
+        - man-db
+        - procps-ng
+        - gnupg
+        # Network
+        - mtr
+        - nmap
+        - ipcalc
+        - socat
+        - iputils # provides arping
+        - speedtest-cli
+        # Cloud
+        - azure-cli
+        - aws-cli-v2
+        - azcopy
+        # IaC
+        - ansible-lint
+        # Development
+        - github-cli
+        - act
+        - git-lfs
+        - gitleaks
+        - lazygit
+        - neovim
+        - worktrunk
+        - websocat
+        # Databases
+        - pgcli
+        - mongodb-tools-bin
+        # Containers
+        - docker
+        - docker-buildx
+        - docker-compose
+        - containerd
+        - dive
+        # Kubernetes
+        - kubectl
+        - kubectx
+        - crictl
+        - k9s
+        - helm
+        - helmfile
+        - argocd
+        - kustomize
+        - cilium-cli
+        # Security
+        - sslscan
+        - trivy
+        - hashcat
+        - hydra
+        - age
+        - sops
+        # Terminal / CLI
+        - tmux
+        - starship
+        - jq
+        - yq
+        - bat
+        - lsd
+        - fd
+        - fzf
+        - htop
+        - btop
+        - yazi
+        - zoxide
+        - mise
+        - ripgrep
+        - yamllint
+        - grc
+        - ffmpeg
+        - imagemagick
+        - perl-image-exiftool
+        - libpst # reading Outlook .pst files
+        # Python
+        - python-pipx
+        - python-poetry
+      desktop:
+        - kitty
+        - flameshot
+        - obsidian
+        - vlc
+        - mpv
+        - drawio-desktop
+        - qemu-full
+        - solaar # Logitech device manager
+        - qt6-tools # provides qdbus6, used by the Solaar rules
+        - kde-cli-tools # provides kwriteconfig6
+        - kdeconnect
+        - krdp
+        - kwalletmanager
+        - ttf-jetbrains-mono-nerd
+        - ttf-cascadia-code-nerd
+    aur:
+      base:
+        - k6
+        - terraform-docs
+        - tenv-bin
+        - infracost
+        - git-secrets
+        - pgbadger
+        - mongosh-bin
+        - talosctl-bin
+        - snyk
+        - databricks-cli-bin
+        - azure-dev-cli-bin
+        - google-cloud-cli
+        - ipinfo-cli
+        - tcptraceroute
+        - docker-credential-secretservice
+      desktop:
+        - postman-bin
+        - redisinsight-bin
+        - slack-desktop
+        - spotify
+        - winbox # MikroTik RouterOS configuration utility
+        - bottles
+    pipx:
+      - keepercommander
+      - shcheck # check http headers
+      - apkid
+  # Cross-platform toolchains, managed by mise on Linux (macOS uses goenv/pyenv/volta).
+  mise:
+    - go@1.24.4
+    - node@20
+    - pnpm@8.6.2
+    - yarn@latest
+  # Cross-platform IaC versions, managed by tenv everywhere.
+  tenv:
+    tf: 1.13.1
+    tg: 0.66.7
+    tofu: 1.10.6

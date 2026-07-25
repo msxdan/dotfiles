@@ -1,0 +1,43 @@
+{{/*
+   First half of ~/.zshrc: prompt, plugin manager, completion system, and the tool
+   completions that exist on every OS. The OS fragment is appended after this, then
+   shared/zshrc-main.tmpl. Everything is guarded by `command -v` so a shell still
+   starts on a freshly provisioned machine where the packages aren't installed yet.
+*/}}
+command -v starship >/dev/null && eval "$(starship init zsh)"
+command -v zoxide >/dev/null && eval "$(zoxide init zsh)"
+command -v mise >/dev/null && eval "$(mise activate zsh)"
+
+# zinit plugin, load before compinit
+ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
+[ ! -d $ZINIT_HOME ] && mkdir -p "$(dirname $ZINIT_HOME)"
+[ ! -d $ZINIT_HOME/.git ] && git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
+source "${ZINIT_HOME}/zinit.zsh"
+
+# Load zinit plugins
+zinit ice atload"zpcdreplay" atclone"./zplug.zsh" atpull"%atclone" wait"0" lucid
+zinit light g-plane/pnpm-shell-completion
+zinit light zsh-users/zsh-syntax-highlighting
+zinit light zsh-users/zsh-completions
+zinit light zsh-users/zsh-autosuggestions
+zinit light Aloxaf/fzf-tab
+
+# bashcompinit (for `complete -F`/`complete -C` style completions below)
+# and compinit (defines compdef, used by docker/kubectl/helm/tenv completion scripts)
+# must both load before any tool completion is sourced
+autoload -U +X bashcompinit && bashcompinit
+autoload -Uz compinit
+compinit
+zinit cdreplay -q
+
+# Now it's safe to load tool completions that depend on compdef/complete
+command -v docker >/dev/null && source <(docker completion zsh) # Makes the first load a bit slower
+command -v kubectl >/dev/null && source <(kubectl completion zsh) && complete -F __start_kubectl k
+command -v helm >/dev/null && source <(helm completion zsh)
+command -v tenv >/dev/null && source <(tenv completion zsh)
+command -v terraform >/dev/null && complete -o nospace -C "$(command -v terraform)" terraform
+#source <(pulumi gen-completion zsh)
+#source <(chezmoi completion zsh)
+
+# Required by zoxide
+command -v fzf >/dev/null && source <(fzf --zsh)

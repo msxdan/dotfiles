@@ -1,5 +1,59 @@
+{{/*
+   Machine identity.
+
+   Everything downstream (templates, .chezmoiignore, run_ scripts) branches on the
+   derived facts below rather than on raw hostnames, so adding a new machine means
+   adding one branch here instead of grepping the whole repo.
+
+   NOTE: .chezmoidata/ is NOT available in this file -- the config is rendered before
+   the source state is loaded -- which is why the host table is inline.
+*/}}
+{{- $hostname := .chezmoi.hostname -}}
+{{- $os := .chezmoi.os -}}
+{{- $osID := $os -}}
+{{- $idLike := "" -}}
+{{- if and (eq $os "linux") (hasKey .chezmoi "osRelease") -}}
+{{-   $osID = index .chezmoi.osRelease "id" | default $os -}}
+{{-   $idLike = index .chezmoi.osRelease "idLike" | default "" -}}
+{{- end -}}
+{{- $isArch := and (eq $os "linux") (or (eq $osID "arch") (contains "arch" $idLike)) -}}
+
+{{- $isWSL := false -}}
+{{- $isDesktop := false -}}
+{{- $desktopEnv := "" -}}
+{{- $role := "" -}}
+{{- if eq $hostname "cachyos" -}}
+{{-   $isDesktop = true -}}
+{{-   $desktopEnv = "kde" -}}
+{{-   $role = "workstation" -}}
+{{- else if eq $hostname "wsl" -}}
+{{-   $isWSL = true -}}
+{{-   $role = "wsl" -}}
+{{- else if eq $os "darwin" -}}
+{{-   $isDesktop = true -}}
+{{-   $desktopEnv = "aqua" -}}
+{{-   $role = "workstation" -}}
+{{- else -}}
+{{-   $role = promptStringOnce . "role" "Role for this machine (workstation/server)" "server" -}}
+{{-   $isDesktop = promptBoolOnce . "isDesktop" "Is this a graphical desktop machine?" (eq $role "workstation") -}}
+{{-   if $isDesktop -}}
+{{-     $desktopEnv = promptStringOnce . "desktopEnv" "Desktop environment (kde/gnome/other)" "kde" -}}
+{{-   end -}}
+{{- end -}}
 encryption = "age"
 
 [age]
    identity = "~/.config/chezmoi/.key"
    recipient = "age1yrzw5yfrhxpc0tajytcxgfc6rg8jpzue4qcvt0kr300qpx653ghsn7nhlg"
+
+[data]
+   hostname = {{ $hostname | quote }}
+   role = {{ $role | quote }}
+   osID = {{ $osID | quote }}
+   isArch = {{ $isArch }}
+   isWSL = {{ $isWSL }}
+   isDesktop = {{ $isDesktop }}
+   desktopEnv = {{ $desktopEnv | quote }}
+   isKDE = {{ eq $desktopEnv "kde" }}
+   aurHelper = "paru"
+   kubeClusters = {{ promptMultichoiceOnce . "kubeClusters" "Which k8s clusters do you want configured?" (list "homelab" "mm") (list "homelab" "mm") | toToml }}

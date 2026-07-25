@@ -1,2 +1,31 @@
 .key.age
 README.md
+
+{{/* macOS-only targets */}}
+{{- if ne .chezmoi.os "darwin" }}
+Library
+ibooks
+.brewfile
+{{- end }}
+
+{{/* Linux-only targets */}}
+{{- if ne .chezmoi.os "linux" }}
+.config/systemd
+{{- end }}
+
+{{/* Graphical-desktop-only targets */}}
+{{- if not (and (eq .chezmoi.os "linux") .isDesktop) }}
+.config/solaar
+{{- end }}
+
+{{/* KDE-only targets */}}
+{{- if not .isKDE }}
+.config/systemd/user/app-org.kde.krdpserver.service.d
+{{- end }}
+
+{{- if not (has "homelab" .kubeClusters) }}
+.kube/config.d/homelab
+{{- end }}
+{{- if not (has "mm" .kubeClusters) }}
+.kube/config.d/mm
+{{- end }}

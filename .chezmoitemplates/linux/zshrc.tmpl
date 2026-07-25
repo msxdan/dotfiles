@@ -1,0 +1,10 @@
+{{/* Linux-only ~/.zshrc additions, inserted between the two shared halves. */}}
+
+# The AUR google-cloud-cli package installs the SDK under /opt
+if [[ -f /opt/google-cloud-cli/path.zsh.inc ]]; then
+  source /opt/google-cloud-cli/path.zsh.inc
+  # source /opt/google-cloud-cli/completion.zsh.inc
+fi
+
+# systemd-managed user services occasionally need the interactive PATH
+command -v systemctl >/dev/null && systemctl --user import-environment PATH 2>/dev/null

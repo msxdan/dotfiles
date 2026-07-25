@@ -1,0 +1,26 @@
+{{/* macOS-only ~/.zprofile. */}}
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PATH:$PYENV_ROOT/bin"
+export VIRTUAL_ENV_DISABLE_PROMPT=1
+eval "$(pyenv init -)"
+
+# Export pipx binary directory
+export PATH="{{ .chezmoi.homeDir }}/.local/bin:$PATH"
+
+export GOENV_ROOT="$HOME/.goenv"
+export PATH="$GOENV_ROOT/bin:$PATH"
+eval "$(goenv init -)"
+export PATH="$GOROOT/bin:$PATH"
+export PATH="$PATH:$GOPATH/bin"
+
+# Added by OrbStack: command-line tools and integration
+# Comment this line if you don't want it to be added again.
+source ~/.orbstack/shell/init.zsh 2>/dev/null || :
+
+# opencode
+export PATH="{{ .chezmoi.homeDir }}/.opencode/bin:$PATH"
+
+# Add .NET Core SDK tools
+export PATH="$PATH:{{ .chezmoi.homeDir }}/.dotnet/tools"

@@ -1,57 +1,6 @@
-# vscode integration
-export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
-
-# Export pipx binary directory
-export PATH="$PATH:{{ .chezmoi.homeDir }}/.local/bin"
-
-# chezmoi
-export PATH=$PATH:~/bin
-
-# LM Studio
-export PATH="$PATH:{{ .chezmoi.homeDir }}/.lmstudio/bin"
-
-export HOMEBREW_BUNDLE_FILE="{{ .chezmoi.homeDir }}/.brewfile"
-
-export TENV_AUTO_INSTALL=true
-# Use terraform as default for terragrunt
-export TERRAGRUNT_TFPATH="terraform"
-
-export TF_CLI_ARGS_apply="-parallelism=40"
-export TF_CLI_ARGS_plan="-parallelism=40"
-export TF_CLI_CONFIG_FILE="{{ .chezmoi.homeDir }}/.terraformrc"
-
-# Create kubeconfig symlink for existing kubeconfigs in ~/.private/.kube/config.d
-for private_kube_config in ~/.private/.kube/config.d/*; do
-  KUBE_FILE="$HOME/.kube/config.d/$(basename $private_kube_config)"
-  if [ ! -L ${KUBE_FILE} ]; then
-    ln -s $private_kube_config ${KUBE_FILE}
-  fi
-done
-
-KUBECONFIG=${HOME}/.kube/config
-for kubeconfig in ~/.kube/config.d/*; do
-  KUBECONFIG=${KUBECONFIG}:$kubeconfig
-done
-export KUBECONFIG
-export K9S_CONFIG_DIR="{{ .chezmoi.homeDir }}/.config/k9s/"
-
-export HELM_REGISTRY_CONFIG="${HOME}/.docker/config.json"
-
-for env in ~/.private/.env.d/*; do
-  source $env
-done
-
-if [[ -r ~/.aliasrc ]]; then
-  . ~/.aliasrc
-fi
-
-export VOLTA_HOME="$HOME/.volta"
-export PATH="$VOLTA_HOME/bin:$PATH"
-export VOLTA_FEATURE_PNPM=1
-# Lucera blog contentfull
-export BLOG_PROVIDER=local
-
-# Required by k9s and probably other tools
-export EDITOR='nvim'
-
-export INFRACOST_CURRENCY='EUR'
+{{- template "shared/zshenv.tmpl" . }}
+{{ if eq .chezmoi.os "darwin" -}}
+{{-   template "macos/zshenv.tmpl" . -}}
+{{- else if eq .chezmoi.os "linux" -}}
+{{-   template "linux/zshenv.tmpl" . -}}
+{{- end -}}

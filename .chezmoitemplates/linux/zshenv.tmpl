@@ -1,0 +1,7 @@
+{{/* Linux-only ~/.zshenv additions. */}}
+
+# There is no Keychain on Linux; keys live in a user-scoped ssh-agent started by
+# ~/.config/systemd/user/ssh-agent.service, which pins the socket to a fixed path.
+if [[ -z ${SSH_AUTH_SOCK:-} && -n ${XDG_RUNTIME_DIR:-} ]]; then
+  export SSH_AUTH_SOCK="${XDG_RUNTIME_DIR}/ssh-agent.socket"
+fi

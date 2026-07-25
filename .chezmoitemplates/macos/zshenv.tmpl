@@ -1,0 +1,13 @@
+{{/* macOS-only ~/.zshenv additions. */}}
+
+# vscode integration
+export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
+
+# LM Studio
+export PATH="$PATH:{{ .chezmoi.homeDir }}/.lmstudio/bin"
+
+export HOMEBREW_BUNDLE_FILE="{{ .chezmoi.homeDir }}/.brewfile"
+
+export VOLTA_HOME="$HOME/.volta"
+export PATH="$VOLTA_HOME/bin:$PATH"
+export VOLTA_FEATURE_PNPM=1

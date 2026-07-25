@@ -1,0 +1,13 @@
+[Unit]
+Description=SSH key agent
+Documentation=man:ssh-agent(1)
+# macOS keeps keys in the Keychain; on Linux a user-scoped agent with a fixed
+# socket path plays the same role. ~/.zshenv points SSH_AUTH_SOCK at it.
+
+[Service]
+Type=simple
+Environment=SSH_AUTH_SOCK=%t/ssh-agent.socket
+ExecStart=/usr/bin/ssh-agent -D -a $SSH_AUTH_SOCK
+
+[Install]
+WantedBy=default.target

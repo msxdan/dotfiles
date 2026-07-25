@@ -1,4 +1,4 @@
-{{ if eq .chezmoi.os "linux" -}}
+{{ if .isWSL -}}
 #!/bin/bash
 
 # functions.sh" hash: {{ include  ".scripts/shared/functions.sh" | sha256sum }}
@@ -35,6 +35,76 @@ sudo apt install -y --quiet ./gitkraken-amd64.deb
 rm ./gitkraken-amd64.deb
 
 echo "A reload of .bashrc might be needed, use . ~/.bashrc"
+
+{{ else if .isArch -}}
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Package lists live in .chezmoidata/packages.yaml and are rendered inline below, so
+# editing them re-triggers this script automatically.
+# arch-packages.sh" hash: {{ include ".scripts/lib/arch-packages.sh" | sha256sum }}
+source {{ joinPath .chezmoi.sourceDir ".scripts/lib/arch-packages.sh" | quote }}
+
+export AUR_HELPER={{ .aurHelper | quote }}
+
+pkg::sync
+
+pacman_base=(
+{{- range .packages.arch.pacman.base }}
+  {{ . | quote }}
+{{- end }}
+)
+pkg::pacman "${pacman_base[@]}"
+
+aur_base=(
+{{- range .packages.arch.aur.base }}
+  {{ . | quote }}
+{{- end }}
+)
+pkg::aur "${aur_base[@]}"
+{{ if .isDesktop }}
+pacman_desktop=(
+{{- range .packages.arch.pacman.desktop }}
+  {{ . | quote }}
+{{- end }}
+)
+pkg::pacman "${pacman_desktop[@]}"
+
+aur_desktop=(
+{{- range .packages.arch.aur.desktop }}
+  {{ . | quote }}
+{{- end }}
+)
+pkg::aur "${aur_desktop[@]}"
+{{ end }}
+pipx_packages=(
+{{- range .packages.arch.pipx }}
+  {{ . | quote }}
+{{- end }}
+)
+pkg::pipx "${pipx_packages[@]}"
+
+mise_tools=(
+{{- range .packages.mise }}
+  {{ . | quote }}
+{{- end }}
+)
+pkg::mise "${mise_tools[@]}"
+
+pkg::tenv tf {{ .packages.tenv.tf | quote }}
+pkg::tenv tg {{ .packages.tenv.tg | quote }}
+pkg::tenv tofu {{ .packages.tenv.tofu | quote }}
+
+# Docker needs its daemon running and the user in the docker group to be usable
+# without sudo -- the macOS setup gets this from OrbStack instead.
+pkg::enable_service docker.service
+pkg::enable_service containerd.service
+pkg::add_user_to_group docker
+
+# Keep ssh keys in a user-scoped agent (see dot_config/systemd/user/ssh-agent.service).
+systemctl --user enable --now ssh-agent.service || true
+
+pkg::report
 
 {{ else if eq .chezmoi.os "darwin" -}}
 

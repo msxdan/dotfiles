@@ -1,0 +1,12 @@
+%YAML 1.3
+---
+- Rule:
+  - MouseGesture: [Mouse Gesture Button, Mouse Right]
+  - Execute: [qdbus6, org.kde.kglobalaccel, /component/kwin, org.kde.kglobalaccel.Component.invokeShortcut, Switch One Desktop to the Right]
+- Rule:
+  - MouseGesture: [Mouse Gesture Button, Mouse Left]
+  - Execute: [qdbus6, org.kde.kglobalaccel, /component/kwin, org.kde.kglobalaccel.Component.invokeShortcut, Switch One Desktop to the Left]
+- Rule:
+  - MouseGesture: [Mouse Gesture Button]
+  - Execute: [qdbus6, org.kde.kglobalaccel, /component/kwin, org.kde.kglobalaccel.Component.invokeShortcut, Overview]
+...

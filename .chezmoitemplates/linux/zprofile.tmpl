@@ -1,0 +1,16 @@
+{{/*
+   Linux-only ~/.zprofile.
+
+   No brew, no pyenv/goenv/volta: on Linux a single `mise` install (activated from
+   .zshrc) manages go/node/pnpm/yarn, and tenv manages terraform/terragrunt/tofu.
+*/}}
+export VIRTUAL_ENV_DISABLE_PROMPT=1
+
+# Export pipx binary directory
+export PATH="{{ .chezmoi.homeDir }}/.local/bin:$PATH"
+
+# opencode
+export PATH="{{ .chezmoi.homeDir }}/.opencode/bin:$PATH"
+
+# Add .NET Core SDK tools
+export PATH="$PATH:{{ .chezmoi.homeDir }}/.dotnet/tools"

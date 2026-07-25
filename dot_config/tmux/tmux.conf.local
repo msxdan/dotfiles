@@ -180,7 +180,7 @@ tmux_conf_theme_status_attr="none"
 #     - #{username}
 #     - #{username_ssh}
 #tmux_conf_theme_terminal_title="#h ❐ #S ● #I #W"
-tmux_conf_theme_terminal_title="Lucera WSL"
+tmux_conf_theme_terminal_title="#h ❐ #S ● #I #W"
 
 # window status style
 #   - built-in variables are:
