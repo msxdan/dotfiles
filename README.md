@@ -22,7 +22,7 @@ The private submodule (`dot_private`) is cloned over SSH, but the SSH keys live
 key into an agent **before** running init:
 
 ```bash
-sudo pacman -S --needed chezmoi git age openssh
+sudo pacman -S --needed chezmoi git age openssh ksshaskpass
 
 # Either copy an existing key across, or make one for this machine and add the
 # public half at https://github.com/settings/keys
@@ -50,9 +50,10 @@ Fixes, in order of preference:
    nothing needs prompting during init.
 2. `export SSH_ASKPASS_REQUIRE=never` (or `unset DISPLAY`) to force the prompt onto
    the terminal.
-3. `sudo pacman -S ksshaskpass` for a graphical prompt. This is installed
-   automatically on desktop hosts, but that happens *after* the submodule clone, so
-   it does not help the first run.
+3. `sudo pacman -S ksshaskpass` for a graphical prompt that remembers the
+   passphrase in KWallet, so it is asked once rather than on every use. It is in the
+   desktop package list, but that installs *after* the submodule clone — so install
+   it by hand before the first run, as in the block above.
 
 Over SSH into the VM, `ssh -A` forwards your existing agent and avoids putting a key
 on a throwaway machine at all.
