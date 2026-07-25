@@ -18,27 +18,44 @@ does a full `pacman -Syu` plus ~110 packages, which on a read-only squashfs with
 tmpfs overlay replaces the running kernel/systemd and exhausts the overlay.
 
 The private submodule (`dot_private`) is cloned over SSH, but the SSH keys live
-*inside* it — so a brand-new machine has no way to authenticate. Break the cycle by
-authenticating to GitHub over HTTPS first:
+*inside* it — so a brand-new machine has no key to authenticate with. Get a working
+key into an agent **before** running init:
 
 ```bash
-sudo pacman -S --needed chezmoi git age github-cli
+sudo pacman -S --needed chezmoi git age openssh
 
-gh auth login          # device/browser flow, no SSH key needed
-gh auth setup-git      # installs the git credential helper
-git config --global url."https://github.com/".insteadOf "git@github.com:"
+# Either copy an existing key across, or make one for this machine and add the
+# public half at https://github.com/settings/keys
+ssh-keygen -t ed25519 -f ~/.ssh/id_ed25519
+cat ~/.ssh/id_ed25519.pub
+
+eval "$(ssh-agent -s)"
+ssh-add ~/.ssh/id_ed25519
+
+# Accept github.com's host key and confirm auth works before involving chezmoi
+ssh -T git@github.com
 
 chezmoi init msxdan/dotfiles --apply --recurse-submodules
 ```
 
-Once `~/.private/.ssh/keys` exists and the keys are in the agent, drop the rewrite:
-
-```bash
-git config --global --unset url."https://github.com/".insteadOf
-```
-
 `--recurse-submodules` is not optional: several templates `include` files from
 `dot_private`, so without it `chezmoi apply` fails to render.
+
+**If you see `exec(/usr/lib/ssh/ssh-askpass): No such file or directory`**, ssh needed
+to prompt — for a passphrase, or to confirm an unknown host key — but `DISPLAY` was
+set with no usable TTY, so it tried a graphical prompter that isn't installed yet.
+Fixes, in order of preference:
+
+1. Load the key into an agent and run `ssh -T git@github.com` first, as above, so
+   nothing needs prompting during init.
+2. `export SSH_ASKPASS_REQUIRE=never` (or `unset DISPLAY`) to force the prompt onto
+   the terminal.
+3. `sudo pacman -S ksshaskpass` for a graphical prompt. This is installed
+   automatically on desktop hosts, but that happens *after* the submodule clone, so
+   it does not help the first run.
+
+Over SSH into the VM, `ssh -A` forwards your existing agent and avoids putting a key
+on a throwaway machine at all.
 
 The bootstrap script does a full `pacman -Syu`, installs `paru` if missing, and sets
 zsh as the login shell. `chezmoi apply` then installs everything listed in
