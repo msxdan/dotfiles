@@ -73,8 +73,7 @@ to a set of facts, and everything else reads those:
 | `isDesktop` | has a graphical session, so GUI packages and configs apply |
 | `isKDE` / `desktopEnv` | which desktop, for KWin/KRDP tweaks |
 | `aurHelper` | AUR helper used by the install scripts |
-| `profiles` | which identities this machine serves: `personal`, `work` |
-| `isWork` / `isPersonal` | derived from `profiles`, used to gate files |
+| `profiles` | which identities this machine serves: `personal`, `ec` |
 | `kubeClusters` | which kubeconfigs to link (`homelab`, `ec`, `mm`) |
 
 <!-- TODO: document profiles properly once the design is settled. -->

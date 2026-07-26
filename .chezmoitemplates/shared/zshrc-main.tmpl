@@ -90,8 +90,8 @@ _complete_sc() {
   return 0
 }
 complete -F _complete_sc sc sc.sh
-{{ if .isWork -}}
-# Drop straight into the work context on a machine that serves the work profile.
+{{ if has "ec" .profiles -}}
+# Drop straight into the work context on a machine that serves the ec profile.
 [[ -f ~/.private/.env.d/mm ]] && sc mm
 {{- end }}
 

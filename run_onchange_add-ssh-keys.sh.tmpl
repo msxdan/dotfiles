@@ -15,19 +15,19 @@ systemctl --user enable --now ssh-agent.service
 {{ end -}}
 
 # Keys are scoped by directory, following the layout the private repo already uses:
-# anything directly under keys/ applies to every machine, keys/work/ only to machines
-# serving the work profile. Loading a work key on a personal machine is both wrong
+# anything directly under keys/ applies to every machine, keys/ec/ only to machines
+# serving the ec profile. Loading an ec key on a personal machine is both wrong
 # and costly -- each unnecessary key is another passphrase prompt.
 key_dirs=(~/.private/.ssh/keys)
-{{ if .isWork -}}
-key_dirs+=(~/.private/.ssh/keys/work)
+{{ if has "ec" .profiles -}}
+key_dirs+=(~/.private/.ssh/keys/ec)
 {{ end }}
 # The keys are passphrase-protected, so this prompts once per key not already loaded.
 loaded_fingerprints="$(ssh-add -l 2>/dev/null || true)"
 
 for key_dir in "${key_dirs[@]}"; do
   [ -d "$key_dir" ] || continue
-  # -maxdepth 1 so the base directory does not pull in keys/work/ recursively
+  # -maxdepth 1 so the base directory does not pull in keys/ec/ recursively
   find "$key_dir" -maxdepth 1 -type f \( -name '*_ed25519' -o -name '*_rsa' \) -print0 |
     while IFS= read -r -d '' key; do
       fingerprint="$(ssh-keygen -lf "$key" 2>/dev/null | awk '{print $2}')"
