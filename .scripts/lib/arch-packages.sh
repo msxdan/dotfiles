@@ -9,7 +9,20 @@
 # surface the problem and retry the script on the next apply.
 
 declare -ga PKG_FAILED=()
+declare -ga PKG_ERRORS=()
 : "${AUR_HELPER:=paru}"
+
+# Record a failure together with the tail of its output. Without the error text a
+# summary of 21 failed package names is unactionable -- the real cause has already
+# scrolled off screen by the time the report prints.
+pkg::_fail() {
+  local id=$1 log=${2:-}
+  PKG_FAILED+=("$id")
+  if [ -n "$log" ] && [ -s "$log" ]; then
+    PKG_ERRORS+=("${id}
+$(sed -e 's/^/      /' -e '/^ *$/d' "$log" | tail -n 4)")
+  fi
+}
 
 pkg::log() { printf '\n==> %s\n' "$*"; }
 
@@ -41,10 +54,18 @@ pkg::_install() {
   fi
 
   pkg::log "Batch ${label} install failed, retrying one by one"
-  local pkg
+  local pkg log
+  log=$(mktemp)
   for pkg in "$@"; do
-    "${cmd[@]}" "$pkg" || PKG_FAILED+=("${label}:${pkg}")
+    if "${cmd[@]}" "$pkg" >"$log" 2>&1; then
+      echo "    ok   ${pkg}"
+    else
+      echo "    FAIL ${pkg}"
+      sed -e 's/^/         /' -e '/^ *$/d' "$log" | tail -n 4
+      pkg::_fail "${label}:${pkg}" "$log"
+    fi
   done
+  rm -f "$log"
 }
 
 pkg::pacman() {
@@ -54,43 +75,51 @@ pkg::pacman() {
 pkg::aur() {
   (($#)) || return 0
   if ! command -v "$AUR_HELPER" &>/dev/null; then
-    PKG_FAILED+=("aur:<${AUR_HELPER} not installed>")
+    pkg::_fail "aur:<${AUR_HELPER} not installed>"
     return 0
   fi
-  pkg::_install aur "$AUR_HELPER" -S --needed --noconfirm -- "$@"
+  # --skipreview is required for unattended use: paru otherwise opens each PKGBUILD
+  # in a pager for review, which cannot succeed with no terminal attached and fails
+  # every single package identically.
+  pkg::_install aur "$AUR_HELPER" -S --needed --noconfirm --skipreview -- "$@"
 }
 
 pkg::pipx() {
   (($#)) || return 0
   if ! command -v pipx &>/dev/null; then
-    PKG_FAILED+=("pipx:<pipx not installed>")
+    pkg::_fail "pipx:<pipx not installed>"
     return 0
   fi
 
-  local installed spec name
+  local installed spec name log
   installed=$(pipx list --short 2>/dev/null | cut -d' ' -f1)
+  log=$(mktemp)
   for spec in "$@"; do
     name=${spec%%[<>=]*}
     if grep -qxF "$name" <<<"$installed"; then
       continue
     fi
     pkg::log "Installing pipx package ${spec}"
-    pipx install "$spec" --quiet || PKG_FAILED+=("pipx:${spec}")
+    pipx install "$spec" --quiet >"$log" 2>&1 || {
+      sed -e 's/^/      /' -e '/^ *$/d' "$log" | tail -n 4
+      pkg::_fail "pipx:${spec}" "$log"
+    }
   done
+  rm -f "$log"
 }
 
 # mise replaces goenv/pyenv/volta on Linux.
 pkg::mise() {
   (($#)) || return 0
   if ! command -v mise &>/dev/null; then
-    PKG_FAILED+=("mise:<mise not installed>")
+    pkg::_fail "mise:<mise not installed>"
     return 0
   fi
 
   local tool
   for tool in "$@"; do
     pkg::log "Pinning ${tool}"
-    mise use --global --yes "$tool" || PKG_FAILED+=("mise:${tool}")
+    mise use --global --yes "$tool" || pkg::_fail "mise:${tool}"
   done
 }
 
@@ -98,11 +127,11 @@ pkg::mise() {
 pkg::tenv() {
   local kind=$1 version=$2
   if ! command -v tenv &>/dev/null; then
-    PKG_FAILED+=("tenv:<tenv not installed>")
+    pkg::_fail "tenv:<tenv not installed> (needs the tenv-bin AUR package)"
     return 0
   fi
   pkg::log "Installing ${kind} ${version} via tenv"
-  tenv "$kind" install "$version" || PKG_FAILED+=("tenv:${kind}@${version}")
+  tenv "$kind" install "$version" || pkg::_fail "tenv:${kind}@${version}"
 }
 
 # Enable a systemd unit only if its package actually landed.
@@ -112,7 +141,7 @@ pkg::enable_service() {
     return 0
   fi
   pkg::log "Enabling ${unit}"
-  sudo systemctl enable --now "$unit" || PKG_FAILED+=("service:${unit}")
+  sudo systemctl enable --now "$unit" || pkg::_fail "service:${unit}"
 }
 
 pkg::add_user_to_group() {
@@ -133,10 +162,21 @@ pkg::report() {
   }
   printf '\nWARNING: %d package(s) failed to install:\n' "${#PKG_FAILED[@]}"
   printf '  - %s\n' "${PKG_FAILED[@]}"
+
+  if ((${#PKG_ERRORS[@]})); then
+    printf '\nErrors:\n'
+    printf '  %s\n' "${PKG_ERRORS[@]}"
+  fi
+
   cat <<'EOF'
 
-These were most likely renamed or dropped upstream. Fix the names in
-.chezmoidata/packages.yaml, then re-run: chezmoi apply
+If a single package failed, it was probably renamed or dropped upstream: fix the
+name in .chezmoidata/packages.yaml. If every AUR package failed, the helper itself
+is the problem, not the names -- check that paru can build at all:
+
+  paru -S --needed --noconfirm --skipreview tenv-bin
+
+Then re-run: chezmoi apply
 EOF
   return 1
 }
