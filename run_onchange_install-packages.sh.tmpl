@@ -54,18 +54,43 @@ mise_tools=(
 )
 pkg::mise "${mise_tools[@]}"
 
+vscode_extensions=(
+{{- range index $host "vscode" }}
+  {{ . | quote }}
+{{- end }}
+)
+pkg::vscode "${vscode_extensions[@]}"
+
 {{ range index $host "tenv" }}
 pkg::tenv {{ (splitList "@" .) | first | quote }} {{ (splitList "@" .) | last | quote }}
 {{- end }}
 
-# Docker needs its daemon running and the user in the docker group to be usable
-# without sudo -- the macOS setup gets this from OrbStack instead.
-pkg::enable_service docker.service
-pkg::enable_service containerd.service
-pkg::add_user_to_group docker
+services=(
+{{- range index $host "services" }}
+  {{ . | quote }}
+{{- end }}
+)
+for unit in "${services[@]}"; do
+  pkg::enable_service "$unit"
+done
 
-# Keep ssh keys in a user-scoped agent (see dot_config/systemd/user/ssh-agent.service).
-systemctl --user enable --now ssh-agent.service || true
+user_services=(
+{{- range index $host "user_services" }}
+  {{ . | quote }}
+{{- end }}
+)
+for unit in "${user_services[@]}"; do
+  pkg::enable_user_service "$unit"
+done
+
+groups=(
+{{- range index $host "groups" }}
+  {{ . | quote }}
+{{- end }}
+)
+for group in "${groups[@]}"; do
+  pkg::add_user_to_group "$group"
+done
 
 pkg::report
 

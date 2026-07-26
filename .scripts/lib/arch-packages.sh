@@ -146,6 +146,38 @@ pkg::mise() {
   done
 }
 
+# VS Code extensions. `code --install-extension` is not idempotent in any useful
+# sense -- it re-downloads an already-installed extension -- so diff against the
+# installed set first, which also keeps a converged machine from hitting the
+# marketplace 93 times on every apply.
+#
+# Extension IDs are case-insensitive and --list-extensions echoes back the
+# marketplace's casing, not the casing written here, so both sides are lowercased
+# before comparing. Without that, an entry like Catppuccin.catppuccin-vsc-icons
+# reinstalls on every run.
+pkg::vscode() {
+  (($#)) || return 0
+  if ! command -v code &>/dev/null; then
+    pkg::_fail "vscode:<code not installed>"
+    return 0
+  fi
+
+  local installed ext log
+  installed=$(code --list-extensions 2>/dev/null | tr '[:upper:]' '[:lower:]')
+  log=$(mktemp)
+  for ext in "$@"; do
+    if grep -qxF "${ext,,}" <<<"$installed"; then
+      continue
+    fi
+    pkg::log "Installing VS Code extension ${ext}"
+    code --install-extension "$ext" >"$log" 2>&1 || {
+      sed -e 's/^/      /' -e '/^ *$/d' "$log" | tail -n 4
+      pkg::_fail "vscode:${ext}" "$log"
+    }
+  done
+  rm -f "$log"
+}
+
 # tenv manages terraform/terragrunt/opentofu versions on every OS.
 pkg::tenv() {
   local kind=$1 version=$2
@@ -190,6 +222,24 @@ pkg::enable_service() {
   sudo systemctl start "$unit" || pkg::_fail "service:${unit} (start)"
 }
 
+# User units need no sudo, but they do need a running user manager. chezmoi can be
+# applied over ssh or from a tty before the session bus exists, and there the enable
+# is not a failure worth reporting -- the unit is enabled on the next apply from a
+# real session.
+pkg::enable_user_service() {
+  local unit=$1
+  if ! systemctl --user list-unit-files "$unit" &>/dev/null; then
+    return 0
+  fi
+  if ! systemctl --user show-environment &>/dev/null; then
+    echo "    Skipping ${unit}: no user systemd session on this login."
+    return 0
+  fi
+
+  pkg::log "Enabling ${unit} (user)"
+  systemctl --user enable --now "$unit" || pkg::_fail "user-service:${unit}"
+}
+
 pkg::add_user_to_group() {
   local group=$1
   getent group "$group" >/dev/null || return 0
@@ -228,7 +278,6 @@ EOF
   # output is far more specific than anything captured here. The name comes from
   # the failure list rather than being written in, so this file never has to know
   # what is in hosts.yaml.
-  #
   # The <...> entries are placeholders for "the helper is missing entirely", not
   # package names, so they would suggest a command that cannot work.
   local first_aur
