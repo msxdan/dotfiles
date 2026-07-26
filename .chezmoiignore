@@ -23,7 +23,14 @@ ibooks
 .config/systemd/user/app-org.kde.krdpserver.service.d
 {{- end }}
 
-{{/* Work-only: credentials and contexts that belong to the job, not the machine */}}
+{{/*
+   Work-only: credentials and contexts that belong to the job, not the machine.
+
+   Both halves have to be listed. The entries in ~ are the convenience symlinks, but
+   the files they point at are deployed from the private submodule into ~/.private,
+   and the submodule is checked out whole -- so gating only the symlinks still leaves
+   the work credentials sitting on a personal machine.
+*/}}
 {{- if not .isWork }}
 .pgpass
 .pg_service.conf
@@ -31,20 +38,33 @@ ibooks
 .datagrip/ec
 .config/infracost
 .ssh/config.d/mm
+.private/.pgpass
+.private/.pg_service.conf
+.private/.databrickscfg
+.private/.datagrip/ec
+.private/.env.d/mm
+.private/.ssh/config.d/mm
+.private/.ssh/keys/work
 {{- end }}
 
 {{/* Personal-only */}}
 {{- if not .isPersonal }}
 .datagrip/marvin-cloud
+.private/.datagrip/marvin-cloud
+.private/.env.d/msx
+.private/homelab
 {{- end }}
 
-{{/* Kubeconfigs, selected at init */}}
+{{/* Kubeconfigs, selected at init -- symlink and private source alike */}}
 {{- if not (has "homelab" .kubeClusters) }}
 .kube/config.d/homelab
+.private/.kube/config.d/homelab
 {{- end }}
 {{- if not (has "ec" .kubeClusters) }}
 .kube/config.d/ec
+.private/.kube/config.d/ec
 {{- end }}
 {{- if not (has "mm" .kubeClusters) }}
 .kube/config.d/mm
+.private/.kube/config.d/mm
 {{- end }}
