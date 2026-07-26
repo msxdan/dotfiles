@@ -86,10 +86,12 @@ hosts:
       - krdp
       - flameshot
     aur:
-      - tenv-bin # .zshrc completion; TENV_AUTO_INSTALL handles versions on demand
       - docker-credential-secretservice # ~/.docker/config.json credsStore on Linux
     pipx: []
-    mise: []
+    mise:
+      # Not in the official repos and only in the AUR as tenv-bin, but mise can
+      # fetch the same upstream release, so it needs no AUR build.
+      - aqua:tofuutils/tenv # .zshrc completion; TENV_AUTO_INSTALL handles versions
     tenv: [] # empty on purpose: TENV_AUTO_INSTALL=true installs on first use
 
 

@@ -150,7 +150,7 @@ pkg::mise() {
 pkg::tenv() {
   local kind=$1 version=$2
   if ! command -v tenv &>/dev/null; then
-    pkg::_fail "tenv:<tenv not installed> (needs the tenv-bin AUR package)"
+    pkg::_fail "tenv:<tenv not installed> (nothing in this host's lists provides it)"
     return 0
   fi
   pkg::log "Installing ${kind} ${version} via tenv"
@@ -221,12 +221,28 @@ pkg::report() {
   cat <<'EOF'
 
 If a single package failed, it was probably renamed or dropped upstream: fix the
-name in .chezmoidata/hosts.yaml. If every AUR package failed, the helper itself is
-the problem, not the names -- check that paru can build at all:
-
-  paru -S --needed --noconfirm --skipreview tenv-bin
-
-Then re-run: chezmoi apply
+name in .chezmoidata/hosts.yaml.
 EOF
+
+  # If any AUR package failed, suggest retrying one by hand: the helper's own
+  # output is far more specific than anything captured here. The name comes from
+  # the failure list rather than being written in, so this file never has to know
+  # what is in hosts.yaml.
+  #
+  # The <...> entries are placeholders for "the helper is missing entirely", not
+  # package names, so they would suggest a command that cannot work.
+  local first_aur
+  first_aur=$(printf '%s\n' "${PKG_FAILED[@]}" | grep -m1 '^aur:[^<]' | cut -d: -f2-)
+  if [ -n "$first_aur" ]; then
+    cat <<EOF
+
+If every AUR package failed, the helper itself is the problem, not the names --
+check that ${AUR_HELPER} can build at all:
+
+  ${AUR_HELPER} -S --needed --noconfirm --skipreview ${first_aur}
+EOF
+  fi
+
+  printf '\nThen re-run: chezmoi apply\n'
   return 1
 }
