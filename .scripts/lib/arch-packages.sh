@@ -171,8 +171,8 @@ pkg::report() {
   cat <<'EOF'
 
 If a single package failed, it was probably renamed or dropped upstream: fix the
-name in .chezmoidata/packages.yaml. If every AUR package failed, the helper itself
-is the problem, not the names -- check that paru can build at all:
+name in .chezmoidata/hosts.yaml. If every AUR package failed, the helper itself is
+the problem, not the names -- check that paru can build at all:
 
   paru -S --needed --noconfirm --skipreview tenv-bin
 

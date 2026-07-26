@@ -13,68 +13,31 @@ sh -c "$(curl -fsLS get.chezmoi.io)" -- init msxdan/dotfiles --apply --recurse-s
 
 ### CachyOS / Arch
 
-Must be an **installed** system. Applying on a live ISO is refused: the bootstrap
-does a full `pacman -Syu`, which on a read-only squashfs with a tmpfs overlay
-replaces the running kernel/systemd and exhausts the overlay.
-
-The quickest path, which handles every prerequisite below and is worth using after
-restoring a VM snapshot:
-
 ```bash
-bash -c "$(curl -fsSL https://raw.githubusercontent.com/msxdan/dotfiles/main/.scripts/bootstrap.sh)"
-```
-
-It refuses to run on a live ISO, installs chezmoi from the repos (so it lands on
-`PATH`), installs `ksshaskpass`, and checks that a key is in your agent and that
-github.com is a known host before starting — each of those otherwise fails later in
-a way that looks unrelated to its cause. Set `BRANCH=` to test a branch.
-
-Doing it by hand instead:
-
-The private submodule (`dot_private`) is cloned over SSH, but the SSH keys live
-*inside* it — so a brand-new machine has no key to authenticate with. Get a working
-key into an agent **before** running init:
-
-```bash
-sudo pacman -S --needed chezmoi git age openssh ksshaskpass
-
-# Either copy an existing key across, or make one for this machine and add the
-# public half at https://github.com/settings/keys
-ssh-keygen -t ed25519 -f ~/.ssh/id_ed25519
-cat ~/.ssh/id_ed25519.pub
-
-eval "$(ssh-agent -s)"
-ssh-add ~/.ssh/id_ed25519
-
-# Accept github.com's host key and confirm auth works before involving chezmoi
-ssh -T git@github.com
-
+sudo pacman -S --needed chezmoi
+ssh-add ~/.ssh/id_ed25519      # a key with access to the private repo
 chezmoi init msxdan/dotfiles --apply --recurse-submodules
 ```
+
+Init handles everything from there: full `pacman -Syu`, `paru`, zsh as the login
+shell, the per-host package list, Docker, the user ssh-agent, and the KDE tweaks.
+
+Only the two lines above are manual, and both are irreducible — you need chezmoi
+installed to run chezmoi, and the `dot_private` submodule is cloned over SSH while
+the keys it would give you live *inside* it, so a key has to be in the agent first.
+With one loaded, ssh never has to prompt and nothing else is needed. Over SSH into
+the machine, `ssh -A` forwards your existing agent instead.
 
 `--recurse-submodules` is not optional: several templates `include` files from
 `dot_private`, so without it `chezmoi apply` fails to render.
 
-**If you see `exec(/usr/lib/ssh/ssh-askpass): No such file or directory`**, ssh needed
-to prompt — for a passphrase, or to confirm an unknown host key — but `DISPLAY` was
-set with no usable TTY, so it tried a graphical prompter that isn't installed yet.
-Fixes, in order of preference:
-
-1. Load the key into an agent and run `ssh -T git@github.com` first, as above, so
-   nothing needs prompting during init.
-2. `export SSH_ASKPASS_REQUIRE=never` (or `unset DISPLAY`) to force the prompt onto
-   the terminal.
-3. `sudo pacman -S ksshaskpass` for a graphical prompt that remembers the
-   passphrase in KWallet, so it is asked once rather than on every use. It is in the
-   desktop package list, but that installs *after* the submodule clone — so install
-   it by hand before the first run, as in the block above.
-
-Over SSH into the VM, `ssh -A` forwards your existing agent and avoids putting a key
-on a throwaway machine at all.
-
-The bootstrap script does a full `pacman -Syu`, installs `paru` if missing, and sets
-zsh as the login shell. `chezmoi apply` then installs everything listed in
-`.chezmoidata/packages.yaml`, enables Docker, and wires up the user ssh-agent.
+**If you see `exec(/usr/lib/ssh/ssh-askpass): No such file or directory`**, the key
+isn't in the agent, so ssh tried to ask for its passphrase — and with `DISPLAY` set
+but no usable TTY it reached for a graphical prompter. `ssh-add` first, as above.
+Failing that, `export SSH_ASKPASS_REQUIRE=never` forces the prompt onto the
+terminal. `ksshaskpass` is installed by the bootstrap and remembers passphrases in
+KWallet, but that happens after the submodule clone, so it can't rescue the first
+run.
 
 > **Upgrading an existing machine:** the machine facts below are generated into
 > `~/.config/chezmoi/chezmoi.toml` at init time. A machine initialised before those
