@@ -23,8 +23,27 @@ ibooks
 .config/systemd/user/app-org.kde.krdpserver.service.d
 {{- end }}
 
+{{/* Work-only: credentials and contexts that belong to the job, not the machine */}}
+{{- if not .isWork }}
+.pgpass
+.pg_service.conf
+.databrickscfg
+.datagrip/ec
+.config/infracost
+.ssh/config.d/mm
+{{- end }}
+
+{{/* Personal-only */}}
+{{- if not .isPersonal }}
+.datagrip/marvin-cloud
+{{- end }}
+
+{{/* Kubeconfigs, selected at init */}}
 {{- if not (has "homelab" .kubeClusters) }}
 .kube/config.d/homelab
+{{- end }}
+{{- if not (has "ec" .kubeClusters) }}
+.kube/config.d/ec
 {{- end }}
 {{- if not (has "mm" .kubeClusters) }}
 .kube/config.d/mm

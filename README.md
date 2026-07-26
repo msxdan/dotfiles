@@ -74,7 +74,30 @@ to a set of facts, and everything else reads those:
 | `isDesktop` | has a graphical session, so GUI packages and configs apply |
 | `isKDE` / `desktopEnv` | which desktop, for KWin/KRDP tweaks |
 | `aurHelper` | AUR helper used by the install scripts |
-| `kubeClusters` | which kubeconfigs to link (prompted at init) |
+| `profiles` | which identities this machine serves: `personal`, `work` |
+| `isWork` / `isPersonal` | derived from `profiles`, used to gate files |
+| `kubeClusters` | which kubeconfigs to link (`homelab`, `ec`, `mm`) |
+
+### Profiles
+
+A machine declares which identities it serves, and `.chezmoiignore` skips whatever
+belongs to the others. `work` covers both work clusters (`ec` and `mm`) — they are
+not split, since they are the same job.
+
+| Profile | Gets |
+| --- | --- |
+| `personal` | `homelab` kubeconfig, DataGrip `marvin-cloud` |
+| `work` | `ec` + `mm` kubeconfigs, `~/.pgpass`, `~/.pg_service.conf`, `~/.databrickscfg`, DataGrip `ec`, infracost credentials, `~/.ssh/config.d/mm`, and the `sc mm` context switch in `.zshrc` |
+
+Both prompts run at init. `kubeClusters` is pre-selected from the chosen profiles but
+stays overridable, so a personal machine can still pull in a work cluster ad hoc
+without taking the work credentials with it. `chezmoi init --promptDefaults` accepts
+every default, so unattended runs don't hang.
+
+The default is whatever preserves the machine's existing behaviour: macOS defaults to
+`personal` + `work`, everything else to `personal` alone. Changing profiles later
+means editing `profiles` in `~/.config/chezmoi/chezmoi.toml`, or re-running
+`chezmoi init`.
 
 Adding a machine means adding one branch in `.chezmoi.toml.tmpl`; unknown hosts fall
 back to prompts.

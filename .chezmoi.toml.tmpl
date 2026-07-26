@@ -50,6 +50,34 @@
 {{-     $desktopEnv = promptStringOnce . "desktopEnv" "Desktop environment (kde/gnome/other)" "kde" -}}
 {{-   end -}}
 {{- end -}}
+
+{{/*
+   Profiles decide which *identities* a machine serves, and gate the files that only
+   make sense for one of them: work Postgres credentials, Databricks, the mm SSH
+   block and context switch.
+
+   The default preserves what each machine already had, so re-initialising an
+   existing host does not silently drop files it depends on: the Mac keeps work,
+   the personal CachyOS box does not get it.
+
+   Defaults have to be computed here rather than read from .chezmoidata, because
+   .chezmoidata is not available while the config template is rendered.
+*/}}
+{{- $defaultProfiles := list "personal" -}}
+{{- if eq $os "darwin" -}}
+{{-   $defaultProfiles = list "personal" "work" -}}
+{{- end -}}
+{{- $profiles := promptMultichoiceOnce . "profiles" "Which profiles does this machine serve?" (list "personal" "work") $defaultProfiles -}}
+{{- $isWork := has "work" $profiles -}}
+{{- $isPersonal := has "personal" $profiles -}}
+
+{{/*
+   Clusters follow from the profiles, but stay overridable: the chosen profiles
+   pre-select the obvious set and anything else can still be ticked on.
+*/}}
+{{- $defaultClusters := list -}}
+{{- if $isPersonal }}{{ $defaultClusters = append $defaultClusters "homelab" }}{{ end -}}
+{{- if $isWork }}{{ $defaultClusters = concat $defaultClusters (list "ec" "mm") }}{{ end -}}
 encryption = "age"
 
 [age]
@@ -66,4 +94,7 @@ encryption = "age"
    desktopEnv = {{ $desktopEnv | quote }}
    isKDE = {{ eq $desktopEnv "kde" }}
    aurHelper = "paru"
-   kubeClusters = {{ promptMultichoiceOnce . "kubeClusters" "Which k8s clusters do you want configured?" (list "homelab" "mm") (list "homelab" "mm") | toToml }}
+   profiles = {{ $profiles | toToml }}
+   isWork = {{ $isWork }}
+   isPersonal = {{ $isPersonal }}
+   kubeClusters = {{ promptMultichoiceOnce . "kubeClusters" "Which k8s clusters do you want configured?" (list "homelab" "ec" "mm") $defaultClusters | toToml }}
