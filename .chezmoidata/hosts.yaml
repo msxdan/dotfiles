@@ -49,6 +49,11 @@ hosts:
       - age
       - gnupg # dot_gitconfig sets commit.gpgsign, so git cannot commit without it
       - neovim # $EDITOR, dot_config/nvim, alias vim=nvim
+      # image.nvim, pulled in by the neo-tree spec, needs ImageMagick and the magick
+      # luarock. Without a system luarocks, lazy.nvim bootstraps rocks via hererocks,
+      # which downloads a prebuilt Lua that can demand a newer glibc than Arch ships.
+      - imagemagick
+      - luarocks
       - tmux # dot_config/tmux
       - starship # dot_config/starship.toml
       - zoxide # alias cd=z
