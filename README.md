@@ -1,7 +1,7 @@
 # Dotfiles
 
 Personal dotfiles managed with [chezmoi](https://chezmoi.io). Supports macOS and
-Arch-family Linux (CachyOS), with a legacy WSL/Debian path.
+Arch-family Linux (CachyOS).
 
 ## Setup
 
@@ -68,9 +68,8 @@ to a set of facts, and everything else reads those:
 
 | Fact | Meaning |
 | --- | --- |
-| `role` | `workstation`, `wsl`, or `server` |
+| `role` | `workstation` or `server` |
 | `isArch` | Arch-family host (matches `ID`/`ID_LIKE` from os-release) |
-| `isWSL` | legacy Debian-on-WSL host |
 | `isDesktop` | has a graphical session, so GUI packages and configs apply |
 | `isKDE` / `desktopEnv` | which desktop, for KWin/KRDP tweaks |
 | `aurHelper` | AUR helper used by the install scripts |
@@ -97,7 +96,6 @@ Supporting directories:
   friends are thin dispatchers that stitch `shared` + the OS fragment together.
 - `.scripts/lib/arch-packages.sh` — install helpers for the Arch path. Failures are
   collected and reported rather than aborting the run.
-- `.scripts/shared/functions.sh` — legacy apt/brew helpers, used only by the WSL path.
 
 Note that chezmoi maps every top-level source directory into `$HOME`, so per-OS
 top-level directories (`linux/`, `darwin/`) are not usable — `.chezmoiignore` plus

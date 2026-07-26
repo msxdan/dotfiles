@@ -10,7 +10,6 @@
 */}}
 {{- $os := .chezmoi.os -}}
 {{- $hostname := .chezmoi.hostname -}}
-{{- $hn := lower $hostname -}}
 {{- $osID := $os -}}
 {{- $idLike := "" -}}
 {{- if and (eq $os "linux") (hasKey .chezmoi "osRelease") -}}
@@ -25,21 +24,10 @@
    CachyOS live ISO reports "CachyOS", an installed box "cachyos"), and a mismatch
    silently demotes a workstation to a headless server.
 */}}
-{{/*
-   Detect WSL from the kernel it is running, not from a hostname: a WSL kernel
-   release always carries the "microsoft" tag. Same reasoning as the desktop
-   detection above -- a hostname is a machine's label, not a fact about it.
-*/}}
-{{- $isWSL := false -}}
-{{- if and (eq $os "linux") (hasKey .chezmoi "kernel") -}}
-{{-   $isWSL = contains "microsoft" (lower (index .chezmoi.kernel "osrelease" | default "")) -}}
-{{- end -}}
 {{- $isDesktop := false -}}
 {{- $desktopEnv := "" -}}
 {{- $role := "server" -}}
-{{- if $isWSL -}}
-{{-   $role = "wsl" -}}
-{{- else if eq $os "darwin" -}}
+{{- if eq $os "darwin" -}}
 {{-   $isDesktop = true -}}
 {{-   $desktopEnv = "aqua" -}}
 {{-   $role = "workstation" -}}
@@ -97,7 +85,6 @@ encryption = "age"
    role = {{ $role | quote }}
    osID = {{ $osID | quote }}
    isArch = {{ $isArch }}
-   isWSL = {{ $isWSL }}
    isDesktop = {{ $isDesktop }}
    desktopEnv = {{ $desktopEnv | quote }}
    isKDE = {{ eq $desktopEnv "kde" }}
