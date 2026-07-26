@@ -148,7 +148,9 @@ hosts:
       - formulahendry.auto-close-tag
       - foxundermoon.shell-format
       - github.copilot
-      - github.copilot-chat
+      # github.copilot-chat is deliberately absent: VS Code has bundled it as a
+      # built-in since 1.130 (a newer build than the marketplace still offers), and
+      # --install-extension refuses to install over a built-in.
       - github.github-vscode-theme
       - github.vscode-github-actions
       - github.vscode-pull-request-github
