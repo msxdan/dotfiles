@@ -25,7 +25,15 @@
    CachyOS live ISO reports "CachyOS", an installed box "cachyos"), and a mismatch
    silently demotes a workstation to a headless server.
 */}}
-{{- $isWSL := and (eq $os "linux") (eq $hn "wsl") -}}
+{{/*
+   Detect WSL from the kernel it is running, not from a hostname: a WSL kernel
+   release always carries the "microsoft" tag. Same reasoning as the desktop
+   detection above -- a hostname is a machine's label, not a fact about it.
+*/}}
+{{- $isWSL := false -}}
+{{- if and (eq $os "linux") (hasKey .chezmoi "kernel") -}}
+{{-   $isWSL = contains "microsoft" (lower (index .chezmoi.kernel "osrelease" | default "")) -}}
+{{- end -}}
 {{- $isDesktop := false -}}
 {{- $desktopEnv := "" -}}
 {{- $role := "server" -}}

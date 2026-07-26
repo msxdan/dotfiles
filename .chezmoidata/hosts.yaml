@@ -87,13 +87,6 @@ hosts:
     mise: []
     tenv: [] # empty on purpose: TENV_AUTO_INSTALL=true installs on first use
 
-  # Legacy Debian-on-WSL box. Still provisioned by the apt branch, not from here.
-  wsl:
-    pacman: []
-    aur: []
-    pipx: []
-    mise: []
-    tenv: []
 
 # ---------------------------------------------------------------------------
 # Catalogue: ported from the macOS Brewfile but not installed anywhere yet.
