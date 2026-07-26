@@ -37,63 +37,64 @@ rm ./gitkraken-amd64.deb
 echo "A reload of .bashrc might be needed, use . ~/.bashrc"
 
 {{ else if .isArch -}}
+{{- /*
+     Machines do not share packages: look this host up in .chezmoidata/hosts.yaml by
+     lowercased hostname and install only what it asks for. An unlisted host falls
+     back to "default", and the script prints which key it matched so a hostname
+     typo is obvious instead of silently installing the wrong set.
+*/ -}}
+{{- $hn := lower .chezmoi.hostname -}}
+{{- $hostKey := "default" -}}
+{{- if hasKey .hosts $hn }}{{ $hostKey = $hn }}{{ end -}}
+{{- $host := index .hosts $hostKey -}}
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Package lists live in .chezmoidata/packages.yaml and are rendered inline below, so
-# editing them re-triggers this script automatically.
+# Lists are rendered inline from .chezmoidata/hosts.yaml, so editing them
+# re-triggers this script automatically.
 # arch-packages.sh" hash: {{ include ".scripts/lib/arch-packages.sh" | sha256sum }}
 source {{ joinPath .chezmoi.sourceDir ".scripts/lib/arch-packages.sh" | quote }}
 
 export AUR_HELPER={{ .aurHelper | quote }}
 
+echo "Host '{{ .chezmoi.hostname }}' -> using the '{{ $hostKey }}' package list"
+{{ if ne $hostKey $hn }}
+echo "NOTE: '{{ $hn }}' is not listed in .chezmoidata/hosts.yaml; add it there"
+echo "      if this machine should have its own package set."
+{{ end }}
 pkg::sync
 
-pacman_base=(
-{{- range .packages.arch.pacman.base }}
+pacman_packages=(
+{{- range index $host "pacman" }}
   {{ . | quote }}
 {{- end }}
 )
-pkg::pacman "${pacman_base[@]}"
+pkg::pacman "${pacman_packages[@]}"
 
-aur_base=(
-{{- range .packages.arch.aur.base }}
+aur_packages=(
+{{- range index $host "aur" }}
   {{ . | quote }}
 {{- end }}
 )
-pkg::aur "${aur_base[@]}"
-{{ if .isDesktop }}
-pacman_desktop=(
-{{- range .packages.arch.pacman.desktop }}
-  {{ . | quote }}
-{{- end }}
-)
-pkg::pacman "${pacman_desktop[@]}"
+pkg::aur "${aur_packages[@]}"
 
-aur_desktop=(
-{{- range .packages.arch.aur.desktop }}
-  {{ . | quote }}
-{{- end }}
-)
-pkg::aur "${aur_desktop[@]}"
-{{ end }}
 pipx_packages=(
-{{- range .packages.arch.pipx }}
+{{- range index $host "pipx" }}
   {{ . | quote }}
 {{- end }}
 )
 pkg::pipx "${pipx_packages[@]}"
 
 mise_tools=(
-{{- range .packages.mise }}
+{{- range index $host "mise" }}
   {{ . | quote }}
 {{- end }}
 )
 pkg::mise "${mise_tools[@]}"
 
-pkg::tenv tf {{ .packages.tenv.tf | quote }}
-pkg::tenv tg {{ .packages.tenv.tg | quote }}
-pkg::tenv tofu {{ .packages.tenv.tofu | quote }}
+{{ range index $host "tenv" }}
+pkg::tenv {{ (splitList "@" .) | first | quote }} {{ (splitList "@" .) | last | quote }}
+{{- end }}
 
 # Docker needs its daemon running and the user in the docker group to be usable
 # without sudo -- the macOS setup gets this from OrbStack instead.

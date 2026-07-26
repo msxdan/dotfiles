@@ -1,0 +1,122 @@
+# Per-host package lists. Machines do not share packages: each host names exactly
+# what it wants, and nothing is inherited from another host.
+#
+# The key is the lowercased hostname. A host that is not listed here falls back to
+# "default" and the install script says so explicitly, so a hostname typo is visible
+# rather than silently installing the wrong set.
+#
+# Every host MUST define all five keys, even if empty -- the templates index them
+# directly. tenv entries are "kind@version".
+#
+# macOS is deliberately absent: it keeps using ~/.brewfile via `brew bundle`.
+#
+# Package names verified against the CachyOS pacman sync DB and the AUR.
+hosts:
+  # Headless fallback: enough to have a working shell and edit files, nothing more.
+  default:
+    pacman:
+      - git
+      - zsh
+      - openssh
+      - age
+      - neovim
+      - tmux
+      - starship
+      - zoxide
+      - mise
+      - fzf
+      - lsd
+      - bat
+      - ripgrep
+      - jq
+      - htop
+    aur: []
+    pipx: []
+    mise: []
+    tenv: []
+
+  # CachyOS workstation. Scoped to what this repo's own configs reference, plus what
+  # was already installed by hand (see .notes/installed-cachyos.md). Anything else
+  # from the macOS Brewfile is in the catalogue at the bottom of this file -- move a
+  # line up into this list when it is actually wanted.
+  cachyos:
+    pacman:
+      # Shell and CLI referenced by dot_zshrc / dot_aliasrc
+      - git
+      - zsh
+      - openssh
+      - age
+      - neovim # $EDITOR, dot_config/nvim, alias vim=nvim
+      - tmux # dot_config/tmux
+      - starship # dot_config/starship.toml
+      - zoxide # alias cd=z
+      - mise # activated from .zshrc
+      - fzf # fzf-tab
+      - lsd # alias ls=lsd, dot_config/lsd
+      - yazi # yy() helper, dot_config/yazi
+      - bat
+      - ripgrep
+      - jq
+      - yq
+      # Terminal
+      - kitty # dot_config/kitty
+      - ttf-jetbrains-mono-nerd # glyphs for kitty/starship
+      # Tools whose config or shell completion this repo ships
+      - github-cli # dot_config/gh
+      - pgcli # dot_config/pgcli
+      - kubectl # .zshrc completion, $KUBECONFIG assembly
+      - k9s # dot_config/k9s
+      - helm # .zshrc completion, helm repositories.yaml
+      - docker # dot_docker/config.json, .zshrc completion
+      - docker-compose
+      - containerd
+      # Desktop / KDE
+      - solaar # dot_config/solaar
+      - qt6-tools # qdbus6, used by the Solaar rules
+      - kde-cli-tools # kwriteconfig6, used by the KDE settings script
+      - ksshaskpass # ssh passphrase prompts without a terminal
+      - krdp
+      - flameshot
+    aur:
+      - tenv-bin # .zshrc completion; TENV_AUTO_INSTALL handles versions on demand
+    pipx: []
+    mise: []
+    tenv: [] # empty on purpose: TENV_AUTO_INSTALL=true installs on first use
+
+  # Legacy Debian-on-WSL box. Still provisioned by the apt branch, not from here.
+  wsl:
+    pacman: []
+    aur: []
+    pipx: []
+    mise: []
+    tenv: []
+
+# ---------------------------------------------------------------------------
+# Catalogue: ported from the macOS Brewfile but not installed anywhere yet.
+# Move lines into a host above to enable them. Names are checked, so they should
+# work as-is.
+#
+# Network       pacman: mtr nmap ipcalc socat iputils speedtest-cli
+#               aur:    tcptraceroute ipinfo-cli
+# Cloud         pacman: azure-cli aws-cli-v2 azcopy
+#               aur:    google-cloud-cli azure-dev-cli-bin
+# IaC           pacman: ansible-lint
+#               aur:    terraform-docs infracost
+# Kubernetes    pacman: kubectx crictl helmfile argocd kustomize cilium-cli
+#               aur:    talosctl-bin
+# Containers    pacman: docker-buildx dive qemu-full
+# Databases     pacman: mongodb-tools-bin
+#               aur:    mongosh-bin pgbadger redisinsight-bin databricks-cli-bin
+# Development   pacman: act git-lfs gitleaks lazygit worktrunk websocat fd
+#               aur:    git-secrets postman-bin
+# Security      pacman: sslscan trivy hashcat hydra sops
+#               aur:    snyk k6
+# Media         pacman: vlc mpv ffmpeg imagemagick perl-image-exiftool
+# Desktop apps  pacman: obsidian drawio-desktop kdeconnect kwalletmanager
+#               aur:    slack-desktop spotify winbox bottles
+# Python        pacman: python-pipx python-poetry
+#               pipx:   keepercommander shcheck apkid
+# Toolchains    mise:   go@1.24.4 node@20 pnpm@8.6.2 yarn@latest
+#               tenv:   tf@1.13.1 tg@0.66.7 tofu@1.10.6
+# Misc          pacman: grc yamllint libpst wget curl unzip man-db gnupg procps-ng
+# ---------------------------------------------------------------------------

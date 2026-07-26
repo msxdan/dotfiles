@@ -104,8 +104,13 @@ back to prompts.
 
 Supporting directories:
 
-- `.chezmoidata/packages.yaml` — Arch package lists, split base/desktop and
-  pacman/AUR/pipx/mise. macOS keeps using `~/.brewfile`.
+- `.chezmoidata/hosts.yaml` — per-host package lists, keyed by lowercased hostname.
+  **Machines do not share packages**: each host names exactly what it wants and
+  inherits nothing from another host. An unlisted host falls back to `default`, and
+  the install script prints which key it matched so a hostname typo is visible.
+  Packages ported from the Brewfile but not yet wanted by any host sit in a
+  commented catalogue at the bottom of that file — move a line into a host to enable
+  it. macOS is deliberately absent and keeps using `~/.brewfile`.
 - `.chezmoitemplates/{shared,macos,linux}/` — shell fragments. `dot_zshrc.tmpl` and
   friends are thin dispatchers that stitch `shared` + the OS fragment together.
 - `.scripts/lib/arch-packages.sh` — install helpers for the Arch path. Failures are
