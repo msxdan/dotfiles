@@ -134,14 +134,37 @@ pkg::tenv() {
   tenv "$kind" install "$version" || pkg::_fail "tenv:${kind}@${version}"
 }
 
+PKG_REBOOT_REQUIRED=0
+
+# A full -Syu can replace the kernel, which removes the module tree for the kernel
+# still running. Anything that has to load modules cannot start until a reboot --
+# docker in particular fails setting up its bridge with "failed to add jump rules
+# to the ip tables", because it cannot load br_netfilter / iptable_nat.
+pkg::kernel_modules_available() {
+  [ -d "/lib/modules/$(uname -r)" ]
+}
+
 # Enable a systemd unit only if its package actually landed.
 pkg::enable_service() {
   local unit=$1
   if ! systemctl list-unit-files "$unit" &>/dev/null; then
     return 0
   fi
+
   pkg::log "Enabling ${unit}"
-  sudo systemctl enable --now "$unit" || pkg::_fail "service:${unit}"
+  sudo systemctl enable "$unit" || {
+    pkg::_fail "service:${unit} (enable)"
+    return 0
+  }
+
+  if ! pkg::kernel_modules_available; then
+    echo "    Not starting it yet: this run upgraded the kernel, so the running one"
+    echo "    ($(uname -r)) has no module tree left. It will start after a reboot."
+    PKG_REBOOT_REQUIRED=1
+    return 0
+  fi
+
+  sudo systemctl start "$unit" || pkg::_fail "service:${unit} (start)"
 }
 
 pkg::add_user_to_group() {
@@ -156,6 +179,10 @@ pkg::add_user_to_group() {
 }
 
 pkg::report() {
+  if [ "$PKG_REBOOT_REQUIRED" = 1 ]; then
+    printf '\nREBOOT REQUIRED: the kernel was upgraded during this run, so services\n'
+    printf 'that load kernel modules (docker) were enabled but not started.\n'
+  fi
   ((${#PKG_FAILED[@]})) || {
     pkg::log "All packages installed"
     return 0

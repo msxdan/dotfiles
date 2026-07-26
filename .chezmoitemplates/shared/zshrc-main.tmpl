@@ -156,7 +156,9 @@ zstyle ':fzf-tab:*' switch-group '<' '>'
 
 # SSH host completion
 h=()
-for ssh_config in $HOME/.ssh/config $HOME/.ssh/config.d/*; do
+# (N) so an empty or absent config.d does not abort the shell with "no matches
+# found" -- it is empty whenever no profile contributes an ssh include.
+for ssh_config in $HOME/.ssh/config $HOME/.ssh/config.d/*(N); do
   if [[ -r $ssh_config ]]; then
     h=($h ${${${(@M)${(f)"$(cat $ssh_config)"}:#Host *}#Host }:#*[*?]*})
   fi

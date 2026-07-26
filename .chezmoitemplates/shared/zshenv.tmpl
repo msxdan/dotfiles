@@ -16,8 +16,9 @@ export TF_CLI_CONFIG_FILE="{{ .chezmoi.homeDir }}/.terraformrc"
 # Create kubeconfig symlink for existing kubeconfigs in ~/.private/.kube/config.d
 if [[ -d ~/.private/.kube/config.d ]]; then
   mkdir -p ~/.kube/config.d
-  for private_kube_config in ~/.private/.kube/config.d/*; do
-    [[ -e $private_kube_config ]] || continue
+  # (N) is zsh's null_glob qualifier: without it an empty or missing directory
+  # aborts the loop with "no matches found" instead of iterating zero times.
+  for private_kube_config in ~/.private/.kube/config.d/*(N); do
     KUBE_FILE="$HOME/.kube/config.d/$(basename $private_kube_config)"
     if [ ! -L ${KUBE_FILE} ]; then
       ln -s $private_kube_config ${KUBE_FILE}
@@ -27,8 +28,7 @@ fi
 
 KUBECONFIG=${HOME}/.kube/config
 if [[ -d ~/.kube/config.d ]]; then
-  for kubeconfig in ~/.kube/config.d/*; do
-    [[ -e $kubeconfig ]] || continue
+  for kubeconfig in ~/.kube/config.d/*(N); do
     KUBECONFIG=${KUBECONFIG}:$kubeconfig
   done
 fi
@@ -38,8 +38,8 @@ export K9S_CONFIG_DIR="{{ .chezmoi.homeDir }}/.config/k9s/"
 export HELM_REGISTRY_CONFIG="${HOME}/.docker/config.json"
 
 if [[ -d ~/.private/.env.d ]]; then
-  for env in ~/.private/.env.d/*; do
-    [[ -f $env ]] && source $env
+  for env in ~/.private/.env.d/*(N); do
+    source $env
   done
 fi
 
