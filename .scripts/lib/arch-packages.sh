@@ -101,6 +101,17 @@ pkg::aur() {
     pkg::_fail "aur:<${AUR_HELPER} not installed>"
     return 0
   fi
+  # Being on PATH is not the same as being runnable: a helper installed from a -bin
+  # package stops loading after a libalpm soname bump. Left unchecked, every AUR
+  # package then fails with the same linker error, which reads as "all these
+  # packages are broken" rather than "the helper is". Run it once to find out.
+  # Not piped into tail here: the exit status of a pipeline is the last command's,
+  # so a broken helper would still look like it succeeded.
+  local helper_err
+  if ! helper_err=$("$AUR_HELPER" --version 2>&1); then
+    pkg::_fail "aur:<${AUR_HELPER} is installed but will not run: $(tail -n 1 <<<"$helper_err")>"
+    return 0
+  fi
   # --skipreview is required for unattended use: paru otherwise opens each PKGBUILD
   # in a pager for review, which cannot succeed with no terminal attached and fails
   # every single package identically.

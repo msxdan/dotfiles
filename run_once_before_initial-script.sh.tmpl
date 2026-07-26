@@ -22,11 +22,22 @@ sudo pacman -Syu --noconfirm
 sudo pacman -S --needed --noconfirm base-devel git zsh openssh age ksshaskpass
 
 # CachyOS ships paru preinstalled, but a plain Arch or minimal VM image will not.
+# CachyOS also carries it in its own repos, where it is rebuilt whenever pacman
+# bumps the libalpm soname, so prefer that and only build as a fallback.
+#
+# The -bin package is deliberately not used. It ships a binary linked against
+# whatever libalpm existed when its release was cut, so on a host whose pacman has
+# moved on it dies with "libalpm.so.N: cannot open shared object file" every time
+# it runs -- and its `libalpm.so>=14` dependency does not catch that, because
+# pacman satisfies the version while providing a different soname. Building from
+# source links against the libalpm actually installed here.
 if ! command -v {{ .aurHelper }} &> /dev/null; then
-    build_dir="$(mktemp -d)"
-    git clone --depth 1 "https://aur.archlinux.org/{{ .aurHelper }}-bin.git" "${build_dir}/{{ .aurHelper }}-bin"
-    (cd "${build_dir}/{{ .aurHelper }}-bin" && makepkg -si --noconfirm)
-    rm -rf "${build_dir}"
+    if ! sudo pacman -S --needed --noconfirm {{ .aurHelper }}; then
+        build_dir="$(mktemp -d)"
+        git clone --depth 1 "https://aur.archlinux.org/{{ .aurHelper }}.git" "${build_dir}/{{ .aurHelper }}"
+        (cd "${build_dir}/{{ .aurHelper }}" && makepkg -si --noconfirm)
+        rm -rf "${build_dir}"
+    fi
 fi
 
 # Make zsh the login shell (chsh prompts for the account password).
