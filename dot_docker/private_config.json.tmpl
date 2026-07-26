@@ -1,0 +1,30 @@
+{
+	"auths": {
+		"dhi.io": {},
+		"ghcr.io": {},
+		"registry.marvincloud.io": {}
+	},
+	"credHelpers": {
+		"europe-docker.pkg.dev": "gcloud"
+	},
+{{- if eq .chezmoi.os "darwin" }}
+	"credsStore": "osxkeychain",
+	"currentContext": "orbstack",
+	"cliPluginsExtraDirs": [
+		"/opt/homebrew/lib/docker/cli-plugins"
+	]
+{{- else }}
+	{{/*
+	   secretservice reaches KWallet through the Secret Service API and is the Linux
+	   counterpart of osxkeychain. It needs the docker-credential-secretservice AUR
+	   package, which is in this host's list.
+
+	   currentContext must be "default": orbstack does not exist on Linux, and docker
+	   errors out rather than falling back when the current context is missing.
+	   Plugins installed by pacman land in a directory docker already searches, so no
+	   cliPluginsExtraDirs entry is needed.
+	*/}}
+	"credsStore": "secretservice",
+	"currentContext": "default"
+{{- end }}
+}

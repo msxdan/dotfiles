@@ -19,6 +19,7 @@ hosts:
       - zsh
       - openssh
       - age
+      - gnupg # dot_gitconfig sets commit.gpgsign, so git cannot commit without it
       - neovim
       - tmux
       - starship
@@ -46,6 +47,7 @@ hosts:
       - zsh
       - openssh
       - age
+      - gnupg # dot_gitconfig sets commit.gpgsign, so git cannot commit without it
       - neovim # $EDITOR, dot_config/nvim, alias vim=nvim
       - tmux # dot_config/tmux
       - starship # dot_config/starship.toml
@@ -65,6 +67,7 @@ hosts:
       - github-cli # dot_config/gh
       - pgcli # dot_config/pgcli
       - kubectl # .zshrc completion, $KUBECONFIG assembly
+      - kubectx # alias kc=kubectx and kns=kubens; one package provides both
       - k9s # dot_config/k9s
       - helm # .zshrc completion, helm repositories.yaml
       - docker # dot_docker/config.json, .zshrc completion
@@ -79,6 +82,7 @@ hosts:
       - flameshot
     aur:
       - tenv-bin # .zshrc completion; TENV_AUTO_INSTALL handles versions on demand
+      - docker-credential-secretservice # ~/.docker/config.json credsStore on Linux
     pipx: []
     mise: []
     tenv: [] # empty on purpose: TENV_AUTO_INSTALL=true installs on first use
