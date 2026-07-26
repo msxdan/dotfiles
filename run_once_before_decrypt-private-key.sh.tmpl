@@ -2,6 +2,9 @@
 
 if [ ! -f "{{ .chezmoi.homeDir }}/.config/chezmoi/.key" ]; then
     mkdir -p ~/.config/chezmoi
-    chezmoi age decrypt --passphrase --output ~/.config/chezmoi/.key {{ .chezmoi.sourceDir }}/.key.age
+    # Use the absolute path to the running binary, not a bare "chezmoi": the
+    # get.chezmoi.io installer drops it in ./bin relative to the working directory,
+    # so on a fresh machine ~/bin is not on PATH yet and a bare call is not found.
+    {{ .chezmoi.executable }} age decrypt --passphrase --output ~/.config/chezmoi/.key {{ .chezmoi.sourceDir }}/.key.age
     chmod 600 ~/.config/chezmoi/.key
 fi

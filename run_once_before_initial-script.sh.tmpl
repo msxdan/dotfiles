@@ -53,7 +53,9 @@ fi
 sudo pacman -Syu --noconfirm
 
 # Toolchain needed to build AUR packages and to run the rest of this repo.
-sudo pacman -S --needed --noconfirm base-devel git zsh openssh age
+# ksshaskpass is here rather than only in the host package list because ssh has no
+# way to ask for a passphrase without it whenever git is driven by another process.
+sudo pacman -S --needed --noconfirm base-devel git zsh openssh age ksshaskpass
 
 # CachyOS ships paru preinstalled, but a plain Arch or minimal VM image will not.
 if ! command -v {{ .aurHelper }} &> /dev/null; then

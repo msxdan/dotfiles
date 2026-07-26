@@ -14,8 +14,22 @@ sh -c "$(curl -fsLS get.chezmoi.io)" -- init msxdan/dotfiles --apply --recurse-s
 ### CachyOS / Arch
 
 Must be an **installed** system. Applying on a live ISO is refused: the bootstrap
-does a full `pacman -Syu` plus ~110 packages, which on a read-only squashfs with a
-tmpfs overlay replaces the running kernel/systemd and exhausts the overlay.
+does a full `pacman -Syu`, which on a read-only squashfs with a tmpfs overlay
+replaces the running kernel/systemd and exhausts the overlay.
+
+The quickest path, which handles every prerequisite below and is worth using after
+restoring a VM snapshot:
+
+```bash
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/msxdan/dotfiles/main/.scripts/bootstrap.sh)"
+```
+
+It refuses to run on a live ISO, installs chezmoi from the repos (so it lands on
+`PATH`), installs `ksshaskpass`, and checks that a key is in your agent and that
+github.com is a known host before starting — each of those otherwise fails later in
+a way that looks unrelated to its cause. Set `BRANCH=` to test a branch.
+
+Doing it by hand instead:
 
 The private submodule (`dot_private`) is cloned over SSH, but the SSH keys live
 *inside* it — so a brand-new machine has no key to authenticate with. Get a working
