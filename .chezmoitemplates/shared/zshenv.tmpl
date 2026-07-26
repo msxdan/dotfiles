@@ -13,19 +13,10 @@ export TF_CLI_ARGS_apply="-parallelism=40"
 export TF_CLI_ARGS_plan="-parallelism=40"
 export TF_CLI_CONFIG_FILE="{{ .chezmoi.homeDir }}/.terraformrc"
 
-# Create kubeconfig symlink for existing kubeconfigs in ~/.private/.kube/config.d
-if [[ -d ~/.private/.kube/config.d ]]; then
-  mkdir -p ~/.kube/config.d
-  # (N) is zsh's null_glob qualifier: without it an empty or missing directory
-  # aborts the loop with "no matches found" instead of iterating zero times.
-  for private_kube_config in ~/.private/.kube/config.d/*(N); do
-    KUBE_FILE="$HOME/.kube/config.d/$(basename $private_kube_config)"
-    if [ ! -L ${KUBE_FILE} ]; then
-      ln -s $private_kube_config ${KUBE_FILE}
-    fi
-  done
-fi
-
+# The symlinks in ~/.kube/config.d are created by chezmoi, one per cluster selected
+# at init. This used to link everything found in ~/.private/.kube/config.d instead,
+# which silently re-added every cluster the selection had excluded -- the private
+# submodule is checked out whole, so it always contains all of them.
 KUBECONFIG=${HOME}/.kube/config
 if [[ -d ~/.kube/config.d ]]; then
   for kubeconfig in ~/.kube/config.d/*(N); do

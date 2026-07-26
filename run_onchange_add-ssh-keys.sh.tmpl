@@ -3,15 +3,8 @@
 # ssh_config_mm" hash: {{ include  "dot_private/private_dot_ssh/private_config.d/mm" | sha256sum }}
 # ssh_config" hash: {{ include  "private_dot_ssh/private_config" | sha256sum }}
 
-{{ if eq .chezmoi.os "darwin" -}}
-
-# Load ssh keys into keychain
-ssh-add --apple-use-keychain $(find ~/.private/.ssh/keys -type f | grep -E '.*_ed25519$|.*_rsa$')
-
-{{ else if eq .chezmoi.os "linux" -}}
-
-# No Keychain on Linux: load the keys into the user-scoped agent instead. The keys
-# are passphrase-protected, so this prompts once per key that isn't loaded yet.
+{{ if eq .chezmoi.os "linux" -}}
+# No Keychain on Linux: load the keys into a user-scoped agent instead.
 export SSH_AUTH_SOCK="${XDG_RUNTIME_DIR:-/run/user/$(id -u)}/ssh-agent.socket"
 systemctl --user enable --now ssh-agent.service
 
@@ -19,17 +12,28 @@ systemctl --user enable --now ssh-agent.service
 # almost certainly not been re-sourced since ksshaskpass was installed. Set the
 # prompter up here too, or ssh-add below fails instead of asking.
 {{ template "linux/ssh-askpass.tmpl" . }}
+{{ end -}}
 
-if [ -d ~/.private/.ssh/keys ]; then
-  loaded_fingerprints="$(ssh-add -l 2>/dev/null || true)"
-  find ~/.private/.ssh/keys -type f \( -name '*_ed25519' -o -name '*_rsa' \) -print0 |
+# Keys are scoped by directory, following the layout the private repo already uses:
+# anything directly under keys/ applies to every machine, keys/work/ only to machines
+# serving the work profile. Loading a work key on a personal machine is both wrong
+# and costly -- each unnecessary key is another passphrase prompt.
+key_dirs=(~/.private/.ssh/keys)
+{{ if .isWork -}}
+key_dirs+=(~/.private/.ssh/keys/work)
+{{ end }}
+# The keys are passphrase-protected, so this prompts once per key not already loaded.
+loaded_fingerprints="$(ssh-add -l 2>/dev/null || true)"
+
+for key_dir in "${key_dirs[@]}"; do
+  [ -d "$key_dir" ] || continue
+  # -maxdepth 1 so the base directory does not pull in keys/work/ recursively
+  find "$key_dir" -maxdepth 1 -type f \( -name '*_ed25519' -o -name '*_rsa' \) -print0 |
     while IFS= read -r -d '' key; do
       fingerprint="$(ssh-keygen -lf "$key" 2>/dev/null | awk '{print $2}')"
       if [ -n "$fingerprint" ] && echo "$loaded_fingerprints" | grep -qF "$fingerprint"; then
         continue
       fi
-      ssh-add "$key"
+      ssh-add {{ if eq .chezmoi.os "darwin" }}--apple-use-keychain {{ end }}"$key"
     done
-fi
-
-{{ end -}}
+done
