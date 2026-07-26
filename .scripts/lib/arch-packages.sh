@@ -31,6 +31,29 @@ pkg::log() { printf '\n==> %s\n' "$*"; }
 pkg::sync() {
   pkg::log "Upgrading system packages"
   sudo pacman -Syu --noconfirm
+
+  # Arch does not support running a partially upgraded system. A package built
+  # against a newer glibc than the installed one fails at load time with a
+  # confusing "GLIBC_x.yy not found (required by <some library>)", which points at
+  # the library rather than at the real cause. If anything is still pending after a
+  # full upgrade then the mirror is out of sync or the transaction did not finish,
+  # and installing more packages on top only spreads the inconsistency.
+  local -a pending
+  mapfile -t pending < <(pacman -Qu 2>/dev/null)
+  if ((${#pending[@]})); then
+    {
+      echo
+      echo "ERROR: ${#pending[@]} package(s) still pending after a full upgrade:"
+      printf '  %s\n' "${pending[@]}"
+      echo
+      echo "The system is partially upgraded, which Arch does not support. Refresh the"
+      echo "mirrors and upgrade again before re-running chezmoi apply:"
+      echo "  sudo cachyos-rate-mirrors && sudo pacman -Syyu"
+      echo
+      echo "If these are held back on purpose, check IgnorePkg in /etc/pacman.conf."
+    } >&2
+    return 1
+  fi
 }
 
 # Usage: pkg::_install <label> <cmd> [args...] -- [packages...]
