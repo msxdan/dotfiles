@@ -24,22 +24,22 @@ hosts:
   # Headless fallback: enough to have a working shell and edit files, nothing more.
   default:
     pacman:
-      - git
-      - zsh
-      - openssh
-      - age
-      - gnupg # dot_gitconfig sets commit.gpgsign, so git cannot commit without it
-      - neovim
-      - tmux
-      - starship
-      - zoxide
-      - mise
-      - fzf
-      - lsd
-      - bat
-      - ripgrep
-      - jq
-      - htop
+    - git
+    - zsh
+    - openssh
+    - age
+    - gnupg # dot_gitconfig sets commit.gpgsign, so git cannot commit without it
+    - neovim
+    - tmux
+    - starship
+    - zoxide
+    - mise
+    - fzf
+    - lsd
+    - bat
+    - ripgrep
+    - jq
+    - htop
     aur: []
     pipx: []
     mise: []
@@ -48,7 +48,7 @@ hosts:
     # Shipped by dot_config/systemd/user/ on every Linux host, so it is enabled even
     # on the headless fallback: git over ssh needs the agent wherever this applies.
     user_services:
-      - ssh-agent.service
+    - ssh-agent.service
     groups: []
     vscode: [] # headless: no editor GUI here
 
@@ -58,170 +58,175 @@ hosts:
   # line up into this list when it is actually wanted.
   cachyos:
     pacman:
-      # Shell and CLI referenced by dot_zshrc / dot_aliasrc
-      - git
-      - zsh
-      - openssh
-      - age
-      - gnupg # dot_gitconfig sets commit.gpgsign, so git cannot commit without it
-      - neovim # $EDITOR, dot_config/nvim, alias vim=nvim
-      # image.nvim, pulled in by the neo-tree spec, needs ImageMagick and the magick
-      # luarock. Without a system luarocks, lazy.nvim bootstraps rocks via hererocks,
-      # which downloads a prebuilt Lua that can demand a newer glibc than Arch ships.
-      - imagemagick
-      - luarocks
-      - tmux # dot_config/tmux
-      - starship # dot_config/starship.toml
-      - zoxide # alias cd=z
-      - mise # activated from .zshrc
-      - fzf # fzf-tab
-      - lsd # alias ls=lsd, dot_config/lsd
-      - yazi # yy() helper, dot_config/yazi
-      - bat
-      - ripgrep
-      - jq
-      - yq
-      # Terminal
-      - kitty # dot_config/kitty
-      - ttf-jetbrains-mono-nerd # glyphs for kitty/starship
-      # Tools whose config or shell completion this repo ships
-      - github-cli # dot_config/gh
-      - pgcli # dot_config/pgcli
-      - kubectl # .zshrc completion, $KUBECONFIG assembly
-      - kubectx # alias kc=kubectx and kns=kubens; one package provides both
-      - k9s # dot_config/k9s
-      - helm # .zshrc completion, helm repositories.yaml
-      - docker # dot_docker/config.json, .zshrc completion
-      - docker-compose
-      - containerd
-      # Desktop / KDE
-      - solaar # dot_config/solaar
-      - qt6-tools # qdbus6, used by the Solaar rules
-      - kde-cli-tools # kwriteconfig6, used by the KDE settings script
-      - ksshaskpass # ssh passphrase prompts without a terminal
-      - krdp
-      - flameshot
+    # Shell and CLI referenced by dot_zshrc / dot_aliasrc
+    - git
+    - zsh
+    - openssh
+    - age
+    - gnupg # dot_gitconfig sets commit.gpgsign, so git cannot commit without it
+    - neovim # $EDITOR, dot_config/nvim, alias vim=nvim
+    # image.nvim, pulled in by the neo-tree spec, needs ImageMagick and the magick
+    # luarock. Without a system luarocks, lazy.nvim bootstraps rocks via hererocks,
+    # which downloads a prebuilt Lua that can demand a newer glibc than Arch ships.
+    - imagemagick
+    - luarocks
+    # nvim-treesitter's main branch compiles every parser from source and shells
+    # out to the tree-sitter CLI to do it.
+    - tree-sitter-cli
+    - tmux # dot_config/tmux
+    - starship # dot_config/starship.toml
+    - zoxide # alias cd=z
+    - mise # activated from .zshrc
+    - fzf # fzf-tab
+    - lsd # alias ls=lsd, dot_config/lsd
+    - yazi # yy() helper, dot_config/yazi
+    - bat
+    - ripgrep
+    - jq
+    - yq
+    # Terminal
+    - kitty # dot_config/kitty
+    - ttf-jetbrains-mono-nerd # glyphs for kitty/starship
+    # Tools whose config or shell completion this repo ships
+    - github-cli # dot_config/gh
+    - pgcli # dot_config/pgcli
+    - kubectl # .zshrc completion, $KUBECONFIG assembly
+    - kubectx # alias kc=kubectx and kns=kubens; one package provides both
+    - k9s # dot_config/k9s
+    - helm # .zshrc completion, helm repositories.yaml
+    - docker # dot_docker/config.json, .zshrc completion
+    - docker-compose
+    - containerd
+    # Desktop / KDE
+    - solaar # dot_config/solaar
+    - qt6-tools # qdbus6, used by the Solaar rules
+    - kde-cli-tools # kwriteconfig6, used by the KDE settings script
+    - ksshaskpass # ssh passphrase prompts without a terminal
+    - krdp
+    - flameshot
+    - kind
+    - k6
+    - obsidian
     aur:
-      - docker-credential-secretservice # ~/.docker/config.json credsStore on Linux
-      # Microsoft's build rather than the repos' code (Code - OSS): only this one
-      # talks to the real marketplace, and the extension list below needs it. It
-      # conflicts with `code`, which must be uninstalled first.
-      - visual-studio-code-bin
+    - docker-credential-secretservice # ~/.docker/config.json credsStore on Linux
+    # Microsoft's build rather than the repos' code (Code - OSS): only this one
+    # talks to the real marketplace, and the extension list below needs it. It
+    # conflicts with `code`, which must be uninstalled first.
+    - visual-studio-code-bin
     pipx: []
     mise:
-      # Not in the official repos and only in the AUR as tenv-bin, but mise can
-      # fetch the same upstream release, so it needs no AUR build.
-      - aqua:tofuutils/tenv # .zshrc completion; TENV_AUTO_INSTALL handles versions
+    # Not in the official repos and only in the AUR as tenv-bin, but mise can
+    # fetch the same upstream release, so it needs no AUR build.
+    - aqua:tofuutils/tenv # .zshrc completion; TENV_AUTO_INSTALL handles versions
     tenv: [] # empty on purpose: TENV_AUTO_INSTALL=true installs on first use
     # Docker needs its daemon running to be usable at all -- the macOS setup gets
     # this from OrbStack instead.
     services:
-      - docker.service
-      - containerd.service
+    - docker.service
+    - containerd.service
     user_services:
-      - ssh-agent.service
+    - ssh-agent.service
     groups:
-      - docker # run docker without sudo
+    - docker # run docker without sudo
     # Ported from the macOS Brewfile's vscode lines. The six that were commented
     # out individually there are left out: they were already opted out before the
     # block was disabled, and one is marked deprecated upstream.
     vscode:
-      - 4ops.terraform
-      - ahmadalli.vscode-nginx-conf
-      - almenon.arepl
-      - astro-build.astro-vscode
-      - bartolomesintes.mclibre-org-html-css-extension-pack
-      - batisteo.vscode-django
-      - bradgashler.htmltagwrap
-      - Catppuccin.catppuccin-vsc-icons
-      - compilenix.vscode-zonefile
-      - compulim.compulim-vscode-closetag
-      - dbaeumer.vscode-eslint
-      - devsense.composer-php-vscode
-      - devsense.phptools-vscode
-      - devsense.profiler-php-vscode
-      - donjayamanne.python-environment-manager
-      - donjayamanne.python-extension-pack
-      - drcika.apc-extension
-      - eamodio.gitlens
-      - esbenp.prettier-vscode
-      - formulahendry.auto-close-tag
-      - foxundermoon.shell-format
-      - github.copilot
-      # github.copilot-chat is deliberately absent: VS Code has bundled it as a
-      # built-in since 1.130 (a newer build than the marketplace still offers), and
-      # --install-extension refuses to install over a built-in.
-      - github.github-vscode-theme
-      - github.vscode-github-actions
-      - github.vscode-pull-request-github
-      - gitlab.gitlab-workflow
-      - golang.go
-      - graphql.vscode-graphql
-      - graphql.vscode-graphql-execution
-      - graphql.vscode-graphql-syntax
-      - hashicorp.terraform
-      - HTMLHint.vscode-htmlhint
-      - ionutvmi.reg
-      - jeff-hykin.better-shellscript-syntax
-      - kennylong.kubernetes-yaml-formatter
-      - kestra-io.kestra
-      - kevinrose.vsc-python-indent
-      - kisstkondoros.vscode-gutter-preview
-      - l7ssha.tag-inserter
-      - magicstack.magicpython
-      - miguelsolorio.fluent-icons
-      - mrmlnc.vscode-csscomb
-      - ms-azuretools.vscode-azureresourcegroups
-      - ms-azuretools.vscode-azurestaticwebapps
-      - ms-azuretools.vscode-bicep
-      - ms-azuretools.vscode-docker
-      - ms-dotnettools.csdevkit
-      - ms-dotnettools.csharp
-      - ms-dotnettools.dotnet-interactive-vscode
-      - ms-dotnettools.vscode-dotnet-pack
-      - ms-dotnettools.vscode-dotnet-runtime
-      - ms-kubernetes-tools.vscode-kubernetes-tools
-      - ms-python.debugpy
-      - ms-python.isort
-      - ms-python.python
-      - ms-python.vscode-pylance
-      - ms-toolsai.jupyter
-      - ms-toolsai.jupyter-keymap
-      - ms-toolsai.jupyter-renderers
-      - ms-toolsai.vscode-jupyter-cell-tags
-      - ms-toolsai.vscode-jupyter-slideshow
-      - ms-vscode-remote.remote-containers
-      - ms-vscode-remote.remote-ssh
-      - ms-vscode-remote.remote-ssh-edit
-      - ms-vscode-remote.remote-wsl
-      - ms-vscode-remote.vscode-remote-extensionpack
-      - ms-vscode.azurecli
-      - ms-vscode.cpptools-extension-pack
-      - ms-vscode.live-server
-      - ms-vscode.makefile-tools
-      - ms-vscode.powershell
-      - ms-vscode.remote-explorer
-      - ms-vscode.remote-server
-      - ms-vscode.vscode-typescript-next
-      - nicolasvuillamy.vscode-groovy-lint
-      - njpwerner.autodocstring
-      - oderwat.indent-rainbow
-      - pflannery.vscode-versionlens # Version Lens
-      - pkief.material-icon-theme
-      - pomdtr.excalidraw-editor
-      - redhat.ansible
-      - redhat.vscode-xml
-      - redhat.vscode-yaml
-      - ritwickdey.liveserver
-      - tamasfe.even-better-toml
-      - vadimcn.vscode-lldb
-      - visualstudioexptteam.intellicode-api-usage-examples
-      - visualstudioexptteam.vscodeintellicode
-      - vscode-icons-team.vscode-icons
-      - Vue.volar
-      - wholroyd.jinja
-      - ybaumes.highlight-trailing-white-spaces
-
+    - 4ops.terraform
+    - ahmadalli.vscode-nginx-conf
+    - almenon.arepl
+    - astro-build.astro-vscode
+    - bartolomesintes.mclibre-org-html-css-extension-pack
+    - batisteo.vscode-django
+    - bradgashler.htmltagwrap
+    - Catppuccin.catppuccin-vsc-icons
+    - compilenix.vscode-zonefile
+    - compulim.compulim-vscode-closetag
+    - dbaeumer.vscode-eslint
+    - devsense.composer-php-vscode
+    - devsense.phptools-vscode
+    - devsense.profiler-php-vscode
+    - donjayamanne.python-environment-manager
+    - donjayamanne.python-extension-pack
+    - drcika.apc-extension
+    - eamodio.gitlens
+    - esbenp.prettier-vscode
+    - formulahendry.auto-close-tag
+    - foxundermoon.shell-format
+    - github.copilot
+    # github.copilot-chat is deliberately absent: VS Code has bundled it as a
+    # built-in since 1.130 (a newer build than the marketplace still offers), and
+    # --install-extension refuses to install over a built-in.
+    - github.github-vscode-theme
+    - github.vscode-github-actions
+    - github.vscode-pull-request-github
+    - gitlab.gitlab-workflow
+    - golang.go
+    - graphql.vscode-graphql
+    - graphql.vscode-graphql-execution
+    - graphql.vscode-graphql-syntax
+    - hashicorp.terraform
+    - HTMLHint.vscode-htmlhint
+    - ionutvmi.reg
+    - jeff-hykin.better-shellscript-syntax
+    - kennylong.kubernetes-yaml-formatter
+    - kestra-io.kestra
+    - kevinrose.vsc-python-indent
+    - kisstkondoros.vscode-gutter-preview
+    - l7ssha.tag-inserter
+    - magicstack.magicpython
+    - miguelsolorio.fluent-icons
+    - mrmlnc.vscode-csscomb
+    - ms-azuretools.vscode-azureresourcegroups
+    - ms-azuretools.vscode-azurestaticwebapps
+    - ms-azuretools.vscode-bicep
+    - ms-azuretools.vscode-docker
+    - ms-dotnettools.csdevkit
+    - ms-dotnettools.csharp
+    - ms-dotnettools.dotnet-interactive-vscode
+    - ms-dotnettools.vscode-dotnet-pack
+    - ms-dotnettools.vscode-dotnet-runtime
+    - ms-kubernetes-tools.vscode-kubernetes-tools
+    - ms-python.debugpy
+    - ms-python.isort
+    - ms-python.python
+    - ms-python.vscode-pylance
+    - ms-toolsai.jupyter
+    - ms-toolsai.jupyter-keymap
+    - ms-toolsai.jupyter-renderers
+    - ms-toolsai.vscode-jupyter-cell-tags
+    - ms-toolsai.vscode-jupyter-slideshow
+    - ms-vscode-remote.remote-containers
+    - ms-vscode-remote.remote-ssh
+    - ms-vscode-remote.remote-ssh-edit
+    - ms-vscode-remote.remote-wsl
+    - ms-vscode-remote.vscode-remote-extensionpack
+    - ms-vscode.azurecli
+    - ms-vscode.cpptools-extension-pack
+    - ms-vscode.live-server
+    - ms-vscode.makefile-tools
+    - ms-vscode.powershell
+    - ms-vscode.remote-explorer
+    - ms-vscode.remote-server
+    - ms-vscode.vscode-typescript-next
+    - nicolasvuillamy.vscode-groovy-lint
+    - njpwerner.autodocstring
+    - oderwat.indent-rainbow
+    - pflannery.vscode-versionlens # Version Lens
+    - pkief.material-icon-theme
+    - pomdtr.excalidraw-editor
+    - redhat.ansible
+    - redhat.vscode-xml
+    - redhat.vscode-yaml
+    - ritwickdey.liveserver
+    - tamasfe.even-better-toml
+    - vadimcn.vscode-lldb
+    - visualstudioexptteam.intellicode-api-usage-examples
+    - visualstudioexptteam.vscodeintellicode
+    - vscode-icons-team.vscode-icons
+    - Vue.volar
+    - wholroyd.jinja
+    - ybaumes.highlight-trailing-white-spaces
 
 # ---------------------------------------------------------------------------
 # Catalogue: ported from the macOS Brewfile but not installed anywhere yet.
