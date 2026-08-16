@@ -107,17 +107,25 @@ hosts:
     - kind
     - k6
     - obsidian
+    - dive
+    - docker-buildx
+    - ollama
+    - ollama-cuda
+    - cuda
+    - cuda-toolkit
     aur:
     - docker-credential-secretservice # ~/.docker/config.json credsStore on Linux
     # Microsoft's build rather than the repos' code (Code - OSS): only this one
     # talks to the real marketplace, and the extension list below needs it. It
     # conflicts with `code`, which must be uninstalled first.
     - visual-studio-code-bin
+    - slack-desktop
     pipx: []
     mise:
     # Not in the official repos and only in the AUR as tenv-bin, but mise can
     # fetch the same upstream release, so it needs no AUR build.
     - aqua:tofuutils/tenv # .zshrc completion; TENV_AUTO_INSTALL handles versions
+    - helmfile
     tenv: [] # empty on purpose: TENV_AUTO_INSTALL=true installs on first use
     # Docker needs its daemon running to be usable at all -- the macOS setup gets
     # this from OrbStack instead.
