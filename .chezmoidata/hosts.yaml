@@ -56,7 +56,7 @@ hosts:
   # was already installed by hand (see .notes/installed-cachyos.md). Anything else
   # from the macOS Brewfile is in the catalogue at the bottom of this file -- move a
   # line up into this list when it is actually wanted.
-  cachyos:
+  terminator:
     pacman:
     # Shell and CLI referenced by dot_zshrc / dot_aliasrc
     - git
