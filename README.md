@@ -14,6 +14,7 @@ sh -c "$(curl -fsLS get.chezmoi.io)" -- init msxdan/dotfiles --apply --recurse-s
 ### CachyOS / Arch
 
 ```bash
+sh -c "$(curl -fsLS get.chezmoi.io)" -- init msxdan/dotfiles --apply --recurse-submodules --branch cachy-setup
 sudo pacman -S --needed chezmoi
 ssh-add ~/.ssh/id_ed25519      # a key with access to the private repo
 chezmoi init msxdan/dotfiles --apply --recurse-submodules
