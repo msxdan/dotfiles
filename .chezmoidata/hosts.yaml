@@ -110,9 +110,7 @@ hosts:
     - dive
     - docker-buildx
     - ollama
-    - ollama-cuda
-    - cuda
-    - cuda-toolkit
+    - talosctl
     aur:
     - docker-credential-secretservice # ~/.docker/config.json credsStore on Linux
     # Microsoft's build rather than the repos' code (Code - OSS): only this one
@@ -120,6 +118,7 @@ hosts:
     # conflicts with `code`, which must be uninstalled first.
     - visual-studio-code-bin
     - slack-desktop
+    - purple-bin
     pipx: []
     mise:
     # Not in the official repos and only in the AUR as tenv-bin, but mise can
