@@ -17,7 +17,8 @@
 	{{/*
 	   secretservice reaches KWallet through the Secret Service API and is the Linux
 	   counterpart of osxkeychain. It needs the docker-credential-secretservice AUR
-	   package, which is in this host's list.
+	   package, which is in this host's list. nerdctl reads this same
+	   ~/.docker/config.json format, credsStore included.
 
 	   currentContext must be "default": orbstack does not exist on Linux, and docker
 	   errors out rather than falling back when the current context is missing.

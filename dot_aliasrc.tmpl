@@ -1,0 +1,23 @@
+#https://zsh.sourceforge.io/Guide/zshguide02.html#l22
+
+alias ls='lsd'
+alias ll='ls -la'
+alias lt='ls --tree'
+alias cd='z'
+
+alias tf='terraform'
+alias tg='terragrunt'
+
+alias k='kubectl'
+alias kc='kubectx'
+alias kns="kubens"
+
+alias vim='nvim'
+{{ if .isArch }}
+# nerdctl replaces docker on Arch/CachyOS -- see .chezmoidata/hosts.yaml. macOS keeps
+# real Docker via OrbStack, so this alias is scoped to Arch only. nerdctl needs sudo:
+# it talks to containerd's root:root socket directly, unlike docker's group-gated one.
+alias docker='sudo nerdctl'
+{{ end }}
+# Custom switch context
+alias sc='. ~/.local/bin/sc.sh'

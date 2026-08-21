@@ -94,9 +94,12 @@ hosts:
     - kubectx # alias kc=kubectx and kns=kubens; one package provides both
     - k9s # dot_config/k9s
     - helm # .zshrc completion, helm repositories.yaml
-    - docker # dot_docker/config.json, .zshrc completion
-    - docker-compose
+    - nerdctl # docker-compatible CLI for containerd; dot_docker/config.json, .zshrc completion
+    - buildkit # image builds (nerdctl build / nerdctl compose build)
     - containerd
+    - cni-plugins # container networking; nerdctl needs this, docker's libnetwork didn't
+    - qemu-user-static # cross-arch RUN steps in multiarch builds
+    - qemu-user-static-binfmt # registers the qemu-user-static interpreters with the kernel
     # Desktop / KDE
     - solaar # dot_config/solaar
     - qt6-tools # qdbus6, used by the Solaar rules
@@ -105,10 +108,9 @@ hosts:
     - krdp
     - flameshot
     - kind
-    - k6
+    #- k6
     - obsidian
     - dive
-    - docker-buildx
     - ollama
     - talosctl
     aur:
@@ -125,16 +127,19 @@ hosts:
     # fetch the same upstream release, so it needs no AUR build.
     - aqua:tofuutils/tenv # .zshrc completion; TENV_AUTO_INSTALL handles versions
     - helmfile
+    - helm
     tenv: [] # empty on purpose: TENV_AUTO_INSTALL=true installs on first use
-    # Docker needs its daemon running to be usable at all -- the macOS setup gets
-    # this from OrbStack instead.
+    # containerd needs its daemon running to be usable at all -- the macOS setup gets
+    # this from OrbStack instead. buildkit.socket is socket-activated by nerdctl build.
     services:
-    - docker.service
     - containerd.service
+    - buildkit.socket
     user_services:
     - ssh-agent.service
-    groups:
-    - docker # run docker without sudo
+    # No group here: nerdctl talks to containerd's socket (root:root, no group grant),
+    # so commands need sudo -- unlike docker's group-gated socket. Rootless nerdctl is
+    # possible but not set up; revisit if sudo-per-command becomes annoying.
+    groups: []
     # Ported from the macOS Brewfile's vscode lines. The six that were commented
     # out individually there are left out: they were already opted out before the
     # block was disabled, and one is marked deprecated upstream.
