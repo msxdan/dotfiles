@@ -15,9 +15,9 @@ alias kns="kubens"
 alias vim='nvim'
 {{ if .isArch }}
 # nerdctl replaces docker on Arch/CachyOS -- see .chezmoidata/hosts.yaml. macOS keeps
-# real Docker via OrbStack, so this alias is scoped to Arch only. nerdctl needs sudo:
-# it talks to containerd's root:root socket directly, unlike docker's group-gated one.
-alias docker='sudo nerdctl'
+# real Docker via OrbStack, so this alias is scoped to Arch only. Runs rootless (no
+# sudo, no docker group) via run_once_after_setup-rootless-containerd.sh.tmpl.
+alias docker='nerdctl'
 {{ end }}
 # Custom switch context
 alias sc='. ~/.local/bin/sc.sh'

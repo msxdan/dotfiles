@@ -100,6 +100,11 @@ hosts:
     - cni-plugins # container networking; nerdctl needs this, docker's libnetwork didn't
     - qemu-user-static # cross-arch RUN steps in multiarch builds
     - qemu-user-static-binfmt # registers the qemu-user-static interpreters with the kernel
+    # Rootless nerdctl (run_once_after_setup-rootless-containerd.sh.tmpl sets up the
+    # per-user containerd + buildkit instances these back): no docker group, no sudo.
+    - rootlesskit
+    - slirp4netns
+    - fuse-overlayfs
     # Desktop / KDE
     - solaar # dot_config/solaar
     - qt6-tools # qdbus6, used by the Solaar rules
@@ -129,16 +134,12 @@ hosts:
     - helmfile
     - helm
     tenv: [] # empty on purpose: TENV_AUTO_INSTALL=true installs on first use
-    # containerd needs its daemon running to be usable at all -- the macOS setup gets
-    # this from OrbStack instead. buildkit.socket is socket-activated by nerdctl build.
-    services:
-    - containerd.service
-    - buildkit.socket
+    # nerdctl runs rootless here (see run_once_after_setup-rootless-containerd.sh.tmpl),
+    # so containerd/buildkit are per-user systemd --user units that script installs
+    # and enables itself -- no system-level service or docker-style group needed.
+    services: []
     user_services:
     - ssh-agent.service
-    # No group here: nerdctl talks to containerd's socket (root:root, no group grant),
-    # so commands need sudo -- unlike docker's group-gated socket. Rootless nerdctl is
-    # possible but not set up; revisit if sudo-per-command becomes annoying.
     groups: []
     # Ported from the macOS Brewfile's vscode lines. The six that were commented
     # out individually there are left out: they were already opted out before the

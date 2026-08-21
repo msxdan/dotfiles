@@ -1,0 +1,42 @@
+{{ if .isArch -}}
+#!/bin/bash
+set -euo pipefail
+
+# nerdctl on Arch/CachyOS runs rootless (see .chezmoidata/hosts.yaml): no docker
+# group, no sudo needed for run/compose/build. This wires up the per-user
+# containerd + buildkit instances nerdctl talks to by default. Both setup
+# commands are themselves idempotent (they skip already-installed units), so
+# re-running this script on an already-configured machine is a no-op.
+if ! command -v containerd-rootless-setuptool.sh &> /dev/null; then
+  echo "containerd-rootless-setuptool.sh not found (nerdctl not installed yet?), skipping" >&2
+  exit 0
+fi
+
+# containerd 1.7+/2.x enables its NRI plugin by default, which binds a socket at
+# a fixed system path (/run/nri/nri.sock). Under rootlesskit's mount-namespace
+# copy-up of /run that path can come through owned by the real root user rather
+# than the rootless "fake root", so containerd fails to start with a
+# "permission denied" on nri.sock -- seen consistently in VMs, intermittently
+# on bare metal depending on what has already touched /run/nri. NRI itself is
+# for coordinating external resource-management plugins (e.g. in a full
+# Kubernetes node), which nerdctl/kind/buildkit here do not need, so disable it
+# outright instead of fighting the namespace interaction.
+mkdir -p ~/.config/containerd
+if [ ! -f ~/.config/containerd/config.toml ]; then
+  cat > ~/.config/containerd/config.toml <<'TOML'
+version = 3
+
+[plugins.'io.containerd.nri.v1.nri']
+  disable = true
+TOML
+fi
+
+containerd-rootless-setuptool.sh install
+containerd-rootless-setuptool.sh install-buildkit-containerd
+
+# Without linger, the user systemd instance (and these rootless daemons with it)
+# is killed on logout, so a container/build still running over ssh or in another
+# session dies the moment the graphical session ends.
+sudo loginctl enable-linger "$USER"
+
+{{ end -}}
