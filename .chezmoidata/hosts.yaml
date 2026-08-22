@@ -81,6 +81,7 @@ hosts:
     - lsd # alias ls=lsd, dot_config/lsd
     - yazi # yy() helper, dot_config/yazi
     - bat
+    - duf
     - ripgrep
     - jq
     - yq
