@@ -23,7 +23,7 @@ zinit light zsh-users/zsh-autosuggestions
 zinit light Aloxaf/fzf-tab
 
 # bashcompinit (for `complete -F`/`complete -C` style completions below)
-# and compinit (defines compdef, used by docker|nerdctl/kubectl/helm/tenv completion scripts)
+# and compinit (defines compdef, used by docker/kubectl/helm/tenv completion scripts)
 # must both load before any tool completion is sourced
 autoload -U +X bashcompinit && bashcompinit
 autoload -Uz compinit
@@ -31,11 +31,7 @@ compinit
 zinit cdreplay -q
 
 # Now it's safe to load tool completions that depend on compdef/complete
-{{ if .isArch -}}
-command -v nerdctl >/dev/null && source <(nerdctl completion zsh) # Makes the first load a bit slower
-{{ else -}}
 command -v docker >/dev/null && source <(docker completion zsh) # Makes the first load a bit slower
-{{ end -}}
 command -v kubectl >/dev/null && source <(kubectl completion zsh) && complete -F __start_kubectl k
 command -v helm >/dev/null && source <(helm completion zsh)
 command -v tenv >/dev/null && source <(tenv completion zsh)

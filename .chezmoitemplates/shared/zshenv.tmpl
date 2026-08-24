@@ -27,11 +27,6 @@ export KUBECONFIG
 export K9S_CONFIG_DIR="{{ .chezmoi.homeDir }}/.config/k9s/"
 
 export HELM_REGISTRY_CONFIG="${HOME}/.docker/config.json"
-{{ if .isArch }}
-# nerdctl replaces docker on Arch/CachyOS -- see .chezmoidata/hosts.yaml. Pins kind to
-# the nerdctl provider instead of relying on its docker/podman/nerdctl auto-detect.
-export KIND_EXPERIMENTAL_PROVIDER=nerdctl
-{{ end }}
 
 if [[ -d ~/.private/.env.d ]]; then
   for env in ~/.private/.env.d/*(N); do
