@@ -131,6 +131,8 @@ hosts:
     - helmfile
     tenv: [] # empty on purpose: TENV_AUTO_INSTALL=true installs on first use
     # Docker needs its daemon running to be usable at all -- the macOS setup gets
+    - openlinkhub-bin
+    - vmware-workstation
     # this from OrbStack instead.
     services:
     - docker.service
